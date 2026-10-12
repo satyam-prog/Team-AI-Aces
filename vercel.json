@@ -1,0 +1,40 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "api/index.py",
+      "use": "@vercel/python"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "/api/index.py"
+    },
+    {
+      "src": "/css/(.*)",
+      "dest": "/static/css/$1"
+    },
+    {
+      "src": "/js/(.*)",
+      "dest": "/static/js/$1"
+    },
+    {
+      "src": "/images/(.*)",
+      "dest": "/static/images/$1"
+    },
+    {
+      "src": "/(robots\\.txt|sitemap\\.xml|site\\.webmanifest|favicon\\.ico|favicon\\.svg|favicon-16x16\\.png|favicon-32x32\\.png|apple-touch-icon\\.png|og-image\\.png|og-image\\.svg)",
+      "dest": "/static/$1"
+    },
+    {
+      "src": "/(privacy|terms|thank-you|404)",
+      "dest": "/static/$1.html"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/static/index.html"
+    }
+  ]
+}
+
