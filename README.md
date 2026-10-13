@@ -1,4 +1,4 @@
-# EduEagle: Student Success and Intervention Orchestration Engine
+# Team-AI-Aces — EduEagle: Student Success and Intervention Orchestration Engine
 
 Reference Platform: **EduEagle**  
 Local Prototype Server: **http://localhost:8000**  
@@ -235,6 +235,8 @@ EduEagle integrates 14 student-centered academic support modules tailored specif
 ---
 
 ## Running the Verification Test Suites
+
+For the Vercel + Supabase deployment setup, required environment variables, and production-mode limitations, follow [DEPLOYMENT.md](./DEPLOYMENT.md) before importing this repository into Vercel.
 
 Run the unified regression runner to verify all 8 test suites:
 

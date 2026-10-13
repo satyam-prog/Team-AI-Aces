@@ -4,6 +4,7 @@ Contains:
 1. Thread-safe Sliding Window Rate Limiter
 2. Secure File Upload Validator (MIME Magic Bytes, Size, Sandboxed Storage)
 3. Incident Logging & Information Leakage Prevention
+4. Firebase Admin SDK Token Verification
 """
 
 import os
@@ -18,6 +19,8 @@ import json
 import secrets
 import re
 import urllib.parse
+import urllib.error
+import urllib.request
 import math
 from typing import Dict, List, Tuple, Optional, Any, Set
 
@@ -29,28 +32,106 @@ logging.basicConfig(
 )
 logger = logging.getLogger("EduEagleSecurity")
 
+def _load_dotenv():
+    """Load local .env file variables into os.environ if not already present."""
+    env_file = os.path.join(os.path.dirname(os.path.abspath(__file__)), ".env")
+    if os.path.isfile(env_file):
+        try:
+            with open(env_file, "r", encoding="utf-8") as f:
+                for line in f:
+                    line = line.strip()
+                    if not line or line.startswith("#") or "=" not in line:
+                        continue
+                    k, v = line.split("=", 1)
+                    k = k.strip()
+                    v = v.strip().strip("'\"")
+                    if k and k not in os.environ:
+                        os.environ[k] = v
+        except Exception as exc:
+            logger.debug("Failed reading .env file: %s", exc)
+
+_load_dotenv()
+
 # Decoupled Cryptographic Secrets Management (Never hardcode secrets!)
 SECRET_KEY = os.getenv("EDUEAGLE_SECRET_KEY")
 if not SECRET_KEY:
+    if os.getenv("VERCEL") or os.getenv("AWS_LAMBDA_FUNCTION_NAME") or os.getenv("NOW_REGION"):
+        raise RuntimeError("EDUEAGLE_SECRET_KEY must be configured in the server environment.")
     # Generate cryptographic 256-bit ephemeral key if not supplied via environment
     SECRET_KEY = secrets.token_hex(32)
     logger.info("EDUEAGLE_SECRET_KEY not set in environment. Generated secure ephemeral 256-bit key.")
+
+IS_SERVERLESS = bool(
+    os.getenv("VERCEL") or os.getenv("AWS_LAMBDA_FUNCTION_NAME") or os.getenv("NOW_REGION")
+)
+# DEMO_AUTH_ENABLED is ALWAYS false in production. Set to "true" only in a local dev environment.
+DEMO_AUTH_ENABLED = os.getenv(
+    "EDUEAGLE_DEMO_MODE", "false"
+).lower() == "true"
+if IS_SERVERLESS and not re.fullmatch(r"[0-9a-fA-F]{64}", SECRET_KEY):
+    raise RuntimeError("EDUEAGLE_SECRET_KEY must be a newly generated 64-character hexadecimal value.")
+SUPABASE_URL = os.getenv("SUPABASE_URL", "").rstrip("/")
+SUPABASE_ANON_KEY = os.getenv("SUPABASE_ANON_KEY", "")
+SUPABASE_SERVICE_ROLE_KEY = os.getenv("SUPABASE_SERVICE_ROLE_KEY", "")
+SUPABASE_STORAGE_BUCKET = os.getenv("SUPABASE_STORAGE_BUCKET", "student-artifacts")
+
+# ──────────────────────────────────────────────────────────────────────────────
+# Firebase Admin SDK Initialization
+# ──────────────────────────────────────────────────────────────────────────────
+_firebase_app = None
+
+def _init_firebase():
+    """Lazily initialise the Firebase Admin SDK from env-provided credentials."""
+    global _firebase_app
+    if _firebase_app is not None:
+        return _firebase_app
+    try:
+        import firebase_admin  # type: ignore
+        from firebase_admin import credentials as fb_credentials, auth as fb_auth  # type: ignore
+
+        sa_json_str = os.getenv("FIREBASE_SERVICE_ACCOUNT_JSON", "").strip()
+        sa_path = os.getenv("FIREBASE_SERVICE_ACCOUNT_PATH", "").strip()
+
+        if sa_json_str:
+            sa_dict = json.loads(sa_json_str)
+            cred = fb_credentials.Certificate(sa_dict)
+        elif sa_path and os.path.isfile(sa_path):
+            cred = fb_credentials.Certificate(sa_path)
+        else:
+            logger.warning(
+                "Firebase Admin SDK not configured (FIREBASE_SERVICE_ACCOUNT_JSON or "
+                "FIREBASE_SERVICE_ACCOUNT_PATH not set). Firebase token verification disabled."
+            )
+            return None
+
+        if not firebase_admin._apps:
+            _firebase_app = firebase_admin.initialize_app(cred)
+        else:
+            _firebase_app = firebase_admin.get_app()
+        logger.info("Firebase Admin SDK initialised successfully.")
+        return _firebase_app
+    except Exception as exc:
+        logger.error("Firebase Admin SDK initialisation failed: %s", exc)
+        return None
+
+# Attempt initialisation at import time (non-fatal)
+_init_firebase()
+
 
 TOKEN_EXPIRY_SECONDS = int(os.getenv("EDUEAGLE_SESSION_TTL", "86400"))  # Default 24h
 
 # Directory for sandboxed uploads (completely outside the static web root)
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-if os.getenv("VERCEL") or os.getenv("AWS_LAMBDA_FUNCTION_NAME") or os.getenv("NOW_REGION"):
+if IS_SERVERLESS:
     SECURE_STORAGE_DIR = os.getenv("EDUEAGLE_STORAGE_DIR", os.path.join("/tmp", "private_storage"))
 else:
     SECURE_STORAGE_DIR = os.getenv("EDUEAGLE_STORAGE_DIR", os.path.join(BASE_DIR, "private_storage"))
-try:
+if not SUPABASE_URL or not SUPABASE_SERVICE_ROLE_KEY:
     os.makedirs(SECURE_STORAGE_DIR, exist_ok=True)
-except Exception:
-    pass
 
 # Strict File Upload Constraints
-MAX_FILE_SIZE_BYTES = 5 * 1024 * 1024  # 5 MB Max
+# JSON base64 uploads must fit within Vercel Functions' request-body limit.
+MAX_FILE_SIZE_BYTES = 3 * 1024 * 1024
 ALLOWED_EXTENSIONS = {".pdf", ".png", ".jpg", ".jpeg"}
 
 # Magic byte signatures for true content verification (not just extension)
@@ -65,6 +146,7 @@ MAGIC_SIGNATURES = {
 FORBIDDEN_FILE_PATTERNS = [
     re.compile(r"(^|[\\/])\."),          # Hidden files/directories (.env, .git, .vscode)
     re.compile(r"\.(env|db|sqlite|sqlite3|py|pyc|log|key|pem|bak|swp|config|ini|sh|bat|cmd)$", re.IGNORECASE),
+    re.compile(r"(serviceAccount|service_account|firebase)", re.IGNORECASE),
 ]
 
 def is_path_forbidden(path: str) -> bool:
@@ -151,30 +233,9 @@ def verify_signed_token(token: str, db_conn=None) -> Optional[Dict[str, Any]]:
     """
     Validates cryptographic signature and expiration of session token.
     Returns token payload claims or None if invalid or expired.
+    Demo shortcut tokens (edueagle-token-*) are NOT accepted in production.
     """
     if not token or not isinstance(token, str):
-        return None
-
-    # Demo fallback token support: edueagle-token-USR-xxx
-    if token.startswith("edueagle-token-"):
-        uid = token.replace("edueagle-token-", "").strip()
-        if re.match(r"^USR-\d{3,6}$", uid):
-            import database
-            conn = db_conn or database.get_db()
-            cursor = conn.cursor()
-            cursor.execute("SELECT id, name, role, student_id FROM users WHERE id = ?", (uid,))
-            row = cursor.fetchone()
-            if not db_conn:
-                conn.close()
-            if row:
-                return {
-                    "uid": row["id"],
-                    "rol": row["role"],
-                    "sid": row["student_id"],
-                    "nam": row["name"],
-                    "iat": int(time.time()),
-                    "exp": int(time.time()) + TOKEN_EXPIRY_SECONDS
-                }
         return None
 
     if "." not in token:
@@ -203,6 +264,30 @@ def verify_signed_token(token: str, db_conn=None) -> Optional[Dict[str, Any]]:
         return None
 
     return payload
+
+
+def verify_firebase_token(id_token: str) -> Optional[Dict[str, Any]]:
+    """
+    Verify a Firebase ID token issued by the client SDK.
+    Returns the decoded claims dict on success, or None on failure.
+    The caller is responsible for mapping the Firebase UID to a local user record.
+    """
+    if not id_token or not isinstance(id_token, str):
+        return None
+    try:
+        import firebase_admin  # type: ignore
+        from firebase_admin import auth as fb_auth  # type: ignore
+
+        app = _init_firebase()
+        if app is None:
+            logger.error("Firebase Admin SDK is not initialised - cannot verify ID token.")
+            return None
+
+        decoded = fb_auth.verify_id_token(id_token, check_revoked=True)
+        return decoded  # contains uid, email, name, picture, etc.
+    except Exception as exc:
+        logger.warning("Firebase ID token verification failed: %s", exc)
+        return None
 
 
 class TokenBucketResult(tuple):
@@ -360,16 +445,93 @@ class RateLimiter:
 rate_limiter = RateLimiter()
 
 
+def verify_supabase_password(email: str, password: str) -> bool:
+    """Verify a password with Supabase Auth without exposing provider credentials."""
+    if not SUPABASE_URL or not SUPABASE_ANON_KEY:
+        raise RuntimeError("Supabase Auth is not configured.")
+
+    payload = json.dumps({"email": email, "password": password}).encode("utf-8")
+    request = urllib.request.Request(
+        f"{SUPABASE_URL}/auth/v1/token?grant_type=password",
+        data=payload,
+        headers={
+            "apikey": SUPABASE_ANON_KEY,
+            "Content-Type": "application/json",
+        },
+        method="POST",
+    )
+    try:
+        with urllib.request.urlopen(request, timeout=10) as response:
+            result = json.loads(response.read().decode("utf-8"))
+    except urllib.error.HTTPError as exc:
+        if exc.code in (400, 401, 422):
+            exc.close()
+            return False
+        logger.error("Supabase Auth returned HTTP %s during password verification.", exc.code)
+        exc.close()
+        raise RuntimeError("Supabase Auth could not complete the login request.") from exc
+    except urllib.error.URLError as exc:
+        logger.error("Supabase Auth is unreachable: %s", exc.reason)
+        raise RuntimeError("Supabase Auth is temporarily unavailable.") from exc
+
+    authenticated_email = (result.get("user") or {}).get("email", "")
+    return authenticated_email.lower() == email.lower() and bool(result.get("access_token"))
+
+
+def read_stored_artifact(artifact_id: str):
+    """Read a validated artifact from private Supabase Storage or local development storage."""
+    if not re.fullmatch(r"ART-[A-F0-9]{12}", artifact_id):
+        raise ValueError("Invalid artifact identifier.")
+
+    extensions = (".pdf", ".png", ".jpg", ".jpeg")
+    if SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY:
+        for extension in extensions:
+            object_path = f"{artifact_id}{extension}"
+            url = (
+                f"{SUPABASE_URL}/storage/v1/object/authenticated/"
+                f"{urllib.parse.quote(SUPABASE_STORAGE_BUCKET, safe='')}/"
+                f"{urllib.parse.quote(object_path, safe='')}"
+            )
+            request = urllib.request.Request(
+                url,
+                headers={
+                    "apikey": SUPABASE_SERVICE_ROLE_KEY,
+                    "Authorization": f"Bearer {SUPABASE_SERVICE_ROLE_KEY}",
+                },
+                method="GET",
+            )
+            try:
+                with urllib.request.urlopen(request, timeout=15) as response:
+                    return object_path, response.read()
+            except urllib.error.HTTPError as exc:
+                if exc.code == 404:
+                    continue
+                logger.error("Supabase Storage returned HTTP %s during artifact download.", exc.code)
+                raise RuntimeError("Persistent artifact storage could not complete the download.") from exc
+            except urllib.error.URLError as exc:
+                logger.error("Supabase Storage is unreachable: %s", exc.reason)
+                raise RuntimeError("Persistent artifact storage is temporarily unavailable.") from exc
+        return None
+
+    for extension in extensions:
+        object_path = f"{artifact_id}{extension}"
+        file_path = os.path.join(SECURE_STORAGE_DIR, object_path)
+        if os.path.isfile(file_path):
+            with open(file_path, "rb") as stored_file:
+                return object_path, stored_file.read()
+    return None
+
+
 def validate_and_save_upload(filename: str, file_bytes: bytes, uploaded_by: str) -> Tuple[bool, Optional[Dict[str, Any]], Optional[str]]:
     """
     Validates uploaded file:
-    1. Size verification (<= 5 MB)
+    1. Size verification (<= 3 MB)
     2. Extension whitelist verification
     3. Magic byte inspection to verify real binary format
     4. Sandboxed storage with UUID filename to prevent code execution & directory traversal
     """
     if len(file_bytes) > MAX_FILE_SIZE_BYTES:
-        return False, None, f"File size ({len(file_bytes) / 1024 / 1024:.2f} MB) exceeds maximum allowed 5 MB."
+        return False, None, f"File size ({len(file_bytes) / 1024 / 1024:.2f} MB) exceeds maximum allowed 3 MB."
 
     if len(file_bytes) < 8:
         return False, None, "File content is corrupted or empty."
@@ -390,14 +552,44 @@ def validate_and_save_upload(filename: str, file_bytes: bytes, uploaded_by: str)
     # Sandboxed storage: generate randomized UUID filename to prevent path traversal or executable execution
     secure_id = f"ART-{uuid.uuid4().hex[:12].upper()}"
     sandboxed_filename = f"{secure_id}{ext}"
-    target_path = os.path.join(SECURE_STORAGE_DIR, sandboxed_filename)
+    if SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY:
+        mime_type = {
+            ".pdf": "application/pdf",
+            ".png": "image/png",
+            ".jpg": "image/jpeg",
+            ".jpeg": "image/jpeg",
+        }[ext]
+        bucket = urllib.parse.quote(SUPABASE_STORAGE_BUCKET, safe="")
+        object_path = urllib.parse.quote(sandboxed_filename, safe="")
+        request = urllib.request.Request(
+            f"{SUPABASE_URL}/storage/v1/object/{bucket}/{object_path}",
+            data=file_bytes,
+            headers={
+                "apikey": SUPABASE_SERVICE_ROLE_KEY,
+                "Authorization": f"Bearer {SUPABASE_SERVICE_ROLE_KEY}",
+                "Content-Type": mime_type,
+                "x-upsert": "false",
+            },
+            method="POST",
+        )
+        try:
+            with urllib.request.urlopen(request, timeout=20):
+                pass
+        except urllib.error.HTTPError as exc:
+            logger.error("Supabase Storage returned HTTP %s during artifact upload.", exc.code)
+            return False, None, "Persistent artifact storage rejected the upload."
+        except urllib.error.URLError as exc:
+            logger.error("Supabase Storage is unreachable: %s", exc.reason)
+            return False, None, "Persistent artifact storage is temporarily unavailable."
+    else:
+        target_path = os.path.join(SECURE_STORAGE_DIR, sandboxed_filename)
 
-    # Double check real path is inside SECURE_STORAGE_DIR (prevent directory traversal)
-    if not os.path.abspath(target_path).startswith(os.path.abspath(SECURE_STORAGE_DIR)):
-        return False, None, "Invalid file destination path."
+        # Double check real path is inside SECURE_STORAGE_DIR (prevent directory traversal)
+        if not os.path.abspath(target_path).startswith(os.path.abspath(SECURE_STORAGE_DIR)):
+            return False, None, "Invalid file destination path."
 
-    with open(target_path, "wb") as f:
-        f.write(file_bytes)
+        with open(target_path, "wb") as f:
+            f.write(file_bytes)
 
     logger.info(f"Secure artifact saved: {sandboxed_filename} ({len(file_bytes)} bytes) by {uploaded_by}")
 

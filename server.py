@@ -53,9 +53,9 @@ class EduEagleAPIHandler(http.server.SimpleHTTPRequestHandler):
         self.send_header("X-Frame-Options", "DENY")
         self.send_header("X-XSS-Protection", "1; mode=block")
         self.send_header("Referrer-Policy", "strict-origin-when-cross-origin")
-        self.send_header("Content-Security-Policy", "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' data: https:; connect-src 'self' http://localhost:* http://127.0.0.1:* https:; font-src 'self' https://fonts.gstatic.com; frame-ancestors 'none'; base-uri 'self'; form-action 'self'")
+        self.send_header("Content-Security-Policy", "default-src 'self'; script-src 'self' 'unsafe-inline' https://www.gstatic.com https://apis.google.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' data: https:; connect-src 'self' http://localhost:* http://127.0.0.1:* https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://*.googleapis.com https:; font-src 'self' https://fonts.gstatic.com; frame-src https://accounts.google.com https://*.firebaseapp.com; frame-ancestors 'none'; base-uri 'self'; form-action 'self'")
         self.send_header("Permissions-Policy", "geolocation=(), camera=(), microphone=(), payment=()")
-        self.send_header("Cross-Origin-Opener-Policy", "same-origin")
+        self.send_header("Cross-Origin-Opener-Policy", "same-origin-allow-popups")
         self.send_header("Cross-Origin-Resource-Policy", "same-origin")
         self.end_headers()
         self.wfile.write(response_bytes)
@@ -74,12 +74,14 @@ class EduEagleAPIHandler(http.server.SimpleHTTPRequestHandler):
         self.send_header("X-Frame-Options", "DENY")
         self.send_header("X-XSS-Protection", "1; mode=block")
         self.send_header("Referrer-Policy", "strict-origin-when-cross-origin")
-        self.send_header("Content-Security-Policy", "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' data: https:; connect-src 'self' http://localhost:* http://127.0.0.1:* https:; font-src 'self' https://fonts.gstatic.com; frame-ancestors 'none'; base-uri 'self'; form-action 'self'")
+        self.send_header("Content-Security-Policy", "default-src 'self'; script-src 'self' 'unsafe-inline' https://www.gstatic.com https://apis.google.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' data: https:; connect-src 'self' http://localhost:* http://127.0.0.1:* https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://*.googleapis.com https:; font-src 'self' https://fonts.gstatic.com; frame-src https://accounts.google.com https://*.firebaseapp.com; frame-ancestors 'none'; base-uri 'self'; form-action 'self'")
         self.send_header("Permissions-Policy", "geolocation=(), camera=(), microphone=(), payment=()")
-        self.send_header("Cross-Origin-Opener-Policy", "same-origin")
+        self.send_header("Cross-Origin-Opener-Policy", "same-origin-allow-popups")
         self.send_header("Cross-Origin-Resource-Policy", "same-origin")
         self.end_headers()
         self.wfile.write(content)
+
+
 
     def _send_404_page(self):
         not_found_file = os.path.join(STATIC_DIR, "404.html")
@@ -220,6 +222,24 @@ class EduEagleAPIHandler(http.server.SimpleHTTPRequestHandler):
                 return self._send_404_page()
 
         if path.startswith("/api/"):
+            if path == "/api/config":
+                fb_api_key = os.getenv("FIREBASE_API_KEY", "").strip()
+                fb_config = None
+                if fb_api_key:
+                    fb_config = {
+                        "apiKey": fb_api_key,
+                        "authDomain": os.getenv("FIREBASE_AUTH_DOMAIN", "").strip(),
+                        "projectId": os.getenv("FIREBASE_PROJECT_ID", "").strip(),
+                        "storageBucket": os.getenv("FIREBASE_STORAGE_BUCKET", "").strip(),
+                        "messagingSenderId": os.getenv("FIREBASE_MESSAGING_SENDER_ID", "").strip(),
+                        "appId": os.getenv("FIREBASE_APP_ID", "").strip()
+                    }
+                self._send_json({
+                    "demo_auth_enabled": security.DEMO_AUTH_ENABLED,
+                    "firebase_config": fb_config
+                })
+                return
+
             # Enforce thread-safe rate limiting
             is_auth = path.startswith("/api/auth/")
             allowed, retry_after, remaining, limit = security.rate_limiter.check_rate_limit(client_ip, is_auth=is_auth)
@@ -582,27 +602,13 @@ class EduEagleAPIHandler(http.server.SimpleHTTPRequestHandler):
                 conn.close()
                 return
 
-            matched_file = None
-            if os.path.exists(security.SECURE_STORAGE_DIR):
-                for fname in os.listdir(security.SECURE_STORAGE_DIR):
-                    if fname.startswith(art_id):
-                        matched_file = fname
-                        break
-
-            if not matched_file:
+            stored_artifact = security.read_stored_artifact(art_id)
+            if not stored_artifact:
                 self._send_json({"error": "Requested artifact not found", "status": 404}, status=404)
                 conn.close()
                 return
 
-            file_path = os.path.join(security.SECURE_STORAGE_DIR, matched_file)
-            if not os.path.abspath(file_path).startswith(os.path.abspath(security.SECURE_STORAGE_DIR)):
-                self._send_json({"error": "Access to unauthorized path rejected", "status": 403}, status=403)
-                conn.close()
-                return
-
-            with open(file_path, "rb") as f:
-                file_bytes = f.read()
-
+            matched_file, file_bytes = stored_artifact
             _, ext = os.path.splitext(matched_file)
             mime_map = {
                 ".pdf": "application/pdf",
@@ -1425,8 +1431,87 @@ class EduEagleAPIHandler(http.server.SimpleHTTPRequestHandler):
 
         # 1. Login Authentication & Brute-Force Lockout Defense
         if path == "/api/auth/login":
-            auth_type = body.get("type", "role_switch")
-            identifier = body.get("phone") or body.get("email") or body.get("github_id") or body.get("role") or client_ip
+            auth_type = body.get("type", "credentials")
+
+            # ── Production path: Firebase ID token (email/password + Google OAuth) ──
+            firebase_id_token = body.get("firebase_id_token", "").strip()
+            if firebase_id_token:
+                firebase_claims = security.verify_firebase_token(firebase_id_token)
+                if not firebase_claims:
+                    conn.close()
+                    self._send_json({"error": "Firebase token verification failed. Please sign in again.", "status": 401}, status=401)
+                    return
+
+                fb_uid = firebase_claims.get("uid", "")
+                fb_email = (firebase_claims.get("email") or "").lower()
+                fb_name = firebase_claims.get("name") or firebase_claims.get("email", "")
+                fb_picture = firebase_claims.get("picture", "")
+
+                # Resolve local user record by Firebase UID or email
+                cursor.execute("SELECT * FROM users WHERE firebase_uid = ?", (fb_uid,))
+                user = cursor.fetchone()
+                if not user and fb_email:
+                    cursor.execute("SELECT * FROM users WHERE LOWER(email) = ?", (fb_email,))
+                    user = cursor.fetchone()
+
+                if user:
+                    u_dict = dict(user)
+                    # Persist firebase_uid on first OAuth sign-in so future lookups are instant
+                    if not u_dict.get("firebase_uid"):
+                        cursor.execute("UPDATE users SET firebase_uid = ? WHERE id = ?", (fb_uid, u_dict["id"]))
+                        conn.commit()
+                else:
+                    new_user_id = f"USR-{uuid.uuid4().hex[:6].upper()}"
+                    new_student_id = f"STU-{uuid.uuid4().hex[:6].upper()}"
+                    clean_name = fb_name or (fb_email.split("@")[0] if fb_email else "Scholar")
+                    avatar_init = "".join([part[0] for part in clean_name.split()[:2]]).upper() or "ST"
+                    cursor.execute("""
+                        INSERT INTO students (id, roll_no, name, email, department, year_semester, program, academic_risk_level, avatar, created_at)
+                        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                    """, (new_student_id, f"ROLL-{new_user_id[-4:]}", clean_name, fb_email, "Computer Science Engineering", "Year 1 - Semester 1", "B.Tech Computer Science", "Low Risk", avatar_init, now_str))
+
+                    cursor.execute("""
+                        INSERT INTO users (id, name, email, phone, role, department, avatar, student_id, firebase_uid, created_at)
+                        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                    """, (new_user_id, clean_name, fb_email, "", "Student", "Computer Science Engineering", avatar_init, new_student_id, fb_uid, now_str))
+                    conn.commit()
+
+                    cursor.execute("SELECT * FROM users WHERE id = ?", (new_user_id,))
+                    user = cursor.fetchone()
+                    u_dict = dict(user)
+
+                if u_dict.get("student_id"):
+                    cursor.execute("SELECT * FROM students WHERE id = ?", (u_dict["student_id"],))
+                    st = cursor.fetchone()
+                    if st:
+                        u_dict["student_profile"] = dict(st)
+
+                signed_token = security.generate_signed_token(
+                    u_dict["id"], u_dict["role"], u_dict.get("student_id"), u_dict["name"]
+                )
+
+                cursor.execute("""
+                INSERT INTO audit_logs (timestamp, entity_type, entity_id, action, performed_by, details)
+                VALUES (?, ?, ?, ?, ?, ?)
+                """, (now_str, "USER", u_dict["id"], "LOGIN", u_dict["name"],
+                      f"Authenticated via Firebase ({auth_type}) as {u_dict['role']}"))
+                conn.commit()
+
+                self._send_json({"success": True, "user": u_dict, "token": signed_token})
+                conn.close()
+                return
+
+            # ── Demo / dev-only path (DEMO_AUTH_ENABLED must be explicitly set) ──
+            if not security.DEMO_AUTH_ENABLED:
+                conn.close()
+                self._send_json({
+                    "error": "Direct credential login is not available. Please use Firebase Authentication.",
+                    "status": 403
+                }, status=403)
+                return
+
+            # Remaining demo-mode branches (guarded by DEMO_AUTH_ENABLED)
+            identifier = body.get("phone") or body.get("email") or body.get("role") or client_ip
 
             is_locked, remaining = security.rate_limiter.check_account_lockout(identifier)
             if is_locked:
@@ -1439,38 +1524,7 @@ class EduEagleAPIHandler(http.server.SimpleHTTPRequestHandler):
                 return
 
             user = None
-            if auth_type == "phone":
-                phone = body.get("phone", "").strip().replace(" ", "").replace("-", "")
-                otp = body.get("otp", "").strip()
-                if otp == "123456":
-                    cursor.execute("SELECT * FROM users WHERE phone LIKE ?", (f"%{phone[-10:]}%",))
-                    user = cursor.fetchone()
-                    if not user:
-                        cursor.execute("SELECT * FROM users WHERE role = 'Student' LIMIT 1")
-                        user = cursor.fetchone()
-                else:
-                    user = None
-
-            elif auth_type == "gmail":
-                email = body.get("email", "").strip().lower()
-                cursor.execute("SELECT * FROM users WHERE LOWER(email) = ?", (email,))
-                user = cursor.fetchone()
-                if not user:
-                    cursor.execute("SELECT * FROM users WHERE LOWER(email) LIKE ?", (f"%{email.split('@')[0]}%",))
-                    user = cursor.fetchone()
-                if not user:
-                    cursor.execute("SELECT * FROM users WHERE role = 'Student' LIMIT 1")
-                    user = cursor.fetchone()
-
-            elif auth_type == "github":
-                gh_user = body.get("github_id", "").strip().lower()
-                cursor.execute("SELECT * FROM users WHERE LOWER(github_id) = ?", (gh_user,))
-                user = cursor.fetchone()
-                if not user:
-                    cursor.execute("SELECT * FROM users WHERE role = 'Student' LIMIT 1")
-                    user = cursor.fetchone()
-
-            elif auth_type == "role_switch":
+            if auth_type == "role_switch":
                 role = body.get("role", "Faculty")
                 cursor.execute("SELECT * FROM users WHERE role = ? LIMIT 1", (role,))
                 user = cursor.fetchone()
@@ -1481,39 +1535,23 @@ class EduEagleAPIHandler(http.server.SimpleHTTPRequestHandler):
             elif auth_type in ("credentials", "student", "student_login", "staff_login"):
                 raw_ident = str(body.get("identifier", "")).strip()
                 ident = raw_ident.lower()
-                pwd = str(body.get("password", "")).strip()
-
-                if not raw_ident:
-                    # Default demo fallback
-                    cursor.execute("SELECT * FROM users WHERE role = 'Student' LIMIT 1")
+                # In demo mode, match by roll_no / id / email without password verification
+                cursor.execute("""
+                    SELECT * FROM students
+                    WHERE LOWER(roll_no) = ? OR LOWER(id) = ? OR LOWER(email) = ?
+                """, (ident, ident, ident))
+                st = cursor.fetchone()
+                if st:
+                    st_dict = dict(st)
+                    cursor.execute("SELECT * FROM users WHERE student_id = ? OR LOWER(email) = ?",
+                                   (st_dict["id"], st_dict["email"].lower()))
                     user = cursor.fetchone()
                 else:
-                    # 1. Search in students table by roll_no, id, email, or phone
                     cursor.execute("""
-                        SELECT * FROM students 
-                        WHERE LOWER(roll_no) = ? OR LOWER(id) = ? OR LOWER(email) = ? OR phone = ?
-                    """, (ident, ident, ident, raw_ident))
-                    st = cursor.fetchone()
-                    if st:
-                        st_dict = dict(st)
-                        cursor.execute("SELECT * FROM users WHERE student_id = ? OR LOWER(email) = ?", (st_dict["id"], st_dict["email"].lower()))
-                        user = cursor.fetchone()
-                        if not user:
-                            new_uid = f"USR-STU-{st_dict['id'].replace('STU-', '')}"
-                            cursor.execute("""
-                                INSERT INTO users (id, name, email, phone, role, department, student_id, created_at)
-                                VALUES (?, ?, ?, ?, 'Student', ?, ?, ?)
-                            """, (new_uid, st_dict["name"], st_dict["email"], st_dict["phone"], st_dict["department"], st_dict["id"], now_str))
-                            conn.commit()
-                            cursor.execute("SELECT * FROM users WHERE student_id = ?", (st_dict["id"],))
-                            user = cursor.fetchone()
-                    else:
-                        # 2. Search directly in users table (Staff ID, official email, or phone)
-                        cursor.execute("""
-                            SELECT * FROM users 
-                            WHERE LOWER(email) = ? OR LOWER(id) = ? OR LOWER(phone) = ?
-                        """, (ident, ident, raw_ident))
-                        user = cursor.fetchone()
+                        SELECT * FROM users
+                        WHERE LOWER(email) = ? OR LOWER(id) = ?
+                    """, (ident, ident))
+                    user = cursor.fetchone()
 
             if user:
                 u_dict = dict(user)
@@ -1523,22 +1561,17 @@ class EduEagleAPIHandler(http.server.SimpleHTTPRequestHandler):
                     if st:
                         u_dict["student_profile"] = dict(st)
 
-                # Reset lockout failure counter on successful authentication
                 security.rate_limiter.record_login_attempt(identifier, success=True)
 
-                # Generate cryptographically signed HMAC token with expiration
                 signed_token = security.generate_signed_token(
-                    u_dict["id"],
-                    u_dict["role"],
-                    u_dict.get("student_id"),
-                    u_dict["name"]
+                    u_dict["id"], u_dict["role"], u_dict.get("student_id"), u_dict["name"]
                 )
 
-                # Log login audit
                 cursor.execute("""
                 INSERT INTO audit_logs (timestamp, entity_type, entity_id, action, performed_by, details)
                 VALUES (?, ?, ?, ?, ?, ?)
-                """, (now_str, "USER", u_dict["id"], "LOGIN", u_dict["name"], f"Authenticated via {auth_type} as {u_dict['role']}"))
+                """, (now_str, "USER", u_dict["id"], "LOGIN", u_dict["name"],
+                      f"Demo authenticated via {auth_type} as {u_dict['role']}"))
                 conn.commit()
 
                 self._send_json({"success": True, "user": u_dict, "token": signed_token})
@@ -1556,17 +1589,27 @@ class EduEagleAPIHandler(http.server.SimpleHTTPRequestHandler):
             conn.close()
             return
 
-        # 2. Phone OTP Request simulation
+        # 2. Phone OTP Request (demo mode only — Firebase Phone Auth handles production OTP)
         if path == "/api/auth/otp/request":
+            if not security.DEMO_AUTH_ENABLED:
+                conn.close()
+                self._send_json({
+                    "error": "Phone OTP is handled by Firebase Authentication. Use the Firebase Phone Auth flow.",
+                    "status": 403
+                }, status=403)
+                return
             phone = body.get("phone", "")
-            # Return demo OTP for instant user convenience
+            # Return a simulated OTP only in demo/dev mode
+            demo_otp = "123456"
             self._send_json({
                 "success": True,
-                "message": f"OTP sent to {phone}",
-                "demo_otp": "123456"
+                "message": f"[Demo] OTP sent to {phone}",
+                "demo_otp": demo_otp
             })
             conn.close()
             return
+
+
 
         # 3. Create or Accept Intervention
         if path == "/api/interventions/create":
@@ -1981,6 +2024,10 @@ class EduEagleAPIHandler(http.server.SimpleHTTPRequestHandler):
 
         # 12. Reset Database (Protect Admin Routes)
         if path == "/api/reset":
+            if not security.DEMO_AUTH_ENABLED:
+                conn.close()
+                self._send_json({"error": "Demo database reset is disabled.", "status": 403}, status=403)
+                return
             if not security.has_permission(auth_user["rol"], "DATABASE_RESET"):
                 conn.close()
                 self._send_json({"error": "Access denied. Database re-initialization is restricted to SuperAdmin.", "status": 403}, status=403)
@@ -2737,6 +2784,7 @@ class EduEagleAPIHandler(http.server.SimpleHTTPRequestHandler):
 
         # 27. Module M: Student Self-Registration
         if path == "/api/auth/register":
+
             name = str(body.get("name", "")).strip()
             email = str(body.get("email", "")).strip().lower()
             password = str(body.get("password", "")).strip()
@@ -3150,4 +3198,3 @@ if __name__ == "__main__":
         database.init_db(force_reseed=True)
 
     run_server(port=args.port, host=args.host)
-

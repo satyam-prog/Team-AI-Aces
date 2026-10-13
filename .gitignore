@@ -5,12 +5,16 @@
 *.pem
 *.key
 *.cert
+serviceAccountKey.json
+*serviceAccount*.json
 
 # Database files & local persistence
 *.db
+*.db-*
 *.sqlite
 *.sqlite3
 edueagle.db
+edueagle.db-*
 
 # Sandboxed private storage
 private_storage/

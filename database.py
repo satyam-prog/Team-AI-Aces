@@ -3,10 +3,29 @@ import json
 import os
 import uuid
 import shutil
+import re
+import importlib
 from datetime import datetime, timedelta
 
 ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
 DATABASE_URL = os.getenv("DATABASE_URL")
+
+
+def is_postgres_available():
+    """Return True only when PostgreSQL is configured and the driver is importable."""
+    if not DATABASE_URL:
+        return False
+    try:
+        importlib.import_module("psycopg2")
+        return True
+    except ImportError:
+        return False
+
+
+def uses_postgres_db():
+    """Compatibility helper for code paths that need a boolean DB backend check."""
+    return is_postgres_available()
+
 
 # Serverless environment (Vercel / AWS Lambda) fallback:
 # If running serverless and no external Postgres DATABASE_URL is provided,
@@ -64,6 +83,15 @@ class PostgresCursorWrapper:
         self._cursor = raw_cursor
 
     def _convert_query(self, query: str) -> str:
+        if re.match(r"^\s*INSERT\s+OR\s+IGNORE\s+INTO\b", query, re.IGNORECASE):
+            query = re.sub(
+                r"^\s*INSERT\s+OR\s+IGNORE\s+INTO\b",
+                "INSERT INTO",
+                query,
+                count=1,
+                flags=re.IGNORECASE,
+            ).rstrip().rstrip(";")
+            query += " ON CONFLICT DO NOTHING"
         return query.replace("?", "%s")
 
     def execute(self, query, params=None):
@@ -121,10 +149,14 @@ class PostgresConnectionWrapper:
         return self._conn.close()
 
 def get_db():
-    if DATABASE_URL:
-        import psycopg2
+    if is_postgres_available():
+        psycopg2 = importlib.import_module("psycopg2")
         raw_conn = psycopg2.connect(DATABASE_URL)
         return PostgresConnectionWrapper(raw_conn)
+
+    if DATABASE_URL:
+        print("Warning: DATABASE_URL is set but psycopg2 is unavailable; falling back to SQLite.")
+
     conn = sqlite3.connect(DB_FILE, timeout=30.0)
     conn.row_factory = sqlite3.Row
     # Database security & concurrency lockdowns
@@ -135,6 +167,9 @@ def get_db():
     return conn
 
 def init_db(force_reseed=False):
+    if force_reseed and is_postgres_available():
+        raise RuntimeError("Full database reseeding is disabled for PostgreSQL deployments.")
+
     db_exists = os.path.exists(DB_FILE)
     if force_reseed and db_exists:
         try:
@@ -225,6 +260,7 @@ def init_db(force_reseed=False):
         email TEXT UNIQUE NOT NULL,
         phone TEXT UNIQUE NOT NULL,
         github_id TEXT UNIQUE,
+        firebase_uid TEXT UNIQUE,
         role TEXT NOT NULL,
         department TEXT,
         avatar TEXT,
@@ -232,6 +268,7 @@ def init_db(force_reseed=False):
         created_at TEXT NOT NULL
     );
     """)
+
 
     # Student Support Requests (Beacon)
     cursor.execute("""
@@ -250,7 +287,7 @@ def init_db(force_reseed=False):
     """)
 
     # Audit Logs
-    audit_pk = "SERIAL PRIMARY KEY" if DATABASE_URL else "INTEGER PRIMARY KEY AUTOINCREMENT"
+    audit_pk = "SERIAL PRIMARY KEY" if is_postgres_available() else "INTEGER PRIMARY KEY AUTOINCREMENT"
     cursor.execute(f"""
     CREATE TABLE IF NOT EXISTS audit_logs (
         id {audit_pk},
@@ -449,9 +486,13 @@ def init_db(force_reseed=False):
     # Check if empty, seed if needed
     cursor.execute("SELECT COUNT(*) FROM students")
     count = cursor.fetchone()[0]
-    if count == 0:
+    seed_demo_data = os.getenv(
+        "EDUEAGLE_SEED_DEMO_DATA",
+        "false" if (os.getenv("VERCEL") or os.getenv("AWS_LAMBDA_FUNCTION_NAME")) else "true",
+    ).lower() == "true"
+    if count == 0 and seed_demo_data:
         seed_data(conn)
-    else:
+    elif count > 0 and seed_demo_data:
         # Check if fee_accounts needs seeding in existing database
         cursor.execute("SELECT COUNT(*) FROM fee_accounts")
         fee_count = cursor.fetchone()[0]
@@ -1928,8 +1969,11 @@ def ensure_extended_schemas_and_columns(cursor):
         ("submissions", "appeal_id", "TEXT DEFAULT ''"),
         ("submissions", "appeal_status", "TEXT DEFAULT 'none'"),
         ("submissions", "appeal_reason", "TEXT DEFAULT ''"),
-        ("submissions", "appeal_response", "TEXT DEFAULT ''")
+        ("submissions", "appeal_response", "TEXT DEFAULT ''"),
+        # Firebase Auth integration — store Firebase UID for fast identity lookup
+        ("users", "firebase_uid", "TEXT UNIQUE"),
     ]
+
     for table, col, col_type in migrations:
         try:
             cursor.execute(f"ALTER TABLE {table} ADD COLUMN {col} {col_type};")
@@ -2743,5 +2787,3 @@ def run_scheduled_academic_jobs():
 
 if __name__ == "__main__":
     init_db(force_reseed=True)
-
-
