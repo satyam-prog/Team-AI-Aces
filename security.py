@@ -40,8 +40,14 @@ TOKEN_EXPIRY_SECONDS = int(os.getenv("EDUEAGLE_SESSION_TTL", "86400"))  # Defaul
 
 # Directory for sandboxed uploads (completely outside the static web root)
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-SECURE_STORAGE_DIR = os.getenv("EDUEAGLE_STORAGE_DIR", os.path.join(BASE_DIR, "private_storage"))
-os.makedirs(SECURE_STORAGE_DIR, exist_ok=True)
+if os.getenv("VERCEL") or os.getenv("AWS_LAMBDA_FUNCTION_NAME") or os.getenv("NOW_REGION"):
+    SECURE_STORAGE_DIR = os.getenv("EDUEAGLE_STORAGE_DIR", os.path.join("/tmp", "private_storage"))
+else:
+    SECURE_STORAGE_DIR = os.getenv("EDUEAGLE_STORAGE_DIR", os.path.join(BASE_DIR, "private_storage"))
+try:
+    os.makedirs(SECURE_STORAGE_DIR, exist_ok=True)
+except Exception:
+    pass
 
 # Strict File Upload Constraints
 MAX_FILE_SIZE_BYTES = 5 * 1024 * 1024  # 5 MB Max

@@ -173,3 +173,77 @@ EduEagle/
 | **Counsellor** | Dr. Anita Desai | Campus Wellbeing Director | `anita.desai@edueagle.edu` | `+91 98444 55566` |
 | **Placement** | Mr. Vikram Malhotra | Head of Career Services | `vikram.malhotra@edueagle.edu` | `+91 98555 66677` |
 | **Finance** | Ms. Kavita Jain | Bursar and Financial Aid | `kavita.jain@edueagle.edu` | `+91 98666 77788` |
+
+---
+
+## Student Success Engine (AI ACES) Modules
+
+EduEagle integrates 14 student-centered academic support modules tailored specifically for students in Tier 3 and Tier 4 private colleges:
+
+### 1. Student Registration and Profile Management
+- Persistent student registration with roll number, department, year, gender, and avatar selection.
+- Endpoints: `POST /api/auth/register`, `POST /api/students/profile`.
+- Secure cryptographic HMAC session tokens with CSRF protections.
+
+### 2. Live Student Dashboard with Real Stored Statistics
+- Dynamic academic progress calculations, attendance velocity, and marks ledger from real database records.
+- Endpoints: `GET /api/podium-and-marks`, `GET /api/attendance`.
+
+### 3. Faculty Assignment Management & Criteria
+- Detailed assignment specifications: deadlines, subject, marking criteria, word count, paragraph count, points, and submission format.
+- Endpoints: `POST /api/tasks`, `GET /api/tasks`.
+
+### 4. 3-Stage Verification for Handwritten Submissions
+1. Stage 1: Text analysis for similarity and duplicate excerpts.
+2. Stage 2: Notebook page-turn video evidence verification.
+3. Stage 3: Temporal video consistency and tampering analysis.
+- Clear non-clinical limitations disclaimer and student evaluation appeals panel.
+- Endpoints: `POST /api/tasks/<id>/submit`, `POST /api/submissions/<id>/ai-check`, `POST /api/submissions/<id>/appeal`, `POST /api/assignment-appeals/<id>/review`.
+
+### 5. Timed Mock Assessments & Speed-Accuracy Rubric
+- Timed assessments with countdown timers, auto-submission on expiry, and answer persistence.
+- Speed vs accuracy rubric that rewards conceptual understanding rather than reckless speed.
+- Topic-level performance breakdowns for targeted remedial revision.
+- Endpoints: `POST /api/mock-tests`, `POST /api/mock-tests/<id>/start`, `POST /api/mock-tests/<id>/submit`, `GET /api/mock-tests/history/my`.
+
+### 6. Notes Summarization & Grounded AI Chatbot
+- Academic notes repository with question-driven conceptual summarizer.
+- Curriculum-grounded AI assistant citing approved resources with zero policy hallucinations.
+- Endpoints: `GET /api/academic-resources`, `POST /api/academic-resources/summarize`, `POST /api/chat`.
+
+### 7. Mentor & Parent Dashboards with Strict RBAC
+- Alternate-day mentor pulse logs and fortnightly parent digest reports.
+- Strict role-based access control protecting private student records.
+- Endpoints: `GET /api/mentor/pulse`, `GET /api/parent-digest/<id>`, `POST /api/parent-digest/<id>/send`.
+
+### 8. Confidential Student Well-Being Support
+- Non-clinical self-reflection check-in for mood, stress, sleep, and energy.
+- Prominent Tele-MANAS 14416 (24x7 National Helpline) integration.
+- Well-being data is strictly confidential and permanently isolated from grading and rewards.
+- Endpoints: `POST /api/wellbeing/checkin`, `GET /api/wellbeing/history`.
+
+### 9. Functional Rewards System & Top 3 Laureates Claims Desk
+- Transparent, deterministic ranking based on academic points ledger.
+- Full claim and redemption workflow: Pending -> Approved -> Redeemed.
+- Endpoints: `GET /api/rewards/rules`, `GET /api/rewards/my-points`, `GET /api/rewards/leaderboard`, `POST /api/rewards/claim`, `POST /api/rewards/claims/<id>/process`.
+
+### 10. Automated Notifications & Scheduler Center
+- In-app notification center with real-time badge counts and read receipts.
+- Scheduled job execution logs with Asia/Kolkata timezone awareness.
+- Endpoints: `GET /api/notifications`, `POST /api/notifications/<id>/read`, `POST /api/scheduler/run-now`, `GET /api/scheduler/logs`.
+
+---
+
+## Running the Verification Test Suites
+
+Run the unified regression runner to verify all 8 test suites:
+
+```bash
+python scratch/run_all_tests.py
+```
+
+Or run the Student Success Engine test suite directly:
+
+```bash
+python -m unittest test_student_success_engine.py -v
+```

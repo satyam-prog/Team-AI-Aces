@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Request Received &amp; Confirmation | EduEagle</title>
+  <meta name="description" content="Confirmation of submitted institutional support request, academic advisory dispatch, and intervention tracking receipt on EduEagle.">
+  <link rel="canonical" href="https://edueagle.edu/thank-you">
+  
+  <!-- Favicon Set -->
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="theme-color" content="#0a0f1d">
+
+  <!-- Open Graph Meta Tags -->
+  <meta property="og:title" content="Request Received &amp; Confirmation | EduEagle">
+  <meta property="og:description" content="Confirmation of submitted institutional support request, academic advisory dispatch, and intervention tracking receipt on EduEagle.">
+  <meta property="og:image" content="https://edueagle.edu/images/og-image.png">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://edueagle.edu/thank-you">
+
+  <link rel="stylesheet" href="/css/style.css">
+  <style>
+    .confirm-wrapper {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      background-color: var(--bg-primary);
+    }
+    .confirm-main {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 20px;
+    }
+    .confirm-card {
+      max-width: 660px;
+      width: 100%;
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-lg);
+      padding: 38px;
+    }
+    .confirm-status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      background: rgba(22, 163, 74, 0.12);
+      border: 1px solid rgba(22, 163, 74, 0.3);
+      color: #4ade80;
+      border-radius: var(--radius-xs);
+      font-size: 0.76rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+    .confirm-title {
+      font-size: 1.65rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 10px;
+      letter-spacing: -0.02em;
+    }
+    .confirm-desc {
+      font-size: 0.88rem;
+      color: #cbd5e1;
+      line-height: 1.6;
+      margin-bottom: 22px;
+    }
+    .timeline-box {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-sm);
+      padding: 18px 20px;
+      margin-bottom: 24px;
+    }
+    .timeline-title {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: #38bdf8;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 12px;
+    }
+    .timeline-step {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 10px;
+      font-size: 0.82rem;
+      color: #e2e8f0;
+    }
+    .timeline-step:last-child {
+      margin-bottom: 0;
+    }
+    .step-num {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: #2563eb;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.72rem;
+      font-weight: 700;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+    .contact-box {
+      background: #0b1323;
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-xs);
+      padding: 14px 16px;
+      font-size: 0.78rem;
+      color: #94a3b8;
+      line-height: 1.55;
+      margin-bottom: 24px;
+    }
+    .contact-box strong {
+      color: #f1f5f9;
+    }
+  </style>
+</head>
+<body class="confirm-wrapper">
+
+  <!-- Header -->
+  <header class="app-header glass-nav">
+    <div class="header-top">
+      <a href="/" class="brand" style="text-decoration: none; color: inherit;">
+        <div class="brand-icon">
+          <img src="/favicon.svg" alt="EduEagle Institutional Shield Logo" width="20" height="20" style="display: block;">
+        </div>
+        <div class="brand-text">
+          <h1>EduEagle</h1>
+          <p>Student Success &amp; Intervention Engine</p>
+        </div>
+      </a>
+      <div class="header-controls">
+        <a href="/" class="btn btn-secondary btn-sm" style="text-decoration: none;">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          <span>Return to Gateway</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Confirmation Body -->
+  <main class="confirm-main">
+    <div class="confirm-card">
+      <div class="confirm-status-badge">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+        <span id="ref-receipt-badge">Action Recorded: Ref #REQ-2026-9410</span>
+      </div>
+
+      <h1 class="confirm-title">Institutional Request Confirmed</h1>
+
+      <p class="confirm-desc">
+        Your academic support or advisory communication has been registered in the institutional ledger. In accordance with university student success protocols, your departmental mentor and assigned advisory team have been dispatched.
+      </p>
+
+      <!-- Protocol Timeline Box -->
+      <div class="timeline-box">
+        <div class="timeline-title">Advisory Protocol &amp; Service Level Agreement (SLA):</div>
+        <div class="timeline-step">
+          <div class="step-num">1</div>
+          <div><strong>Ledger Timestamp Logged:</strong> Immutable entry created in audit records under FERPA compliance guidelines.</div>
+        </div>
+        <div class="timeline-step">
+          <div class="step-num">2</div>
+          <div><strong>Faculty Mentor Notification:</strong> Assigned instructor and department chair notified with a 48-hour response SLA.</div>
+        </div>
+        <div class="timeline-step">
+          <div class="step-num">3</div>
+          <div><strong>Direct Advisory Conference:</strong> Your advisor will schedule a 1-on-1 consultation or deliver the requested academic support.</div>
+        </div>
+      </div>
+
+      <!-- Real Contact Coordinates Card -->
+      <div class="contact-box">
+        <div style="font-weight: 700; color: #fff; margin-bottom: 4px;">Institutional Advisory Operations:</div>
+        <div>Department of Academic Affairs &amp; Student Success</div>
+        <div>Division of Academic Support &amp; Retention</div>
+        <div>450 Technology Square, Suite 700, Cambridge, MA 02139, USA</div>
+        <div style="margin-top: 4px;">Direct Helpline: <strong>+1 (617) 555-0198</strong> | Official Inquiries: <strong>advising@edueagle.edu</strong></div>
+      </div>
+
+      <!-- Action Row -->
+      <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+        <a href="/" class="btn btn-primary" style="text-decoration: none; padding: 10px 18px;">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg>
+          <span>Return to Institutional Gateway</span>
+        </a>
+        <a href="/privacy" class="btn btn-secondary" style="text-decoration: none; padding: 10px 16px;">
+          <span>FERPA Privacy Policy</span>
+        </a>
+      </div>
+    </div>
+  </main>
+
+  <!-- Institutional Footer -->
+  <footer class="app-footer">
+    <div>
+      <strong>EduEagle Institutional Student Advisory System</strong> | Department of Academic Affairs &amp; Student Success
+    </div>
+    <div class="footer-links">
+      <a class="footer-link" href="/privacy">Privacy Policy</a>
+      <a class="footer-link" href="/terms">Terms of Service</a>
+      <a class="footer-link" href="/#safeguards">FERPA Framework</a>
+    </div>
+  </footer>
+
+  <script src="/js/analytics.js"></script>
+  <script>
+    // Extract query parameter reference if present (e.g. ?ref=REQ-1234)
+    const urlParams = new URLSearchParams(window.location.search);
+    const refCode = urlParams.get('ref');
+    if (refCode) {
+      const badge = document.getElementById('ref-receipt-badge');
+      if (badge) badge.textContent = `Action Recorded: Ref #${refCode}`;
+    }
+  </script>
+</body>
+</html>
+

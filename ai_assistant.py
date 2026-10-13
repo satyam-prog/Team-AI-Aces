@@ -137,9 +137,29 @@ def generate_ai_response(user_message: str, auth_user: dict, history: Optional[L
         }
 
     # =========================================================================
+    # 1b. CONFIDENTIAL STUDENT WELL-BEING & MENTAL HEALTH SUPPORT
+    # =========================================================================
+    wellbeing_keywords = ["stress", "anxiety", "anxious", "depress", "overwhelm", "burnout", "mental health", "tired", "sleep", "sad", "hopeless", "counsel", "wellness", "panic", "exhaust"]
+    if any(k in msg for k in wellbeing_keywords):
+        reply = "### 🌿 Confidential Well-Being & Support Guidance\n\n"
+        reply += "I hear you, and it is completely normal to feel stretched during demanding academic semesters. Your health, peace of mind, and well-being are always more important than any single exam, test, or grade.\n\n"
+        reply += "#### Supportive Suggestions for Today:\n"
+        reply += "* **Take an intentional 15-minute breather:** Step away from all screens, take a short walk, and hydrate.\n"
+        reply += "* **4-7-8 Centering Breath:** Inhale quietly for 4 seconds, hold gently for 7 seconds, exhale completely for 8 seconds.\n"
+        reply += "* **Micro-chunking:** If coursework feels daunting, focus only on the next 20 minutes and set the rest aside.\n"
+        reply += "* **Confidential Check-in:** Log your feelings in the **Well-Being Hub** tab. All check-in records are strictly private to you and never shared with faculty or used in grading.\n\n"
+        reply += "#### 24x7 Immediate Campus & National Helplines:\n"
+        reply += "* **National Tele-MANAS:** **14416** or **1800-891-4416** (24x7 Free Govt. of India Tele-Mental Health Helpline)\n"
+        reply += "* **Campus Student Wellness Center:** Room 104, Student Services Block (Walk-in hours: 09:00 AM - 05:00 PM)\n"
+        reply += "* **National Emergency Support:** **112**\n\n"
+        reply += "**Important Disclaimer:** This assistant provides empathetic academic support and resources. It is not a licensed doctor, therapist, or medical diagnostic tool. If you are experiencing persistent distress, please reach out to qualified professionals or trusted family members."
+        suggestions = ["Open Well-Being Check-in", "Upcoming Deadlines", "View Notes Summary", "My Attendance Status"]
+        return {"success": True, "reply": reply, "suggestions": suggestions, "timestamp": datetime.now().strftime("%I:%M %p")}
+
+    # =========================================================================
     # 2. ATTENDANCE INQUIRIES
     # =========================================================================
-    if "attendance" in msg or "absent" in msg or "bunk" in msg or "risk" in msg and "band" in msg:
+    if "attendance" in msg or "absent" in msg or "bunk" in msg or ("risk" in msg and "band" in msg):
         if role == "Student":
             st = ctx.get("student") or {}
             att = float(st.get("attendance_overall", 63.5))
@@ -177,7 +197,7 @@ def generate_ai_response(user_message: str, auth_user: dict, history: Optional[L
     # =========================================================================
     # 3. FEE, DUES & FINANCIAL LEDGER
     # =========================================================================
-    if "fee" in msg or "dues" in msg or "payment" in msg or "balance" in msg or "receipt" in msg or "scholarship" in msg:
+    if bool(re.search(r"\bfees?\b|\bdues?\b|\bpayments?\b|\bbalance\b|\breceipts?\b", msg)) and "reward" not in msg and "prize" not in msg:
         if role == "Student":
             fee = ctx.get("fee") or {}
             total = fee.get("total_annual_fee", 185000.0)
@@ -213,12 +233,12 @@ def generate_ai_response(user_message: str, auth_user: dict, history: Optional[L
     # =========================================================================
     # 4. MARKS, GRADES, CGPA & EXCELLENCE PODIUM
     # =========================================================================
-    if "mark" in msg or "cgpa" in msg or "grade" in msg or "podium" in msg or "rank" in msg or "score" in msg:
+    if "mark" in msg or "cgpa" in msg or "grade" in msg or "podium" in msg or "rank" in msg or "score" in msg or "reward" in msg or "prize" in msg or "scholarship" in msg:
         podium = ctx.get("podium") or []
         if role == "Student":
             st = ctx.get("student") or {}
             cgpa = st.get("cgpa", 6.42)
-            reply = f"### 🏆 Academic Performance & Marks Breakdown\n\n"
+            reply = f"### 🏆 Academic Performance & Excellence Podium\n\n"
             reply += f"* **Current Cumulative CGPA:** **{cgpa}** / 10.0\n"
             reply += f"* **Previous Term CGPA:** {st.get('past_cgpa', 7.85)}\n\n"
             reply += "**Current Continuous Evaluation Ledger (Out of 100):**\n"
@@ -227,20 +247,28 @@ def generate_ai_response(user_message: str, auth_user: dict, history: Optional[L
                 c_name = c.get("course_name") or c.get("name") or c.get("course_code") or "Subject"
                 c_score = c.get("midterm_score") if c.get("midterm_score") is not None else c.get("score", 75)
                 reply += f"* **{c_name}**: **{c_score} / 100**\n"
-            reply += f"\n**Institutional Excellence Podium:**\n"
+            reply += f"\n**Institutional Excellence Podium & Academic Merit Rewards:**\n"
             for idx, p in enumerate(podium):
-                tier = ["Gold 🥇 (Scholarship)", "Silver 🥈 (Corporate Referral)", "Bronze 🥉 (Book Grant)"][idx]
+                tier = [
+                    "Gold 🥇 (100% Tuition Fee Off Merit Scholarship + INR 50,000 Cash Prize)",
+                    "Silver 🥈 (50% Tuition Fee Off Merit Scholarship + INR 25,000 Cash Prize)",
+                    "Bronze 🥉 (25% Tuition Fee Off Merit Scholarship + INR 10,000 Cash Prize)"
+                ][idx] if idx < 3 else f"Rank {idx+1}"
                 reply += f"{idx+1}. **{p.get('name')}** ({p.get('roll_no')}) - {p.get('avg_score')}% [{tier}]\n"
-            reply += f"\n💡 *Tip:* You can raise your average by scoring well on the upcoming **B-Tree Database Project** and **Dijkstra Algorithm Assignment**."
-            suggestions = ["Upcoming Deadlines", "Dijkstra Proof Derivation", "Check Attendance"]
+            reply += f"\n💡 *Merit Tip:* Top academic performers receive statutory tuition fee waiver certificates and Direct Benefit Transfer (DBT) cash prize disbursements directly into their verified bank accounts."
+            suggestions = ["Download Award Certificate", "Upcoming Deadlines", "Check Attendance"]
         else:
-            reply = f"### 🏅 Department Excellence Podium & Marks Ledger\n\n"
-            reply += f"Students currently ranked at the top of the Continuous Evaluation Marks Ledger:\n\n"
+            reply = f"### 🏅 Department Excellence Podium & Academic Merit Rewards Ledger\n\n"
+            reply += f"Students currently ranked at the top of the Continuous Evaluation Marks Ledger and their merit grant status:\n\n"
             for idx, p in enumerate(podium):
-                tier = ["Gold (1st)", "Silver (2nd)", "Bronze (3rd)"][idx]
-                reward = ["Merit Scholarship Badge ($2,000)", "Priority Corporate Internship Referral", "Dean's Academic Book Grant"][idx]
-                reply += f"* **Rank {idx+1} [{tier}]:** **{p.get('name')}** ({p.get('roll_no')}) - Average: **{p.get('avg_score')}%** | Unlocked: *{reward}*\n"
-            reply += f"\n👉 *Faculty Capability:* You have full inline editing permissions in the **Continuous Marks** tab to adjust internal, assignment, and attendance scores with instant recalculation of podium ranks."
+                tier = ["Gold (1st)", "Silver (2nd)", "Bronze (3rd)"][idx] if idx < 3 else f"Rank {idx+1}"
+                reward = [
+                    "100% Tuition Fee Off Merit Scholarship + INR 50,000 Cash Prize",
+                    "50% Tuition Fee Off Merit Scholarship + INR 25,000 Cash Prize + Priority Internship",
+                    "25% Tuition Fee Off Merit Scholarship + INR 10,000 Cash Prize + Dean's Book Grant"
+                ][idx] if idx < 3 else "Commendation Certificate"
+                reply += f"* **Rank {idx+1} [{tier}]:** **{p.get('name')}** ({p.get('roll_no')}) - Average: **{p.get('avg_score')}%** | Grant: *{reward}*\n"
+            reply += f"\n👉 *Faculty Capability:* You have full inline editing permissions in the **Continuous Marks** tab to adjust internal, assignment, and attendance scores with instant recalculation of podium ranks and bursary vouchers."
             suggestions = ["Show students below 75% attendance", "Active Tasks", "Cohort fee summary"]
         return {"success": True, "reply": reply, "suggestions": suggestions, "timestamp": datetime.now().strftime("%I:%M %p")}
 
@@ -396,24 +424,84 @@ $$\text{Else (E)} \implies \text{Tradeoff between Latency (L) and Consistency (C
         return {"success": True, "reply": reply, "suggestions": suggestions, "timestamp": datetime.now().strftime("%I:%M %p")}
 
     # =========================================================================
-    # 8. GENERAL / FALLBACK ACADEMIC GUIDANCE
+    # 7b. CONFIDENTIAL STUDENT WELL-BEING & MENTAL HEALTH SUPPORT
     # =========================================================================
+    wellbeing_keywords = ["stress", "anxiety", "anxious", "depress", "overwhelm", "burnout", "mental health", "tired", "sleep", "sad", "hopeless", "counsel", "wellness", "panic", "exhaust"]
+    if any(k in msg for k in wellbeing_keywords):
+        reply = "### 🌿 Confidential Well-Being & Support Guidance\n\n"
+        reply += "I hear you, and it is completely normal to feel stretched during demanding academic semesters. Your health, peace of mind, and well-being are always more important than any single exam, test, or grade.\n\n"
+        reply += "#### Supportive Suggestions for Today:\n"
+        reply += "* **Take an intentional 15-minute breather:** Step away from all screens, take a short walk, and hydrate.\n"
+        reply += "* **4-7-8 Centering Breath:** Inhale quietly for 4 seconds, hold gently for 7 seconds, exhale completely for 8 seconds.\n"
+        reply += "* **Micro-chunking:** If coursework feels daunting, focus only on the next 20 minutes and set the rest aside.\n"
+        reply += "* **Confidential Check-in:** Log your feelings in the **Well-Being Hub** tab. All check-in records are strictly private to you and never shared with faculty or used in grading.\n\n"
+        reply += "#### 24x7 Immediate Campus & National Helplines:\n"
+        reply += "* **National Tele-MANAS:** **14416** or **1800-891-4416** (24x7 Free Govt. of India Tele-Mental Health Helpline)\n"
+        reply += "* **Campus Student Wellness Center:** Room 104, Student Services Block (Walk-in hours: 09:00 AM - 05:00 PM)\n"
+        reply += "* **National Emergency Support:** **112**\n\n"
+        reply += "**Important Disclaimer:** This assistant provides empathetic academic support and resources. It is not a licensed doctor, therapist, or medical diagnostic tool. If you are experiencing persistent distress, please reach out to qualified professionals or trusted family members."
+        suggestions = ["Open Well-Being Check-in", "Upcoming Deadlines", "View Notes Summary", "My Attendance Status"]
+        return {"success": True, "reply": reply, "suggestions": suggestions, "timestamp": datetime.now().strftime("%I:%M %p")}
+
+    # =========================================================================
+    # 7c. DYNAMIC CURRICULUM NOTES RETRIEVAL & SOURCE CITATIONS
+    # =========================================================================
+    try:
+        conn = database.get_db()
+        cursor = conn.cursor()
+        cursor.execute("SELECT id, title, subject, category, semester, content_text FROM academic_notes")
+        notes = [dict(r) for r in cursor.fetchall()]
+        conn.close()
+
+        matched_note = None
+        words = [w for w in re.findall(r"\b[a-zA-Z]{4,}\b", msg) if w not in ("what", "when", "where", "which", "explain", "describe", "about", "notes", "help", "please", "tell", "give", "show")]
+        for n in notes:
+            n_title = n["title"].lower()
+            n_subj = n["subject"].lower()
+            n_text = n["content_text"].lower()
+            if any(w in n_title or w in n_subj or w in n_text for w in words):
+                matched_note = n
+                break
+
+        if matched_note:
+            reply = f"### 📚 Grounded Curriculum Resource: {matched_note['title']}\n\n"
+            reply += f"**Subject:** {matched_note['subject']} ({matched_note['semester']}) | **Category:** {matched_note['category']}\n\n"
+            content_snippet = matched_note['content_text'][:650].strip()
+            reply += f"{content_snippet}...\n\n"
+            reply += f"👉 **Approved Source:** `[Approved Resource: {matched_note['title']} - Subject: {matched_note['subject']}]`\n\n"
+            reply += "*(Extracted strictly from your institution's verified academic repository. Zero artificial fabrications or unverified policy guidance.)*"
+            suggestions = ["View Full Note in Academic Hub", "Dijkstra Algorithm Derivation", "Banker's Algorithm", "My Attendance Status"]
+            return {"success": True, "reply": reply, "suggestions": suggestions, "timestamp": datetime.now().strftime("%I:%M %p")}
+    except Exception:
+        pass
+
+    # =========================================================================
+    # 8. GENERAL / FALLBACK ACADEMIC GUIDANCE & ZERO HALLUCINATION POLICY
+    # =========================================================================
+    is_question = "?" in user_message or any(msg.startswith(q) for q in ["what", "how", "can i", "is there", "does", "will", "why", "where", "when"])
     if role == "Student":
-        reply = f"I am reviewing your academic workspace regarding: *\"{user_message}\"*.\n\n"
-        reply += f"Here are the primary academic resources and records active for your profile:\n"
-        reply += f"1. **Attendance Engine:** Real-time tracking across 4 core subjects with automated 75% threshold monitoring.\n"
-        reply += f"2. **Continuous Marks & Podium:** Internal scores, midterms, and institutional rewards (Rank 1 Merit Scholarship).\n"
-        reply += f"3. **Academic Hub:** Full lecture derivations, previous year question papers (PYQs 2023-2025), and model solutions.\n"
-        reply += f"4. **Task Studio:** 80 MB document & photo submissions with strict format verification.\n\n"
-        reply += f"Would you like me to pull up specific details on your **attendance**, **pending fees**, or **exam derivations**?"
-        suggestions = ["What is my attendance status?", "Do I have any pending fee dues?", "Upcoming Deadlines", "Dijkstra Algorithm Derivation"]
+        if is_question and len(msg) > 15:
+            reply = f"I evaluated institutional repository records for: *\"{user_message}\"*.\n\n"
+            reply += "⚠️ **Notice on Academic Rigor:** I do not have an approved institutional curriculum document or verified policy regarding this specific query in the current campus database. To ensure complete accuracy and prevent misleading guidance, please verify with your course instructor, department mentor, or refer to the official university syllabus."
+            suggestions = ["What is my attendance status?", "Do I have any pending fee dues?", "Upcoming Deadlines", "Dijkstra Algorithm Derivation"]
+        else:
+            reply = f"I am reviewing your academic workspace regarding: *\"{user_message}\"*.\n\n"
+            reply += f"Here are the primary academic resources and records active for your profile:\n"
+            reply += f"1. **Attendance Engine:** Real-time tracking across 4 core subjects with automated 75% threshold monitoring.\n"
+            reply += f"2. **Continuous Marks & Podium:** Internal scores, midterms, and institutional rewards (Rank 1 Merit Scholarship).\n"
+            reply += f"3. **Academic Hub:** Full lecture derivations, previous year question papers (PYQs 2023-2025), and model solutions.\n"
+            reply += f"4. **Task Studio:** 80 MB document & photo submissions with strict format verification.\n"
+            reply += f"5. **Timed Mock Assessments & Well-Being:** Practice assessments with countdown timers and confidential self-checkins.\n\n"
+            reply += f"Would you like me to pull up specific details on your **attendance**, **pending fees**, or **exam derivations**?"
+            suggestions = ["What is my attendance status?", "Do I have any pending fee dues?", "Upcoming Deadlines", "Dijkstra Algorithm Derivation"]
     else:
         reply = f"Understood, {user_name}. Analyzing institutional faculty tools for: *\"{user_message}\"*.\n\n"
         reply += f"As Faculty / Mentor, your administrative desk provides:\n"
         reply += f"1. **Cohort Attendance Control:** Review attendance risk bands and dispatch statutory notifications.\n"
         reply += f"2. **Marks & Podium Ledger:** Inline score editing with instant recalculation of top 3 ranks.\n"
         reply += f"3. **Task & AI Verification Studio:** Publish project/assignment guidelines and execute teacher-only originality scans.\n"
-        reply += f"4. **Academic Resource Publisher:** Upload syllabus guides and model solutions to the Academic Hub.\n\n"
+        reply += f"4. **Academic Resource Publisher:** Upload syllabus guides and model solutions to the Academic Hub.\n"
+        reply += f"5. **Timed Assessments & Appeals:** Create timed mock tests and adjudicate student assignment appeals.\n\n"
         reply += f"What specific administrative area would you like to review?"
         suggestions = ["Show students below 75% attendance", "Submissions needing AI verification", "Cohort fee summary", "Mentor Pulse Schedule"]
 

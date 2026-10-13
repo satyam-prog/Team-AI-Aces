@@ -1,0 +1,2501 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EduEagle | Institutional Student Success &amp; Early Warning System</title>
+  <meta name="description" id="page-meta-description" content="Academic workspace and mentorship platform under NEP 2020 and DPDP Act 2023, providing smart attendance tracking, task management with manual AI integrity verification, and parent digests.">
+  <link rel="canonical" href="https://edueagle.edu/">
+
+  <!-- Favicon Set -->
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="theme-color" content="#0F5338">
+
+  <!-- Open Graph Meta Tags -->
+  <meta property="og:title" content="EduEagle | Institutional Student Success &amp; Early Warning System">
+  <meta property="og:description" content="Academic workspace and mentorship platform under NEP 2020 and DPDP Act 2023, providing smart attendance tracking, task management with manual AI integrity verification, and parent digests.">
+  <meta property="og:image" content="https://edueagle.edu/images/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:type" content="image/png">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://edueagle.edu/">
+
+  <!-- Twitter Card Meta Tags -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="EduEagle | Institutional Student Success &amp; Early Warning System">
+  <meta name="twitter:description" content="Academic workspace and mentorship platform under NEP 2020 and DPDP Act 2023, providing smart attendance tracking, task management with manual AI integrity verification, and parent digests.">
+  <meta name="twitter:image" content="https://edueagle.edu/images/og-image.png">
+
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <div id="global-loader"></div>
+
+  <!-- ======================================================= -->
+  <!-- INSTITUTIONAL AUTHENTICATION & LOGIN GATEWAY            -->
+  <!-- ======================================================= -->
+  <div id="login-screen" class="login-screen-wrapper">
+    <div class="login-card-container">
+      <!-- Left Institutional Overview Side -->
+      <div class="login-brand-side">
+        <div>
+          <div class="brand-badge-large">
+            <div class="brand-squircle-logo">
+              <div class="brand-squircle-inner">
+                <svg width="24" height="24" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                  <circle cx="24" cy="22" r="14" fill="#F59E0B" fill-opacity="0.25"/>
+                  <path d="M24 6V10M12 11L15 14M36 11L33 14" stroke="#D97706" stroke-width="2" stroke-linecap="round"/>
+                  <path d="M12 36C16 34 21 34 24 37C27 34 32 34 36 36V28C32 26 27 26 24 29C21 26 16 26 12 28V36Z" fill="#FEF3C7" stroke="#D97706" stroke-width="1.8" stroke-linejoin="round"/>
+                  <path d="M24 29V37" stroke="#D97706" stroke-width="1.8" stroke-linecap="round"/>
+                  <path d="M24 13L28 19L38 18L30 24L33 32L24 26L15 32L18 24L10 18L20 19L24 13Z" fill="#0F5338" stroke="#0F5338" stroke-width="1.5" stroke-linejoin="round"/>
+                </svg>
+              </div>
+            </div>
+            <div>
+              <div class="brand-hero-title">EduEagle</div>
+              <div class="brand-hero-sub">Academic Workspace &amp; Mentorship Companion</div>
+            </div>
+          </div>
+
+          <p style="font-size: 0.86rem; color: var(--text-muted); line-height: 1.55; margin-bottom: 16px;">
+            Human-centered academic growth, attendance tracking, and faculty mentorship platform engineered under the Indian University NEP 2020 framework and DPDP Act 2023 compliance.
+          </p>
+
+          <!-- Primary Call To Action (Above the Fold) -->
+          <div class="hero-cta-banner" style="display: flex; gap: 10px; margin-bottom: 22px; flex-wrap: wrap;">
+            <button class="btn btn-primary" onclick="focusSignInForm()" style="padding: 10px 18px; font-weight: 700; font-size: 0.86rem;">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
+              <span>Access Institutional Portal</span>
+            </button>
+            <button class="btn btn-secondary" onclick="quickLoginAs('Faculty')" style="padding: 10px 16px; font-weight: 600; font-size: 0.86rem;">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+              <span>Launch Live Advisory Console</span>
+            </button>
+            <button class="btn btn-secondary" onclick="activateStudentGatewayMode()" style="padding: 10px 16px; font-weight: 600; font-size: 0.86rem; background: var(--bg-card); border: 1px solid var(--border-color); color: var(--text-main); display: inline-flex; align-items: center; gap: 6px;">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+              <span>Access Student Portal</span>
+            </button>
+          </div>
+
+          <div class="hero-feature-list">
+            <div class="hero-feature-item">
+              <div class="hero-feat-icon">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.45 1-1 1H7v4h10v-4h-2c-.55 0-1-.45-1-1v-2.34c3-.9 5-3.66 5-6.66V4H6v4c0 3 2 5.76 5 6.66z"/></svg>
+              </div>
+              <div>
+                <div class="hero-feat-title">Top 3 Academic Excellence Podium</div>
+                <div class="hero-feat-desc">Celebrates high achievement with Gold, Silver, and Bronze honors, Merit Scholarships, and real-time marks ledger re-ranking.</div>
+              </div>
+            </div>
+
+            <div class="hero-feature-item">
+              <div class="hero-feat-icon">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><path d="m9 16 2 2 4-4"/></svg>
+              </div>
+              <div>
+                <div class="hero-feat-title">3-Tier Smart Attendance Tracker</div>
+                <div class="hero-feat-desc">Color-coded risk tiers with automated mentor notification when attendance drops below the statutory 75% threshold.</div>
+              </div>
+            </div>
+
+            <div class="hero-feature-item">
+              <div class="hero-feat-icon">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><path d="M9 15h6"/><path d="M9 11h6"/></svg>
+              </div>
+              <div>
+                <div class="hero-feat-title">Task Studio &amp; Manual AI Verification</div>
+                <div class="hero-feat-desc">80 MB upload dropzone for Projects &amp; Assignments with on-demand, teacher-triggered AI integrity verification.</div>
+              </div>
+            </div>
+
+            <div class="hero-feature-item">
+              <div class="hero-feat-icon">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+              </div>
+              <div>
+                <div class="hero-feat-title">Bi-Weekly Parent Portal (14-Day Digest)</div>
+                <div class="hero-feat-desc">Holistic transparency combining academic velocity, attendance health, and verified extracurricular participation.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-footer-trust">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+          <span>DPDP Act 2023 Compliance &amp; NEP 2020 Academic Framework Applied</span>
+        </div>
+      </div>
+
+      <!-- Right Form Side -->
+      <div class="login-form-side">
+        <!-- Gateway Mode Selector -->
+        <div class="gateway-mode-tabs" style="display: flex; gap: 8px; margin-bottom: 14px; padding: 4px; background: var(--bg-sand); border-radius: var(--radius-sm); border: 1px solid var(--border-color);">
+          <button class="gateway-mode-btn" id="mode-btn-student" onclick="switchGatewayMode('student')" style="flex: 1; padding: 8px 12px; font-size: 0.82rem; font-weight: 700; border-radius: 6px; border: none; background: transparent; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px; color: var(--text-muted); transition: all 0.2s ease;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+            <span>Student Portal</span>
+          </button>
+          <button class="gateway-mode-btn active" id="mode-btn-institutional" onclick="switchGatewayMode('institutional')" style="flex: 1; padding: 8px 12px; font-size: 0.82rem; font-weight: 700; border-radius: 6px; border: none; background: #FFFFFF; box-shadow: var(--shadow-sm); cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px; color: var(--primary); transition: all 0.2s ease;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21h18"/><path d="M5 21V7l7-4 7 4v14"/><path d="M9 10h1"/><path d="M9 14h1"/><path d="M9 18h1"/><path d="M14 10h1"/><path d="M14 14h1"/><path d="M14 18h1"/></svg>
+            <span>Institutional Gateway</span>
+          </button>
+        </div>
+
+        <div class="login-form-header">
+          <div class="login-form-title" id="gateway-login-title">Student Portal Sign In</div>
+          <div class="login-form-sub" id="gateway-login-sub">Enter your University Roll Number / Student ID and password to access your academic workspace:</div>
+        </div>
+
+        <!-- 1. Dedicated Student Portal Login Form (Clean, Authentic, Zero Presets) -->
+        <div id="student-login-form-container">
+          <form onsubmit="event.preventDefault(); submitStudentLogin();" novalidate>
+            <div class="form-group" style="margin-bottom: 12px;">
+              <label class="form-label" for="student-login-id" style="font-weight: 600;">University Roll Number / Student ID</label>
+              <div style="position: relative;">
+                <input type="text" id="student-login-id" class="form-control" placeholder="e.g. 21CS042, STU-101, or name@edueagle.edu" autocomplete="username" style="padding-left: 36px;">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="position: absolute; left: 11px; top: 50%; transform: translateY(-50%); color: var(--text-muted);"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+              </div>
+            </div>
+
+            <div class="form-group" style="margin-bottom: 12px;">
+              <label class="form-label" for="student-login-pwd" style="font-weight: 600; margin-bottom: 4px;">Student Portal Password / Security PIN</label>
+              <div style="position: relative;">
+                <input type="password" id="student-login-pwd" class="form-control" placeholder="Enter student portal password or security PIN" autocomplete="current-password" style="padding-left: 36px; padding-right: 36px;">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="position: absolute; left: 11px; top: 50%; transform: translateY(-50%); color: var(--text-muted);"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                <button type="button" onclick="togglePasswordVisibility('student-login-pwd', this)" aria-label="Toggle password visibility" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); background: none; border: none; cursor: pointer; color: var(--text-muted); padding: 2px;">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                </button>
+              </div>
+            </div>
+
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; font-size: 0.76rem; color: var(--text-muted);">
+              <label style="display: flex; align-items: center; gap: 6px; cursor: pointer; user-select: none;">
+                <input type="checkbox" id="student-remember-check" checked style="accent-color: var(--primary);">
+                <span>Remember on this browser</span>
+              </label>
+              <span style="font-size: 0.72rem; color: var(--text-muted);">Encrypted Session</span>
+            </div>
+
+            <button type="submit" class="btn btn-primary" id="btn-student-login" style="width: 100%; justify-content: center; padding: 10px; font-weight: 700; font-size: 0.88rem;">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
+              <span>Sign In to Student Portal</span>
+            </button>
+          </form>
+
+          <div style="margin-top: 12px; text-align: center; font-size: 0.76rem; color: var(--text-muted);">
+            <span>New Student? </span>
+            <a href="javascript:void(0)" onclick="toggleStudentAuthView('register')" style="color: var(--primary); font-weight: 700; text-decoration: underline;">Create New Student Account</a>
+          </div>
+
+          <div style="margin-top: 10px; text-align: center; font-size: 0.76rem; color: var(--text-muted); padding-top: 10px; border-top: 1px dashed var(--border-color);">
+            <span>Prefer mobile verification? </span>
+            <a href="javascript:void(0)" onclick="switchGatewayMode('institutional'); switchLoginTab('phone');" style="color: var(--primary); font-weight: 600; text-decoration: underline;">Sign In with Phone OTP</a>
+          </div>
+        </div>
+
+        <!-- Dedicated Student Registration Form Container -->
+        <div id="student-register-form-container" style="display: none;">
+          <form onsubmit="event.preventDefault(); submitStudentRegister();" novalidate>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+              <div class="form-group" style="margin-bottom: 8px;">
+                <label class="form-label" for="reg-name" style="font-weight: 600; font-size: 0.76rem;">Full Name</label>
+                <input type="text" id="reg-name" class="form-control" placeholder="e.g. Aarav Sharma" required>
+              </div>
+              <div class="form-group" style="margin-bottom: 8px;">
+                <label class="form-label" for="reg-roll" style="font-weight: 600; font-size: 0.76rem;">University Roll No</label>
+                <input type="text" id="reg-roll" class="form-control" placeholder="e.g. 21CS099" required>
+              </div>
+            </div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+              <div class="form-group" style="margin-bottom: 8px;">
+                <label class="form-label" for="reg-email" style="font-weight: 600; font-size: 0.76rem;">Official Email</label>
+                <input type="email" id="reg-email" class="form-control" placeholder="student@edueagle.edu" required>
+              </div>
+              <div class="form-group" style="margin-bottom: 8px;">
+                <label class="form-label" for="reg-phone" style="font-weight: 600; font-size: 0.76rem;">Phone (10-Digit)</label>
+                <input type="tel" id="reg-phone" class="form-control" placeholder="9876543210">
+              </div>
+            </div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+              <div class="form-group" style="margin-bottom: 8px;">
+                <label class="form-label" for="reg-dept" style="font-weight: 600; font-size: 0.76rem;">Department</label>
+                <select id="reg-dept" class="form-control" style="font-size: 0.78rem;">
+                  <option value="Computer Science & Engineering">Computer Science &amp; Engg</option>
+                  <option value="Electronics & Communication">Electronics &amp; Comm</option>
+                  <option value="Mechanical Engineering">Mechanical Engg</option>
+                  <option value="Civil Engineering">Civil Engg</option>
+                  <option value="Information Technology">Information Technology</option>
+                </select>
+              </div>
+              <div class="form-group" style="margin-bottom: 8px;">
+                <label class="form-label" for="reg-year" style="font-weight: 600; font-size: 0.76rem;">Academic Year</label>
+                <select id="reg-year" class="form-control" style="font-size: 0.78rem;">
+                  <option value="1">Year 1</option>
+                  <option value="2">Year 2</option>
+                  <option value="3" selected>Year 3</option>
+                  <option value="4">Year 4</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group" style="margin-bottom: 8px;">
+              <label class="form-label" style="font-weight: 600; font-size: 0.76rem;">Gender</label>
+              <div style="display: flex; gap: 10px; font-size: 0.76rem;">
+                <label><input type="radio" name="reg-gender" value="Female" style="accent-color: var(--primary);"> Female</label>
+                <label><input type="radio" name="reg-gender" value="Male" checked style="accent-color: var(--primary);"> Male</label>
+                <label><input type="radio" name="reg-gender" value="Non-Binary" style="accent-color: var(--primary);"> Non-Binary</label>
+                <label><input type="radio" name="reg-gender" value="Other" style="accent-color: var(--primary);"> Other</label>
+              </div>
+            </div>
+            <div class="form-group" style="margin-bottom: 8px;">
+              <label class="form-label" style="font-weight: 600; font-size: 0.76rem;">Choose Profile Avatar</label>
+              <div class="avatar-picker-grid" id="reg-avatar-picker">
+                <button type="button" class="avatar-choice-chip selected" onclick="selectRegAvatar(this, 'AS')">AS</button>
+                <button type="button" class="avatar-choice-chip" onclick="selectRegAvatar(this, 'RS')">RS</button>
+                <button type="button" class="avatar-choice-chip" onclick="selectRegAvatar(this, 'DP')">DP</button>
+                <button type="button" class="avatar-choice-chip" onclick="selectRegAvatar(this, 'VK')">VK</button>
+                <button type="button" class="avatar-choice-chip" onclick="selectRegAvatar(this, 'AK')">AK</button>
+                <button type="button" class="avatar-choice-chip" onclick="selectRegAvatar(this, 'SR')">SR</button>
+              </div>
+              <input type="hidden" id="reg-avatar-val" value="AS">
+            </div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+              <div class="form-group" style="margin-bottom: 10px;">
+                <label class="form-label" for="reg-pwd" style="font-weight: 600; font-size: 0.76rem;">Create Password</label>
+                <input type="password" id="reg-pwd" class="form-control" placeholder="Min 6 chars" required>
+              </div>
+              <div class="form-group" style="margin-bottom: 10px;">
+                <label class="form-label" for="reg-pwd-confirm" style="font-weight: 600; font-size: 0.76rem;">Confirm Password</label>
+                <input type="password" id="reg-pwd-confirm" class="form-control" placeholder="Re-enter password" required>
+              </div>
+            </div>
+            <button type="submit" class="btn btn-primary" id="btn-student-register" style="width: 100%; justify-content: center; padding: 10px; font-weight: 700; font-size: 0.86rem;">
+              <span>Register &amp; Access Student Portal</span>
+            </button>
+            <div style="margin-top: 10px; text-align: center; font-size: 0.76rem; color: var(--text-muted);">
+              <span>Already registered? </span>
+              <a href="javascript:void(0)" onclick="toggleStudentAuthView('login')" style="color: var(--primary); font-weight: 700; text-decoration: underline;">Sign In to Existing Account</a>
+            </div>
+          </form>
+        </div>
+
+        <!-- 2. Institutional Gateway Container -->
+        <div id="institutional-login-form-container" style="display: none;">
+          <!-- Auth Tabs -->
+          <div class="auth-tabs-row">
+            <button class="auth-tab-pill active" id="pill-staff-cred" onclick="switchLoginTab('staff_cred')">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
+              <span>Staff Login</span>
+            </button>
+            <button class="auth-tab-pill" id="pill-phone" onclick="switchLoginTab('phone')">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
+              <span>Phone OTP</span>
+            </button>
+            <button class="auth-tab-pill" id="pill-gmail" onclick="switchLoginTab('gmail')">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12.48 10.92v3.28h7.84c-.24 1.84-.853 3.187-1.787 4.133-1.147 1.147-2.933 2.4-6.053 2.4-4.827 0-8.6-3.893-8.6-8.72s3.773-8.72 8.6-8.72c2.6 0 4.507 1.027 5.907 2.347l2.307-2.307C18.747 1.44 16.133 0 12.48 0 5.867 0 .307 5.387.307 12s5.56 12 12.173 12c3.573 0 6.267-1.173 8.373-3.36 2.16-2.16 2.84-5.213 2.84-7.667 0-.76-.053-1.467-.173-2.053H12.48z"/></svg>
+              <span>Google SSO</span>
+            </button>
+          </div>
+
+          <!-- Tab 0: Staff Credentials (Email & Password) -->
+          <div id="landing-tab-staff-cred">
+            <form onsubmit="event.preventDefault(); submitStaffLogin();" novalidate>
+              <div class="form-group" style="margin-bottom: 12px;">
+                <label class="form-label" for="staff-login-id" style="font-weight: 600;">Official University Email / Staff ID</label>
+                <div style="position: relative;">
+                  <input type="text" id="staff-login-id" class="form-control" placeholder="e.g. priya.nair@edueagle.edu or USR-002" autocomplete="username" style="padding-left: 36px;">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="position: absolute; left: 11px; top: 50%; transform: translateY(-50%); color: var(--text-muted);"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                </div>
+              </div>
+
+              <div class="form-group" style="margin-bottom: 12px;">
+                <label class="form-label" for="staff-login-pwd" style="font-weight: 600;">Staff Master Password / Security PIN</label>
+                <div style="position: relative;">
+                  <input type="password" id="staff-login-pwd" class="form-control" placeholder="Enter official institutional password" autocomplete="current-password" style="padding-left: 36px; padding-right: 36px;">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="position: absolute; left: 11px; top: 50%; transform: translateY(-50%); color: var(--text-muted);"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                  <button type="button" onclick="togglePasswordVisibility('staff-login-pwd', this)" aria-label="Toggle password visibility" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); background: none; border: none; cursor: pointer; color: var(--text-muted); padding: 2px;">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                  </button>
+                </div>
+              </div>
+
+              <button type="submit" class="btn btn-primary" id="btn-staff-login" style="width: 100%; justify-content: center; padding: 10px; font-weight: 700; font-size: 0.88rem;">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
+                <span>Authenticate Institutional Desk</span>
+              </button>
+            </form>
+          </div>
+
+          <!-- Tab 1: Phone + OTP -->
+          <div id="landing-tab-phone" style="display: none;">
+            <div class="form-group" style="margin-bottom: 12px;">
+              <label class="form-label" for="landing-phone-input">Registered Mobile Number</label>
+              <div style="display: flex; gap: 8px;">
+                <select class="form-control" style="width: 95px; padding: 8px;" aria-label="Country Code">
+                  <option>+91 (IN)</option>
+                  <option>+1 (US)</option>
+                  <option>+44 (UK)</option>
+                </select>
+                <input type="tel" id="landing-phone-input" class="form-control" style="flex: 1;" placeholder="Enter 10-digit mobile">
+              </div>
+            </div>
+
+            <div id="landing-otp-group" class="form-group" style="margin-bottom: 14px; display: none;">
+              <div style="display: flex; justify-content: space-between; align-items: center;">
+                <label class="form-label" for="landing-otp-input">Verification Code (6-Digit)</label>
+                <span style="font-size: 0.74rem; color: var(--risk-safe); font-weight: 700;">Code Sent</span>
+              </div>
+              <input type="text" id="landing-otp-input" class="form-control" placeholder="123456" maxlength="6" style="letter-spacing: 4px; font-weight: 700; font-size: 1.05rem; text-align: center;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 5px;">
+                <span style="font-size: 0.72rem; color: var(--text-muted);">Verification code: <strong>123456</strong></span>
+                <button type="button" class="btn btn-secondary btn-sm" style="font-size: 0.7rem; padding: 2px 8px;" onclick="document.getElementById('landing-otp-input').value='123456'">Autofill Code</button>
+              </div>
+            </div>
+
+            <div style="display: flex; gap: 10px; margin-top: 6px;">
+              <button type="button" class="btn btn-primary" id="landing-btn-send-otp" style="flex: 1;" onclick="requestLandingPhoneOTP()">Request Verification Code</button>
+              <button type="button" class="btn btn-success" id="landing-btn-verify-otp" style="flex: 1; display: none;" onclick="verifyLandingPhoneLogin()">Verify and Sign In</button>
+            </div>
+          </div>
+
+          <!-- Tab 2: Google / Gmail -->
+          <div id="landing-tab-gmail" style="display: none;">
+            <div class="form-group" style="margin-bottom: 12px;">
+              <label class="form-label" for="landing-gmail-input">Institutional Email Account</label>
+              <input type="email" id="landing-gmail-input" class="form-control" placeholder="staff@edueagle.edu">
+            </div>
+            <button type="button" class="btn btn-primary" style="width: 100%;" onclick="loginWithLandingGmail()">
+              <span>Sign In with Institutional Google Account</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Role Quick-Access Selection with Uniform Heights & Avatar Initials (Institutional Evaluation Profiles Only) -->
+        <div id="institutional-quick-personas" style="display: none; margin-top: 18px; padding-top: 12px; border-top: 1px solid var(--border-color);">
+          <div style="font-size: 0.72rem; font-weight: 700; color: var(--primary); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 8px;">
+            Institutional Staff Profiles (Evaluation Testing):
+          </div>
+          <div class="persona-chip-grid">
+            <button class="persona-fast-chip" onclick="quickLoginAs('Faculty')">
+              <div style="display: flex; align-items: center; gap: 8px;">
+                <div class="user-avatar-small">PN</div>
+                <div>
+                  <strong>Dr. Priya Nair</strong>
+                  <span class="role-tag">Faculty (Marks Editor &amp; Tasks)</span>
+                </div>
+              </div>
+            </button>
+            <button class="persona-fast-chip" onclick="quickLoginAs('Mentor')">
+              <div style="display: flex; align-items: center; gap: 8px;">
+                <div class="user-avatar-small">RV</div>
+                <div>
+                  <strong>Prof. Rajesh Verma</strong>
+                  <span class="role-tag">Mentor (Pulse &amp; Digests)</span>
+                </div>
+              </div>
+            </button>
+            <button class="persona-fast-chip" onclick="quickLoginAs('HOD')">
+              <div style="display: flex; align-items: center; gap: 8px;">
+                <div class="user-avatar-small">SR</div>
+                <div>
+                  <strong>Dr. Sunita Rao</strong>
+                  <span class="role-tag">Head of Department (Overrides)</span>
+                </div>
+              </div>
+            </button>
+            <button class="persona-fast-chip" onclick="quickLoginAs('Finance Team')">
+              <div style="display: flex; align-items: center; gap: 8px;">
+                <div class="user-avatar-small">KJ</div>
+                <div>
+                  <strong>Ms. Kavita Jain</strong>
+                  <span class="role-tag">Finance / Bursar Desk</span>
+                </div>
+              </div>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Top Header Navigation -->
+  <header class="app-header glass-nav">
+    <div class="header-top">
+      <div class="brand" onclick="switchTab('podium')">
+        <div class="brand-squircle-logo">
+          <div class="brand-squircle-inner">
+            <img src="/favicon.svg" alt="EduEagle Institutional Eagle Logo" width="22" height="22" style="display: block;">
+          </div>
+        </div>
+        <div class="brand-text">
+          <h1>EduEagle</h1>
+          <p>Academic Workspace &amp; Mentorship Companion</p>
+        </div>
+      </div>
+
+      <div class="header-controls">
+        <!-- Ethical Safeguard Status -->
+        <div class="safeguard-badge" title="Algorithmic Safeguards: Non-punitive policy and non-diagnostic categorization active">
+          <div class="safeguard-dot"></div>
+          <span>Safeguards Active</span>
+        </div>
+
+        <!-- In-App Notification Center -->
+        <div class="notification-center-wrap" id="notif-center-wrapper">
+          <button class="btn btn-secondary btn-sm" id="btn-notifications-toggle" onclick="toggleNotificationDropdown()" title="View Notifications" aria-label="Notifications" style="position: relative; padding: 6px 10px;">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+            <span class="notification-badge" id="notif-badge-count" style="display: none;">0</span>
+          </button>
+          <div id="notification-dropdown" class="notification-dropdown-panel">
+            <div style="padding: 10px 14px; background: var(--bg-sand); border-bottom: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center;">
+              <span style="font-size: 0.82rem; font-weight: 700; color: var(--text-main);">Notifications &amp; Schedule</span>
+              <button class="btn btn-secondary btn-sm" onclick="clearAllNotifications()" style="font-size: 0.7rem; padding: 2px 6px;">Clear All</button>
+            </div>
+            <div id="notification-list-container" style="max-height: 340px; overflow-y: auto; padding: 6px;">
+              <div style="text-align: center; padding: 18px; color: var(--text-muted); font-size: 0.8rem;">No notifications right now</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Student Profile & Avatar Button (Active for Students) -->
+        <button class="btn btn-secondary btn-sm" id="btn-edit-student-profile" onclick="openStudentProfileModal()" title="Edit My Profile &amp; Avatar" style="display: none;">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          <span>My Profile</span>
+        </button>
+
+        <!-- Active User Profile Control -->
+        <button class="role-pill-btn" onclick="openLoginModal()" title="Switch stakeholder profile">
+          <div class="user-avatar-small" id="header-user-avatar">PN</div>
+          <div style="text-align: left;">
+            <div style="font-weight: 700; font-size: 0.82rem;" id="header-user-name">Dr. Priya Nair</div>
+            <div style="font-size: 0.72rem; color: var(--text-muted);" id="header-user-role">Faculty, CSE</div>
+          </div>
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+
+        <!-- Sign Out Button -->
+        <button class="btn btn-secondary btn-sm" onclick="logoutToLoginScreen()" title="Sign out to login gateway">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+          <span>Sign Out</span>
+        </button>
+
+        <!-- Scenario Simulator Controller -->
+        <div style="position: relative; display: inline-block;">
+          <button class="btn btn-secondary btn-sm" onclick="toggleSimMenu()" title="Simulate dynamic institutional events">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+            <span>Simulate Scenario</span>
+          </button>
+          <div id="sim-menu" style="display: none; position: absolute; right: 0; top: 100%; margin-top: 6px; background: #FFFFFF; border: 1px solid var(--border-color); border-radius: var(--radius-sm); box-shadow: var(--shadow-lg); z-index: 1000; min-width: 260px; padding: 6px;">
+            <div style="font-size: 0.72rem; color: var(--text-muted); padding: 6px 10px; font-weight: 700; text-transform: uppercase;">Simulated Event Triggers:</div>
+            <button class="btn btn-secondary btn-sm" style="width: 100%; text-align: left; justify-content: flex-start; margin-bottom: 4px;" onclick="runScenario('academic_dip')">Coursework Grade Dip (Simulated Student)</button>
+            <button class="btn btn-secondary btn-sm" style="width: 100%; text-align: left; justify-content: flex-start; margin-bottom: 4px;" onclick="runScenario('fee_overdue')">Term Fee Default Threshold (Simulated Student)</button>
+            <button class="btn btn-secondary btn-sm" style="width: 100%; text-align: left; justify-content: flex-start;" onclick="runScenario('remedial_recovery')">Remedial Retest Completion (Simulated Student)</button>
+          </div>
+        </div>
+
+        <!-- Reset Button -->
+        <button class="btn btn-secondary btn-sm" onclick="resetDemoData()" title="Reset data store to pristine state">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+          <span>Reset Demo</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Navigation Tabs -->
+    <nav class="nav-tabs-bar" id="app-nav-tabs">
+      <div class="nav-tab active" data-tab="podium" id="tab-podium">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.45 1-1 1H7v4h10v-4h-2c-.55 0-1-.45-1-1v-2.34c3-.9 5-3.66 5-6.66V4H6v4c0 3 2 5.76 5 6.66z"/></svg>
+        <span id="tab-label-podium">Podium &amp; Marks</span>
+      </div>
+      <div class="nav-tab" data-tab="attendance" id="tab-attendance">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><path d="m9 16 2 2 4-4"/></svg>
+        <span id="tab-label-attendance">Smart Attendance</span>
+      </div>
+      <div class="nav-tab" data-tab="tasks" id="tab-tasks">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+        <span id="tab-label-tasks">Tasks &amp; AI Integrity</span>
+      </div>
+      <div class="nav-tab" data-tab="mock_tests" id="tab-mock-tests">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        <span id="tab-label-mock-tests">Timed Assessments</span>
+      </div>
+      <div class="nav-tab" data-tab="academic_hub" id="tab-academic_hub">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/><path d="M6 6h10M6 10h10"/></svg>
+        <span>Academic Hub &amp; PYQs</span>
+      </div>
+      <div class="nav-tab" data-tab="wellbeing" id="tab-wellbeing">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+        <span>Well-Being Hub</span>
+      </div>
+      <!-- Student Fee Tab (Shown ONLY to Student) -->
+      <div class="nav-tab" data-tab="student_fees" id="tab-student-fees" style="display: none;">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/><line x1="6" y1="15" x2="10" y2="15"/></svg>
+        <span>My Fee &amp; Dues</span>
+      </div>
+      <!-- Institutional Fee Desk (Shown ONLY to Institutional Staff) -->
+      <div class="nav-tab" data-tab="institutional_fees" id="tab-institutional-fees">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/><circle cx="12" cy="15" r="2"/></svg>
+        <span>Institutional Fee Desk</span>
+      </div>
+      <!-- Student 360 & Complete Work Inspection (Institutional Staff Only) -->
+      <div class="nav-tab" data-tab="students" id="tab-students-portfolio">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        <span>Student 360 &amp; Work</span>
+      </div>
+      <div class="nav-tab" data-tab="mentor_pulse" id="tab-mentor-pulse">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+        <span>Mentor Pulse Feed</span>
+      </div>
+      <div class="nav-tab" data-tab="parent_portal" id="tab-parent-portal">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        <span id="tab-label-parent">Parent Digest (14d)</span>
+      </div>
+      <div class="nav-tab" data-tab="cohort" id="tab-cohort">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 20V10M12 20V4M6 20v-6"/></svg>
+        <span>Cohort Analytics</span>
+      </div>
+      <div class="nav-tab" data-tab="safeguards" id="tab-safeguards">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        <span>Governance &amp; Policy</span>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Main Content Views Container -->
+  <main class="app-main">
+
+    <!-- ================================================================= -->
+    <!-- MODULE F: TOP 3 ACADEMIC EXCELLENCE PODIUM & MARKS LEDGER         -->
+    <!-- ================================================================= -->
+    <section id="view-podium" class="tab-view active">
+      <div class="framework-banner">
+        <div class="framework-banner-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.45 1-1 1H7v4h10v-4h-2c-.55 0-1-.45-1-1v-2.34c3-.9 5-3.66 5-6.66V4H6v4c0 3 2 5.76 5 6.66z"/></svg>
+        </div>
+        <div>
+          <h4>NEP 2020 Continuous Evaluation Framework &amp; Academic Honors</h4>
+          <p>
+            Celebrating academic merit and holistic achievement. Ranks 1, 2, and 3 are dynamically awarded merit scholarships, priority industrial research internships, and institutional book grants. Faculty can update marks inline with live podium recalculation.
+          </p>
+        </div>
+      </div>
+
+      <!-- Top 3 Podium Container -->
+      <div class="podium-section">
+        <div class="podium-header">
+          <h3>Academic Excellence Podium</h3>
+          <p>Top scholars across B.Tech Computer Science &amp; Engineering cohort based on continuous assessment.</p>
+        </div>
+        <div class="podium-grid" id="podium-cards-container">
+          <!-- Rendered dynamically by JS -->
+        </div>
+      </div>
+
+      <!-- Upgraded Institutional Merit Rewards & Scholarship Grant Framework -->
+      <div class="card" style="margin-top: 20px; border: 1px solid var(--border-color); background: var(--bg-card);">
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 14px; flex-wrap: wrap; gap: 10px;">
+          <div>
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <span class="badge" style="background: var(--accent-gold-light); color: var(--accent-gold); font-weight: 700; border: 1px solid var(--accent-gold-border);">NEP 2020 INCENTIVE POLICY</span>
+              <span class="badge" style="background: var(--primary-light); color: var(--primary); font-weight: 700; border: 1px solid var(--primary-border);">AUTUMN 2026 DISBURSAL ACTIVE</span>
+            </div>
+            <h4 style="margin: 8px 0 4px 0; font-size: 1.05rem;">Upgraded Academic Excellence Reward &amp; Tuition Fee Waiver Framework</h4>
+            <p style="font-size: 0.82rem; color: var(--text-muted); margin: 0;">
+              High-achieving scholars in the Continuous Evaluation Marks Ledger automatically qualify for statutory tuition fee waiver scholarships and direct cash prizes disbursed directly into student accounts.
+            </p>
+          </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px;">
+          <!-- 1. Gold Reward -->
+          <div class="reward-tier-card" onclick="openTop3LaureateSubpage(1)" style="background: var(--bg-sand); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 14px; cursor: pointer; transition: transform 0.15s ease, box-shadow 0.15s ease;" title="Click to view Rank #1 Laureate Dossier &amp; Statutory Benefits">
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
+              <span class="podium-badge-pill badge-gold" style="font-size: 0.74rem;">1st Rank &bull; Gold Laureate</span>
+              <strong style="color: var(--accent-gold); font-size: 0.95rem;">INR 50,000 Cash</strong>
+            </div>
+            <div style="font-weight: 700; font-size: 0.88rem; color: var(--text-main); margin-bottom: 4px;">100% Full Tuition Fee Waiver</div>
+            <p style="font-size: 0.78rem; color: var(--text-muted); line-height: 1.4; margin-bottom: 10px;">
+              Complete zero-liability tuition scholarship for the upcoming academic cycle. Direct Benefit Transfer of INR 50,000 cash grant, plus the Dr. A.P.J. Abdul Kalam Presidential Gold Medal.
+            </p>
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-top: 10px; padding-top: 8px; border-top: 1px dashed var(--border-color); flex-wrap: wrap; gap: 6px;">
+              <div style="font-size: 0.72rem; color: var(--primary); font-weight: 600; display: flex; align-items: center; gap: 4px;">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                <span>Auto-Credited to Bursar Ledger</span>
+              </div>
+              <button class="btn btn-primary btn-sm" onclick="event.stopPropagation(); openTop3LaureateSubpage(1);" style="font-size: 0.72rem; padding: 4px 10px;">
+                <span>View Rank #1 Dossier &rarr;</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- 2. Silver Reward -->
+          <div class="reward-tier-card" onclick="openTop3LaureateSubpage(2)" style="background: var(--bg-sand); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 14px; cursor: pointer; transition: transform 0.15s ease, box-shadow 0.15s ease;" title="Click to view Rank #2 Laureate Dossier &amp; Statutory Benefits">
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
+              <span class="podium-badge-pill badge-silver" style="font-size: 0.74rem;">2nd Rank &bull; Silver Scholar</span>
+              <strong style="color: var(--text-main); font-size: 0.95rem;">INR 25,000 Cash</strong>
+            </div>
+            <div style="font-weight: 700; font-size: 0.88rem; color: var(--text-main); margin-bottom: 4px;">50% Tuition Fee Waiver</div>
+            <p style="font-size: 0.78rem; color: var(--text-muted); line-height: 1.4; margin-bottom: 10px;">
+              Half-semester tuition fee concession applied directly to the account. INR 25,000 cash fellowship award, priority placement interview access with Tier-1 corporate partners.
+            </p>
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-top: 10px; padding-top: 8px; border-top: 1px dashed var(--border-color); flex-wrap: wrap; gap: 6px;">
+              <div style="font-size: 0.72rem; color: var(--primary); font-weight: 600; display: flex; align-items: center; gap: 4px;">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                <span>Corporate Referral Track</span>
+              </div>
+              <button class="btn btn-secondary btn-sm" onclick="event.stopPropagation(); openTop3LaureateSubpage(2);" style="font-size: 0.72rem; padding: 4px 10px;">
+                <span>View Rank #2 Dossier &rarr;</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- 3. Bronze Reward -->
+          <div class="reward-tier-card" onclick="openTop3LaureateSubpage(3)" style="background: var(--bg-sand); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 14px; cursor: pointer; transition: transform 0.15s ease, box-shadow 0.15s ease;" title="Click to view Rank #3 Laureate Dossier &amp; Statutory Benefits">
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
+              <span class="podium-badge-pill badge-bronze" style="font-size: 0.74rem;">3rd Rank &bull; Bronze Distinction</span>
+              <strong style="color: var(--accent-terracotta); font-size: 0.95rem;">INR 10,000 Cash</strong>
+            </div>
+            <div style="font-weight: 700; font-size: 0.88rem; color: var(--text-main); margin-bottom: 4px;">25% Tuition Fee Waiver</div>
+            <p style="font-size: 0.78rem; color: var(--text-muted); line-height: 1.4; margin-bottom: 10px;">
+              Quarter-semester tuition fee concession. INR 10,000 direct academic stipend, complimentary access to IEEE/ACM digital publications and Dean's Academic Book Grant.
+            </p>
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-top: 10px; padding-top: 8px; border-top: 1px dashed var(--border-color); flex-wrap: wrap; gap: 6px;">
+              <div style="font-size: 0.72rem; color: var(--primary); font-weight: 600; display: flex; align-items: center; gap: 4px;">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                <span>Dean's Research Grant</span>
+              </div>
+              <button class="btn btn-secondary btn-sm" onclick="event.stopPropagation(); openTop3LaureateSubpage(3);" style="font-size: 0.72rem; padding: 4px 10px;">
+                <span>View Rank #3 Dossier &rarr;</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Merit Scholar Points Ledger & Reward Claims Desk -->
+      <div class="card" style="margin-top: 20px; border: 1px solid var(--border-color); background: var(--bg-card);">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; flex-wrap: wrap; gap: 10px;">
+          <div>
+            <h4 style="margin: 0; font-size: 1.05rem;">Merit Scholar Points Ledger &amp; Reward Claims</h4>
+            <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 2px;">
+              Persistent points earned through continuous assessments, mock tests, and assignments. Top 3 scholars can redeem statutory awards.
+            </p>
+          </div>
+          <div style="display: flex; gap: 8px;">
+            <button class="btn btn-primary btn-sm" id="btn-claim-merit-reward" onclick="openRewardClaimModal()">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              <span>Claim Merit Reward</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Student Points Summary & Leaderboard Stats -->
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin-bottom: 16px;">
+          <div style="background: var(--bg-sand); padding: 12px; border-radius: var(--radius-sm); border: 1px solid var(--border-color);">
+            <div style="font-size: 0.72rem; color: var(--text-muted); text-transform: uppercase; font-weight: 700;">My Reward Points</div>
+            <div style="font-size: 1.4rem; font-weight: 800; color: var(--primary);" id="my-reward-points-total">0 Pts</div>
+          </div>
+          <div style="background: var(--bg-sand); padding: 12px; border-radius: var(--radius-sm); border: 1px solid var(--border-color);">
+            <div style="font-size: 0.72rem; color: var(--text-muted); text-transform: uppercase; font-weight: 700;">Current Academic Rank</div>
+            <div style="font-size: 1.4rem; font-weight: 800; color: var(--accent-terracotta);" id="my-reward-rank-display">Rank #--</div>
+          </div>
+          <div style="background: var(--bg-sand); padding: 12px; border-radius: var(--radius-sm); border: 1px solid var(--border-color);">
+            <div style="font-size: 0.72rem; color: var(--text-muted); text-transform: uppercase; font-weight: 700;">Claim Eligibility</div>
+            <div style="font-size: 1rem; font-weight: 700; color: var(--risk-safe);" id="my-reward-eligibility-display">Checking...</div>
+          </div>
+        </div>
+
+        <!-- Claims Ledger Table -->
+        <div class="marks-table-wrap">
+          <table class="marks-table">
+            <thead>
+              <tr>
+                <th>Claim ID</th>
+                <th>Student</th>
+                <th>Rank / Honor</th>
+                <th>Reward Detail</th>
+                <th>Voucher Code</th>
+                <th>Status</th>
+                <th>Submitted On</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="reward-claims-tbody">
+              <!-- Rendered dynamically by JS -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Marks Ledger & Continuous Evaluation Table -->
+      <div class="marks-ledger-container">
+        <div class="marks-ledger-header">
+          <div>
+            <h4>Continuous Internal Evaluation &amp; Subject Marks Ledger</h4>
+            <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 2px;" id="marks-ledger-role-note">
+              Faculty / Mentor mode: Edit marks inline and click Save to instantly recalculate totals and live re-rank the podium.
+            </p>
+          </div>
+          <div id="marks-ledger-actions">
+            <!-- Rendered by JS based on role -->
+          </div>
+        </div>
+
+        <div class="marks-table-wrap">
+          <table class="marks-table">
+            <thead>
+              <tr>
+                <th>Rank</th>
+                <th>Student Scholar</th>
+                <th>Roll No</th>
+                <th>Data Structures (100)</th>
+                <th>Operating Systems (100)</th>
+                <th>DBMS (100)</th>
+                <th>Comp Networks (100)</th>
+                <th>Total (400)</th>
+                <th>Percentage</th>
+                <th id="marks-th-action">Action</th>
+              </tr>
+            </thead>
+            <tbody id="marks-ledger-tbody">
+              <!-- Rendered dynamically by JS -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================================= -->
+    <!-- MODULE A: SMART ATTENDANCE TRACKER & RISK CATEGORIZATION          -->
+    <!-- ================================================================= -->
+    <section id="view-attendance" class="tab-view">
+      <div class="view-header">
+        <div class="view-header-title">
+          <h2>Smart Attendance Tracker &amp; Risk Engine</h2>
+          <p>Statutory attendance monitoring adhering to the 75% University mandate under NEP 2020 framework.</p>
+        </div>
+        <div style="display: flex; gap: 8px;">
+          <select id="attendance-risk-filter" class="form-control" style="width: 170px;" onchange="renderAttendanceView()">
+            <option value="All">All Risk Tiers</option>
+            <option value="High">High Risk (&lt; 50%)</option>
+            <option value="Medium">Medium Risk (50-59.9%)</option>
+            <option value="Low">Low Risk (60-74.9%)</option>
+            <option value="Safe">On Track (&ge; 75%)</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Automated Threshold Alert Container (<75% flag) -->
+      <div id="attendance-threshold-alert-container">
+        <!-- Rendered dynamically by JS when student attendance < 75% -->
+      </div>
+
+      <!-- 3-Tier Legend Bar -->
+      <div style="display: flex; gap: 12px; margin-bottom: 20px; flex-wrap: wrap;">
+        <span class="podium-badge-pill badge-risk-high" style="font-size: 0.74rem;">High Risk: Below 50% (Immediate Intervention)</span>
+        <span class="podium-badge-pill badge-risk-med" style="font-size: 0.74rem;">Medium Risk: 50% to 59.9% (Advisory Warning)</span>
+        <span class="podium-badge-pill badge-risk-low" style="font-size: 0.74rem;">Low Risk: 60% to 74.9% (Mentorship Monitoring)</span>
+        <span class="podium-badge-pill badge-risk-safe" style="font-size: 0.74rem;">On Track: 75% and Above (Compliant)</span>
+      </div>
+
+      <!-- Subject-wise Attendance Cards -->
+      <div class="attendance-grid" id="attendance-cards-grid">
+        <!-- Rendered by JS -->
+      </div>
+
+      <!-- Detailed Attendance Log Table -->
+      <div class="marks-ledger-container" style="margin-top: 20px;">
+        <h4 style="margin-bottom: 12px;">Cohort Attendance Risk Attribution</h4>
+        <div class="marks-table-wrap">
+          <table class="marks-table">
+            <thead>
+              <tr>
+                <th>Student</th>
+                <th>Roll No</th>
+                <th>Overall %</th>
+                <th>30-Day Velocity</th>
+                <th>Risk Category</th>
+                <th>Consecutive Absences</th>
+                <th>Mentor Action</th>
+              </tr>
+            </thead>
+            <tbody id="attendance-table-tbody">
+              <!-- Rendered by JS -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================================= -->
+    <!-- MODULE D: TASKS, ASSIGNMENTS & MANUAL AI INTEGRITY CHECK          -->
+    <!-- ================================================================= -->
+    <section id="view-tasks" class="tab-view">
+      <div class="view-header">
+        <div class="view-header-title">
+          <h2>Task Studio &amp; Submission Review</h2>
+          <p>Academic coursework with strict format validation (up to 80 MB) and teacher-triggered AI integrity verification.</p>
+        </div>
+        <div id="task-view-role-btn">
+          <!-- Create task button for faculty -->
+        </div>
+      </div>
+
+      <div class="tasks-layout">
+        <!-- Main Task List & Submissions -->
+        <div>
+          <!-- Faculty Task Creation Form (collapsible) -->
+          <div id="faculty-task-create-panel" class="marks-ledger-container" style="display: none; margin-bottom: 24px;">
+            <h4 style="margin-bottom: 14px;">Publish New Academic Task</h4>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px;">
+              <div class="form-group">
+                <label class="form-label">Task Title</label>
+                <input type="text" id="task-input-title" class="form-control" placeholder="e.g. B-Tree Implementation &amp; Indexing Engine">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Course Subject</label>
+                <select id="task-input-course" class="form-control">
+                  <option value="Data Structures &amp; Algorithms">Data Structures &amp; Algorithms</option>
+                  <option value="Operating Systems">Operating Systems</option>
+                  <option value="Database Management Systems">Database Management Systems</option>
+                  <option value="Computer Networks">Computer Networks</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Task Type</label>
+                <select id="task-input-type" class="form-control">
+                  <option value="Project">Project (Accepts Video, PDF, DOCX, Images - Max 80 MB)</option>
+                  <option value="Assignment">Assignment (Strictly PDF, DOCX, Images ONLY - Max 80 MB)</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Submission Deadline</label>
+                <input type="date" id="task-input-due" class="form-control" value="2026-10-30">
+              </div>
+            </div>
+
+            <!-- Extended Assignment Evaluation Criteria (NEP 2020) -->
+            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-top: 8px;">
+              <div class="form-group">
+                <label class="form-label" style="font-size: 0.76rem;">Required Word Count</label>
+                <input type="number" id="task-input-word-count" class="form-control" placeholder="e.g. 500" value="500">
+              </div>
+              <div class="form-group">
+                <label class="form-label" style="font-size: 0.76rem;">Paragraph Count</label>
+                <input type="number" id="task-input-paragraph-count" class="form-control" placeholder="e.g. 4" value="4">
+              </div>
+              <div class="form-group">
+                <label class="form-label" style="font-size: 0.76rem;">Format Allowed</label>
+                <input type="text" id="task-input-format" class="form-control" placeholder="PDF, DOCX, Video" value="PDF, DOCX, Images">
+              </div>
+            </div>
+
+            <div class="form-group" style="margin-top: 8px;">
+              <label class="form-label" style="font-size: 0.76rem;">Marking Criteria &amp; Rubrics</label>
+              <input type="text" id="task-input-criteria" class="form-control" placeholder="e.g. Problem Formulation 30%, Algorithm Logic 40%, Test Cases 30%" value="Problem Formulation 30%, Algorithm Logic 40%, Test Cases 30%">
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 8px;">
+              <div class="form-group">
+                <label class="form-label" style="font-size: 0.76rem;">Key Points / Concepts Required</label>
+                <input type="text" id="task-input-points" class="form-control" placeholder="e.g. Asymptotic Complexity, Space Bounds, Edge cases">
+              </div>
+              <div class="form-group">
+                <label class="form-label" style="font-size: 0.76rem;">Attached Reference Resource URL</label>
+                <input type="text" id="task-input-resources" class="form-control" placeholder="e.g. /resources/unit2-notes.pdf">
+              </div>
+            </div>
+
+            <div class="form-group" style="margin-top: 8px;">
+              <label class="form-label">Task Description &amp; Instructions</label>
+              <textarea id="task-input-desc" class="form-control" rows="3" placeholder="Provide problem statement, formatting guidelines, and evaluation rubrics..."></textarea>
+            </div>
+            <div style="display: flex; justify-content: flex-end; gap: 8px;">
+              <button class="btn btn-secondary" onclick="toggleTaskCreatePanel(false)">Cancel</button>
+              <button class="btn btn-primary" onclick="submitCreateTask()">Publish Task</button>
+            </div>
+          </div>
+
+          <!-- Tasks List -->
+          <div id="tasks-list-container">
+            <!-- Rendered by JS -->
+          </div>
+
+          <!-- Faculty Assignment Appeals Review Panel -->
+          <div class="marks-ledger-container" id="faculty-appeals-review-panel" style="margin-top: 24px; display: none;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+              <div>
+                <h4 style="margin: 0;">Student Evaluation Appeals &amp; Human Review Desk</h4>
+                <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 2px;">
+                  Fairness Guarantee: Every student has the statutory right to request human review of automated or preliminary grades.
+                </p>
+              </div>
+            </div>
+            <div class="marks-table-wrap">
+              <table class="marks-table">
+                <thead>
+                  <tr>
+                    <th>Appeal ID</th>
+                    <th>Student</th>
+                    <th>Task Subject</th>
+                    <th>Reason &amp; Ground</th>
+                    <th>Status</th>
+                    <th>Submitted On</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody id="appeals-table-tbody">
+                  <!-- Rendered dynamically by JS -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Side: Student Upload Dropzone or Teacher Review -->
+        <div>
+          <!-- Student Upload Dropzone -->
+          <div class="marks-ledger-container" id="student-upload-section">
+            <h4 style="margin-bottom: 6px;">Submit Assignment / Project</h4>
+            <p style="font-size: 0.78rem; color: var(--text-muted); margin-bottom: 16px;">
+              Select an active task to upload. Strict size limit: <strong>80 MB</strong>.
+            </p>
+
+            <div class="form-group">
+              <label class="form-label">Select Task to Submit</label>
+              <select id="upload-selected-task" class="form-control" onchange="onSelectTaskForUpload()">
+                <!-- Populated by JS -->
+              </select>
+            </div>
+
+            <!-- Dynamic Dropzone -->
+            <div class="dropzone-container" id="task-dropzone" onclick="triggerFileUpload()">
+              <div class="dropzone-icon">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+              </div>
+              <div class="dropzone-label">Click or Drag &amp; Drop submission file here</div>
+              <div class="dropzone-limits" id="dropzone-type-limits">
+                Project: Video, Doc, Photo | Assignment: Doc, Photo (Max 80 MB)
+              </div>
+              <input type="file" id="task-file-input" style="display: none;" onchange="handleFileSelection(event)">
+            </div>
+
+            <div id="upload-file-preview" style="display: none; margin-bottom: 14px;">
+              <div style="display: flex; align-items: center; justify-content: space-between; padding: 10px 12px; background: var(--bg-secondary); border-radius: var(--radius-sm); border: 1px solid var(--border-color);">
+                <div>
+                  <div style="font-weight: 700; font-size: 0.82rem;" id="upload-filename">submission.pdf</div>
+                  <div style="font-size: 0.72rem; color: var(--text-muted);" id="upload-filesize">2.4 MB / 80 MB</div>
+                </div>
+                <button class="btn btn-secondary btn-sm" onclick="clearSelectedFile()">Clear</button>
+              </div>
+            </div>
+
+            <!-- Optional 3-Stage Handwritten Verification Evidence -->
+            <div style="margin-top: 14px; padding: 10px; background: var(--bg-sand); border: 1px solid var(--border-color); border-radius: var(--radius-sm);">
+              <div style="font-size: 0.76rem; font-weight: 700; color: var(--primary); margin-bottom: 4px;">
+                Handwritten 3-Stage Verification (Optional):
+              </div>
+              <div class="form-group" style="margin-bottom: 6px;">
+                <label class="form-label" style="font-size: 0.72rem;">Notebook Page-Turn Video Recording Link / File</label>
+                <input type="text" id="upload-video-turn-input" class="form-control" style="font-size: 0.78rem;" placeholder="e.g. /uploads/evidence/page-turn-stu101.mp4">
+              </div>
+              <div class="form-group" style="margin-bottom: 4px;">
+                <label class="form-label" style="font-size: 0.72rem;">Extracted Text Excerpt (for Similarity Check)</label>
+                <textarea id="upload-text-excerpt-input" class="form-control" rows="2" style="font-size: 0.78rem;" placeholder="Paste sample handwritten transcript or key paragraphs..."></textarea>
+              </div>
+            </div>
+
+            <button class="btn btn-primary" id="btn-submit-task" style="width: 100%; margin-top: 12px;" onclick="submitTaskFile()">
+              <span>Upload &amp; Submit Task</span>
+            </button>
+          </div>
+
+          <!-- Teacher AI Verification Info Card -->
+          <div class="framework-banner" style="margin-top: 18px;">
+            <div>
+              <h4 style="font-size: 0.86rem;">3-Stage Integrity &amp; Non-Punitive Notice</h4>
+              <p style="font-size: 0.76rem;">
+                AI verification evaluates text similarity, page-turn video continuity, and tampering flags. Automated punishment is prohibited: all flagged works undergo human faculty review with student appeal rights.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================================= -->
+    <!-- MODULE: TIMED MOCK ASSESSMENTS & REAL-TIME EVALUATION            -->
+    <!-- ================================================================= -->
+    <section id="view-mock_tests" class="tab-view">
+      <div class="view-header" style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 14px;">
+        <div class="view-header-title">
+          <h2>Timed Assessments &amp; Mock Test Engine</h2>
+          <p>Standardized timed assessments with live countdown timer, auto-submission, topic-wise scoring, and speed vs accuracy analytics.</p>
+        </div>
+        <div id="mock-test-faculty-btn-wrap" style="display: none;">
+          <button class="btn btn-primary" onclick="toggleFacultyCreateTestPanel(true)">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+            <span>Create New Mock Assessment</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="framework-banner">
+        <div class="framework-banner-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        </div>
+        <div>
+          <h4>Speed &amp; Accuracy Balanced Rubric</h4>
+          <p>
+            Assessments interpret speed together with accuracy and conceptual understanding. Quick completion without high accuracy is flagged as rushed, while balanced, methodical problem solving is recognized and earns student reward points.
+          </p>
+        </div>
+      </div>
+
+      <!-- Faculty Test Creation Form (Collapsible) -->
+      <div id="faculty-create-test-panel" class="marks-ledger-container" style="display: none; margin-bottom: 20px;">
+        <h4 style="margin-bottom: 12px;">Create Timed Mock Assessment</h4>
+        <form onsubmit="event.preventDefault(); submitCreateMockTest();">
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px;">
+            <div class="form-group">
+              <label class="form-label">Assessment Title</label>
+              <input type="text" id="test-create-title" class="form-control" placeholder="e.g. DBMS Normalization &amp; Transactions Mock" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Subject</label>
+              <select id="test-create-subject" class="form-control">
+                <option value="Data Structures &amp; Algorithms">Data Structures &amp; Algorithms</option>
+                <option value="Operating Systems">Operating Systems</option>
+                <option value="Database Management Systems">Database Management Systems</option>
+                <option value="Computer Networks">Computer Networks</option>
+              </select>
+            </div>
+          </div>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px;">
+            <div class="form-group">
+              <label class="form-label">Duration (Minutes)</label>
+              <input type="number" id="test-create-duration" class="form-control" value="15" min="1" max="180" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Instructions</label>
+              <input type="text" id="test-create-instructions" class="form-control" placeholder="Single correct MCQ. Timer automatically submits upon timeout.">
+            </div>
+          </div>
+
+          <div style="margin-bottom: 12px;">
+            <label class="form-label">Questions (JSON format or optional custom list)</label>
+            <textarea id="test-create-questions-json" class="form-control" rows="3" placeholder='[{"id":"q1","topic":"Transactions","prompt":"Which property guarantees all-or-nothing execution?","options":["Atomicity","Consistency","Isolation","Durability"],"correct":0,"marks":5}]'></textarea>
+            <span style="font-size: 0.72rem; color: var(--text-muted);">Leave empty to auto-generate standard syllabus question set.</span>
+          </div>
+
+          <div style="display: flex; justify-content: flex-end; gap: 8px;">
+            <button type="button" class="btn btn-secondary" onclick="toggleFacultyCreateTestPanel(false)">Cancel</button>
+            <button type="submit" class="btn btn-primary" id="btn-save-mock-test">Publish Assessment</button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Active Mock Test Interface (Visible during an active test session) -->
+      <div id="mock-test-active-interface" class="card" style="display: none; margin-bottom: 24px; border: 2px solid var(--primary); background: var(--bg-card); padding: 20px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; padding-bottom: 14px; border-bottom: 1px solid var(--border-color); flex-wrap: wrap; gap: 10px;">
+          <div>
+            <h3 id="active-test-title" style="margin: 0; color: var(--primary);">Assessment In Progress</h3>
+            <span id="active-test-subject" style="font-size: 0.8rem; color: var(--text-muted);">Data Structures</span>
+          </div>
+          <div style="display: flex; align-items: center; gap: 12px;">
+            <span style="font-size: 0.78rem; color: var(--text-muted);">Time Remaining:</span>
+            <div class="mock-timer-display" id="mock-timer-clock">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              <span id="mock-timer-text">15:00</span>
+            </div>
+          </div>
+        </div>
+
+        <div id="active-test-questions-list" style="margin-top: 18px;">
+          <!-- Dynamically populated with question cards -->
+        </div>
+
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 20px; padding-top: 14px; border-top: 1px solid var(--border-color);">
+          <span style="font-size: 0.76rem; color: var(--text-muted);">Auto-saves answers on each selection. Auto-submits on timer zero.</span>
+          <button class="btn btn-primary" id="btn-submit-active-test" onclick="confirmSubmitMockTest()">
+            <span>Complete &amp; Submit Assessment</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Test Score Result Card (Visible after submission) -->
+      <div id="mock-test-result-card" class="card" style="display: none; margin-bottom: 24px; background: var(--bg-card); border: 1px solid var(--border-color); padding: 20px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
+          <h4 style="margin: 0; color: var(--primary);">Assessment Evaluation Summary</h4>
+          <button class="btn btn-secondary btn-sm" onclick="closeMockTestResult()">Close Summary</button>
+        </div>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; margin-bottom: 16px;">
+          <div style="background: var(--bg-sand); padding: 12px; border-radius: var(--radius-sm); border: 1px solid var(--border-color);">
+            <div style="font-size: 0.72rem; color: var(--text-muted); font-weight: 700; text-transform: uppercase;">Score Obtained</div>
+            <div style="font-size: 1.4rem; font-weight: 800; color: var(--primary);" id="result-score-val">0 / 0</div>
+          </div>
+          <div style="background: var(--bg-sand); padding: 12px; border-radius: var(--radius-sm); border: 1px solid var(--border-color);">
+            <div style="font-size: 0.72rem; color: var(--text-muted); font-weight: 700; text-transform: uppercase;">Accuracy Rate</div>
+            <div style="font-size: 1.4rem; font-weight: 800; color: var(--accent-gold);" id="result-accuracy-val">0%</div>
+          </div>
+          <div style="background: var(--bg-sand); padding: 12px; border-radius: var(--radius-sm); border: 1px solid var(--border-color);">
+            <div style="font-size: 0.72rem; color: var(--text-muted); font-weight: 700; text-transform: uppercase;">Time Taken</div>
+            <div style="font-size: 1.2rem; font-weight: 700; color: var(--text-main);" id="result-time-val">0m 0s</div>
+          </div>
+          <div style="background: var(--bg-sand); padding: 12px; border-radius: var(--radius-sm); border: 1px solid var(--border-color);">
+            <div style="font-size: 0.72rem; color: var(--text-muted); font-weight: 700; text-transform: uppercase;">Performance Rating</div>
+            <div style="font-size: 0.95rem; font-weight: 700; color: var(--risk-safe);" id="result-rating-val">Balanced</div>
+          </div>
+        </div>
+
+        <div style="margin-bottom: 14px;">
+          <h5 style="margin-bottom: 8px;">Topic Breakdown &amp; Conceptual Mastery:</h5>
+          <div id="result-topic-breakdown" style="display: flex; gap: 8px; flex-wrap: wrap;">
+            <!-- Rendered by JS -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Available Assessments Grid -->
+      <h4 style="margin-bottom: 8px;">Available Timed Assessments</h4>
+      <div class="mock-test-grid" id="mock-tests-container">
+        <!-- Rendered dynamically by JS -->
+      </div>
+
+      <!-- My Assessment History Table -->
+      <div class="marks-ledger-container" style="margin-top: 24px;">
+        <h4 style="margin-bottom: 12px;">Completed Assessments &amp; Improvement History</h4>
+        <div class="marks-table-wrap">
+          <table class="marks-table">
+            <thead>
+              <tr>
+                <th>Test ID</th>
+                <th>Assessment Title</th>
+                <th>Subject</th>
+                <th>Score</th>
+                <th>Accuracy</th>
+                <th>Time Spent</th>
+                <th>Performance Rubric</th>
+                <th>Completed At</th>
+              </tr>
+            </thead>
+            <tbody id="mock-test-history-tbody">
+              <!-- Rendered dynamically by JS -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================================= -->
+    <!-- MODULE E: ACADEMIC RESOURCE HUB & QUESTION-DRIVEN AI SUMMARIZER   -->
+    <!-- ================================================================= -->
+    <section id="view-academic-hub" class="tab-view">
+      <div class="view-header" style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 14px;">
+        <div class="view-header-title">
+          <h2>Academic Resource Hub &amp; AI Note Summarizer</h2>
+          <p>Semester notes, syllabus, PYQ (Previous Year Questions) archive, and question-driven AI study assistance.</p>
+        </div>
+        <div id="hub-faculty-actions" class="hidden">
+          <button class="btn btn-primary" onclick="openUploadResourceModal()">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+            <span>Upload Study Resource</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Subject Tabs -->
+      <div class="academic-hub-tabs" id="hub-subject-tabs">
+        <button class="hub-subject-tab active" onclick="switchHubSubject('All')">All Core Subjects</button>
+        <button class="hub-subject-tab" onclick="switchHubSubject('Data Structures & Algorithms')">Data Structures</button>
+        <button class="hub-subject-tab" onclick="switchHubSubject('Operating Systems')">Operating Systems</button>
+        <button class="hub-subject-tab" onclick="switchHubSubject('Database Management Systems')">DBMS</button>
+        <button class="hub-subject-tab" onclick="switchHubSubject('Computer Networks')">Computer Networks</button>
+      </div>
+
+      <!-- PYQ & Category Filter Row -->
+      <div class="pyq-filter-row">
+        <select id="hub-type-filter" class="form-control" style="width: 180px;" onchange="renderAcademicHubView()">
+          <option value="All">All Resource Types</option>
+          <option value="Lecture Notes">Lecture Notes</option>
+          <option value="PYQ">PYQ Papers (Previous Years)</option>
+          <option value="PYQ Solutions">Model Solutions & Rubrics</option>
+          <option value="Syllabus">Curriculum &amp; Syllabus</option>
+          <option value="Reference">Reference Guides</option>
+        </select>
+
+        <select id="hub-pyq-year-filter" class="form-control" style="width: 160px;" onchange="renderAcademicHubView()">
+          <option value="All">All PYQ Years</option>
+          <option value="2026">2026 Academic Year</option>
+          <option value="2025">2025 End-Semester</option>
+          <option value="2024">2024 End-Semester</option>
+          <option value="2023">2023 End-Semester</option>
+        </select>
+      </div>
+
+      <!-- Interactive Question-Driven AI Note Summarizer -->
+      <div class="ai-summarizer-box" id="ai-note-summarizer-box">
+        <h4>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
+          <span>Ask AI / Question-Driven Note Summarizer</span>
+        </h4>
+        <p>Type any specific question or derivation prompt to generate an instant, tailored revision summary directly from verified course notes.</p>
+
+        <!-- Quick Prompts Tray -->
+        <div class="quick-prompts-tray" id="quick-prompts-tray">
+          <span class="quick-prompt-label">Quick Prompts:</span>
+          <button type="button" class="prompt-pill" onclick="setQuickPrompt('Summarize key derivations for a 10-mark question on Dijkstra Shortest Path')">Dijkstra Derivation (10-Mark)</button>
+          <button type="button" class="prompt-pill" onclick="setQuickPrompt('Explain Banker\'s Algorithm safety test conditions with matrix equations')">Banker's Algorithm Proof</button>
+          <button type="button" class="prompt-pill" onclick="setQuickPrompt('Summarize RSA Public-Key Cryptography & Diffie-Hellman Key Exchange')">RSA & Diffie-Hellman</button>
+          <button type="button" class="prompt-pill" onclick="setQuickPrompt('Derive Backpropagation and Gradient Descent formulas for CNN')">CNN Backpropagation</button>
+          <button type="button" class="prompt-pill" onclick="setQuickPrompt('Explain CAP Theorem guarantees, PACELC tradeoffs, and Paxos consensus')">CAP Theorem & Paxos</button>
+        </div>
+        
+        <div class="summary-prompt-row">
+          <input type="text" id="ai-summarize-question" class="summary-prompt-input" placeholder="e.g. Summarize the key derivations from Unit 2 for a 10-mark question...">
+          <button class="btn btn-primary" onclick="submitNoteSummarizePrompt()">
+            <span>Generate Study Summary</span>
+          </button>
+        </div>
+
+        <div class="summary-response-area" id="ai-summarize-result">
+          <!-- Populated by AI summarizer call -->
+        </div>
+      </div>
+
+      <!-- Resources Cards Grid -->
+      <div class="resource-grid" id="academic-resources-grid">
+        <!-- Rendered by JS -->
+      </div>
+    </section>
+
+    <!-- ================================================================= -->
+    <!-- MODULE: CONFIDENTIAL STUDENT WELL-BEING SUPPORT                  -->
+    <!-- ================================================================= -->
+    <section id="view-wellbeing" class="tab-view">
+      <div class="view-header">
+        <div class="view-header-title">
+          <h2>Confidential Student Well-Being Support</h2>
+          <p>Privacy-first emotional and mental wellness check-ins. Strictly confidential under DPDP Act 2023.</p>
+        </div>
+      </div>
+
+      <!-- Strict Confidentiality & Medical Notice -->
+      <div class="wellbeing-disclaimer" style="margin-bottom: 18px;">
+        <div style="display: flex; gap: 10px; align-items: flex-start;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex-shrink: 0;"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          <div>
+            <strong>Confidentiality &amp; Non-Clinical Disclaimer:</strong> This feature is entirely optional and is NOT a medical diagnosis or a replacement for professional clinical care. Well-being data is strictly isolated to your student profile and is NEVER shared with parents, faculty, or mentors, and is NEVER used for grading, rankings, or discipline.
+          </div>
+        </div>
+      </div>
+
+      <div class="wellbeing-grid">
+        <!-- Left: Daily Wellness Check-In Card -->
+        <div class="card" style="border: 1px solid var(--border-color); background: var(--bg-card); padding: 20px;">
+          <h4 style="margin-bottom: 6px;">How are you feeling today?</h4>
+          <p style="font-size: 0.78rem; color: var(--text-muted); margin-bottom: 14px;">
+            A quick pulse check helps you reflect and provides personalized coping suggestions.
+          </p>
+
+          <form onsubmit="event.preventDefault(); submitWellbeingCheckin();">
+            <div class="form-group" style="margin-bottom: 14px;">
+              <label class="form-label" style="font-weight: 700; font-size: 0.82rem;">Current Mood</label>
+              <div class="mood-selector-row" id="mood-selector-options">
+                <button type="button" class="mood-btn selected" onclick="selectMood(this, 'Great')">Great</button>
+                <button type="button" class="mood-btn" onclick="selectMood(this, 'Good')">Good</button>
+                <button type="button" class="mood-btn" onclick="selectMood(this, 'Okay')">Okay</button>
+                <button type="button" class="mood-btn" onclick="selectMood(this, 'Stressed')">Stressed</button>
+                <button type="button" class="mood-btn" onclick="selectMood(this, 'Overwhelmed')">Overwhelmed</button>
+              </div>
+              <input type="hidden" id="wellbeing-mood-val" value="Great">
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 14px;">
+              <div class="form-group">
+                <label class="form-label" style="font-size: 0.76rem; font-weight: 600;">Stress Level (1-5)</label>
+                <select id="wellbeing-stress-val" class="form-control" style="font-size: 0.8rem;">
+                  <option value="1">1 - Minimal</option>
+                  <option value="2">2 - Mild</option>
+                  <option value="3" selected>3 - Moderate</option>
+                  <option value="4">4 - High</option>
+                  <option value="5">5 - Extreme</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="form-label" style="font-size: 0.76rem; font-weight: 600;">Sleep (Hours)</label>
+                <input type="number" id="wellbeing-sleep-val" class="form-control" value="7" min="1" max="16" style="font-size: 0.8rem;">
+              </div>
+              <div class="form-group">
+                <label class="form-label" style="font-size: 0.76rem; font-weight: 600;">Energy Level (1-5)</label>
+                <select id="wellbeing-energy-val" class="form-control" style="font-size: 0.8rem;">
+                  <option value="1">1 - Depleted</option>
+                  <option value="2">2 - Low</option>
+                  <option value="3" selected>3 - Moderate</option>
+                  <option value="4">4 - Energetic</option>
+                  <option value="5">5 - Peak</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group" style="margin-bottom: 14px;">
+              <label class="form-label" style="font-size: 0.76rem; font-weight: 600;">Private Notes / Reflections (Optional)</label>
+              <textarea id="wellbeing-notes-val" class="form-control" rows="2" placeholder="Record what is on your mind or how your week is going..." style="font-size: 0.8rem;"></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-primary" id="btn-submit-wellbeing" style="width: 100%;">
+              <span>Record Confidential Check-In</span>
+            </button>
+          </form>
+
+          <!-- Instant Supportive Guidance Display -->
+          <div id="wellbeing-instant-feedback" style="display: none; margin-top: 16px; padding: 12px; background: var(--primary-light); border: 1px solid var(--primary-border); border-radius: var(--radius-sm);">
+            <div style="font-weight: 700; font-size: 0.82rem; color: var(--primary); margin-bottom: 4px;">Supportive Suggestion:</div>
+            <p id="wellbeing-feedback-text" style="font-size: 0.78rem; color: var(--text-main); margin: 0; line-height: 1.45;"></p>
+          </div>
+        </div>
+
+        <!-- Right: Professional & Campus Resources -->
+        <div style="display: flex; flex-direction: column; gap: 14px;">
+          <div class="card" style="border: 1px solid var(--border-color); background: var(--bg-card); padding: 18px;">
+            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+              <div style="width: 32px; height: 32px; border-radius: var(--radius-sm); background: var(--primary-light); color: var(--primary); display: flex; align-items: center; justify-content: center;">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+              </div>
+              <div>
+                <h4 style="margin: 0; font-size: 0.95rem;">National Helpline: Tele-MANAS</h4>
+                <div style="font-size: 0.74rem; color: var(--text-muted);">Govt. of India 24x7 Mental Health Helpline</div>
+              </div>
+            </div>
+            <div style="padding: 10px; background: var(--bg-sand); border-radius: var(--radius-sm); border: 1px solid var(--border-color); margin-bottom: 10px;">
+              <div style="font-size: 1.1rem; font-weight: 800; color: var(--primary);">Dial 14416 or 1800-891-4416</div>
+              <div style="font-size: 0.72rem; color: var(--text-muted);">Toll-Free | Multi-lingual | 24 Hours a Day</div>
+            </div>
+            <p style="font-size: 0.76rem; color: var(--text-muted); margin: 0;">
+              Free, confidential tele-counseling supported by the Ministry of Health and Family Welfare.
+            </p>
+          </div>
+
+          <div class="card" style="border: 1px solid var(--border-color); background: var(--bg-card); padding: 18px;">
+            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 8px;">
+              <div style="width: 32px; height: 32px; border-radius: var(--radius-sm); background: var(--accent-terracotta-light); color: var(--accent-terracotta); display: flex; align-items: center; justify-content: center;">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+              </div>
+              <div>
+                <h4 style="margin: 0; font-size: 0.95rem;">Campus Counseling Center</h4>
+                <div style="font-size: 0.74rem; color: var(--text-muted);">Student Wellness Block Room 104</div>
+              </div>
+            </div>
+            <div style="font-size: 0.78rem; color: var(--text-muted); line-height: 1.45;">
+              <div>Counselor: <strong>Dr. Ananya Sen (PhD, Clinical Psychology)</strong></div>
+              <div>Walk-in Hours: Monday to Friday, 10:00 AM - 04:00 PM IST</div>
+              <div>Email: <strong>wellness@edueagle.edu</strong></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Past Check-In History Table -->
+      <div class="marks-ledger-container" style="margin-top: 24px;">
+        <h4 style="margin-bottom: 12px;">My Confidential Well-Being Reflections</h4>
+        <div class="marks-table-wrap">
+          <table class="marks-table">
+            <thead>
+              <tr>
+                <th>Date &amp; Time</th>
+                <th>Mood</th>
+                <th>Stress (1-5)</th>
+                <th>Sleep (Hrs)</th>
+                <th>Energy (1-5)</th>
+                <th>Notes</th>
+              </tr>
+            </thead>
+            <tbody id="wellbeing-history-tbody">
+              <!-- Rendered dynamically by JS -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================================= -->
+    <!-- MODULE B: AUTOMATED MENTOR PULSE & WEEKLY REVIEW SCHEDULER        -->
+    <!-- ================================================================= -->
+    <section id="view-mentor-pulse" class="tab-view">
+      <div class="view-header">
+        <div class="view-header-title">
+          <h2>Automated Mentor Pulse &amp; Review Scheduler</h2>
+          <p>Alternate-day student status sync (Mon, Wed, Fri) and customizable weekly review digest schedule.</p>
+        </div>
+      </div>
+
+      <!-- Schedule Status Banner -->
+      <div class="pulse-schedule-banner">
+        <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
+          <span class="pulse-cadence-badge">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            <span>Active Cadence: Alternate Days (Mon, Wed, Fri)</span>
+          </span>
+          <span class="pulse-offday-indicator">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/></svg>
+            <span>Sundays / Institutional Off-Days Automatically Paused</span>
+          </span>
+        </div>
+        <div style="font-size: 0.8rem; color: var(--text-muted);" id="pulse-next-sync-time">
+          Next Scheduled Sync: <strong>Wednesday, 09:00 AM IST</strong>
+        </div>
+      </div>
+
+      <div class="pulse-layout">
+        <!-- Left: Pulse Feed List -->
+        <div>
+          <h4 style="margin-bottom: 14px;">Recent Student Mentorship Updates</h4>
+          <div class="pulse-feed-list" id="mentor-pulse-feed-list">
+            <!-- Rendered by JS -->
+          </div>
+        </div>
+
+        <!-- Right: Configurable Weekly Review Digest Setting -->
+        <div>
+          <div class="review-settings-card">
+            <h4>Weekly Review Digest Schedule</h4>
+            <p>
+              Mentors receive a comprehensive weekly summary report. You can customize which day of the week this review is dispatched (strictly locked to once-per-week cadence).
+            </p>
+
+            <div class="form-group">
+              <label class="form-label">Review Dispatch Day</label>
+              <select id="mentor-review-day-select" class="form-control">
+                <option value="Monday">Monday (09:00 AM IST)</option>
+                <option value="Tuesday">Tuesday (09:00 AM IST)</option>
+                <option value="Wednesday">Wednesday (09:00 AM IST)</option>
+                <option value="Thursday">Thursday (09:00 AM IST)</option>
+                <option value="Friday" selected>Friday (05:00 PM IST - Default)</option>
+                <option value="Saturday">Saturday (11:00 AM IST)</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Notification Channel</label>
+              <select class="form-control" disabled>
+                <option>Institutional Email &amp; Mobile Pulse Feed</option>
+              </select>
+            </div>
+
+            <button class="btn btn-primary" style="width: 100%;" onclick="saveMentorReviewSchedule()">
+              <span>Save Schedule Preference</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================================= -->
+    <!-- MODULE C: BI-WEEKLY PARENT PORTAL / 14-DAY DIGEST                 -->
+    <!-- ================================================================= -->
+    <section id="view-parent-portal" class="tab-view">
+      <div class="view-header">
+        <div class="view-header-title">
+          <h2>Parent Transparency Portal (Bi-Weekly 14-Day Digest)</h2>
+          <p>Holistic 360-degree transparency combining academics, attendance velocity, and extracurricular development.</p>
+        </div>
+        <div style="display: flex; gap: 8px;">
+          <button class="btn btn-secondary" onclick="openParentReportPreviewModal()">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+            <span>Preview Parent Report</span>
+          </button>
+          <button class="btn btn-primary" onclick="sendBiWeeklyDigest()">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+            <span>Send 2-Week Digest (WhatsApp/Email)</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Parent Portal Snapshot Card -->
+      <div class="parent-portal-card" id="parent-portal-content">
+        <!-- Rendered by JS -->
+      </div>
+    </section>
+
+    <!-- ================================================================= -->
+    <!-- EXISTING VIEWS (RETAINED FOR SYSTEM COMPATIBILITY)                -->
+    <!-- ================================================================= -->
+
+    <!-- COHORT ANALYTICS -->
+    <section id="view-cohort" class="tab-view">
+      <div class="framework-banner">
+        <div class="framework-banner-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </div>
+        <div>
+          <h4>Institutional Policy Notice: Action-Oriented Advisory Framework</h4>
+          <p>
+            EduEagle operates under an actionable support mandate. Risk indicators function exclusively to alert faculty advisors, academic mentors, student counseling services, and bursar staff. Automated punitive sanctions are prohibited.
+          </p>
+        </div>
+      </div>
+
+      <div class="kpi-grid" id="cohort-kpis">
+        <!-- Rendered by JS -->
+      </div>
+
+      <div class="marks-ledger-container" style="margin-top: 20px;">
+        <h4 style="margin-bottom: 12px;">Department Risk Indices</h4>
+        <div class="marks-table-wrap">
+          <table class="marks-table">
+            <thead>
+              <tr>
+                <th>Department</th>
+                <th>Enrollment</th>
+                <th>Average Risk Index</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="cohort-dept-table-body">
+              <!-- Rendered by JS -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================================= -->
+    <!-- VIEW: STUDENT FEE & DUES LEDGER (STUDENT SELF-SERVICE)            -->
+    <!-- ================================================================= -->
+    <section id="view-student_fees" class="tab-view">
+      <div class="framework-banner">
+        <div class="framework-banner-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/><line x1="6" y1="15" x2="10" y2="15"/></svg>
+        </div>
+        <div>
+          <h4>Student Fee Ledger &amp; Transparent Financial Accounting</h4>
+          <p>
+            University academic fee transparency under NEP 2020 guidelines. Review your personalized fee components, historical installment transactions, verified institutional receipts, and settle outstanding balances online.
+          </p>
+        </div>
+      </div>
+
+      <!-- Student Fee Intelligence KPI Grid -->
+      <div class="fee-kpi-grid" id="student-fee-kpi-container">
+        <!-- Rendered by JS -->
+      </div>
+
+      <!-- Itemized Fee Component Breakdown Cards (High Quality Grid) -->
+      <div class="marks-ledger-container" style="margin-top: 22px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; flex-wrap: wrap; gap: 10px;">
+          <div>
+            <h4 style="margin: 0;">Itemized Academic Fee Breakdown (2025-2026)</h4>
+            <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 2px;">Statutory academic schedule approved by University Academic Council.</p>
+          </div>
+          <div style="display: flex; gap: 8px;">
+            <button class="btn btn-primary btn-sm" onclick="openStudentPayModal()">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+              <span>Pay Outstanding Dues Online</span>
+            </button>
+            <button class="btn btn-secondary btn-sm" onclick="printFeeReceipt('latest')">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              <span>Download Official Receipt</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="fee-component-grid" id="student-fee-components-container">
+          <!-- Rendered by JS -->
+        </div>
+      </div>
+
+      <!-- Transaction History Table -->
+      <div class="marks-ledger-container" style="margin-top: 22px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+          <div>
+            <h4 style="margin: 0;">Verified Payment Transactions &amp; Receipts</h4>
+            <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 2px;">Cryptographically logged payments reconciled by the University Bursar.</p>
+          </div>
+        </div>
+        <div class="marks-table-wrap">
+          <table class="marks-table">
+            <thead>
+              <tr>
+                <th>Receipt No</th>
+                <th>Transaction ID</th>
+                <th>Date &amp; Time</th>
+                <th>Payment Mode</th>
+                <th>Amount Paid</th>
+                <th>Status</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="student-fee-txns-tbody">
+              <!-- Rendered by JS -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================================= -->
+    <!-- VIEW: INSTITUTIONAL FEE MANAGEMENT DESK (FACULTY & BURSAR)        -->
+    <!-- ================================================================= -->
+    <section id="view-institutional_fees" class="tab-view">
+      <div class="framework-banner">
+        <div class="framework-banner-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/><circle cx="12" cy="15" r="2"/></svg>
+        </div>
+        <div>
+          <h4>Institutional Fee Management &amp; Financial Governance Desk</h4>
+          <p>
+            Complete administrative authority over student cohort fee collections, outstanding dues, installment agreements, and statutory reminder dispatch under DPDP Act financial record standards.
+          </p>
+        </div>
+      </div>
+
+      <!-- Cohort Billing KPI Grid -->
+      <div class="fee-kpi-grid" id="institutional-fee-kpi-container">
+        <!-- Rendered by JS -->
+      </div>
+
+      <!-- Cohort Student Fee Ledger -->
+      <div class="marks-ledger-container" style="margin-top: 22px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; flex-wrap: wrap; gap: 10px;">
+          <div>
+            <h4 style="margin: 0;">Cohort Student Fee Accounts Ledger</h4>
+            <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 2px;">Active student accounts across B.Tech engineering departments.</p>
+          </div>
+          <div style="display: flex; gap: 8px; align-items: center;">
+            <select class="form-control" id="fee-filter-status" style="width: 160px; padding: 6px 10px;" onchange="filterCohortFeeLedger()">
+              <option value="All">All Fee Statuses</option>
+              <option value="Overdue">Overdue Dues Only</option>
+              <option value="Grace Period">Grace Period Only</option>
+              <option value="Clear">Clear / Paid in Full</option>
+            </select>
+            <button class="btn btn-primary btn-sm" onclick="openRecordPaymentModal()">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+              <span>Record Offline / Bank Payment</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="marks-table-wrap">
+          <table class="marks-table">
+            <thead>
+              <tr>
+                <th>Student Scholar</th>
+                <th>Roll No</th>
+                <th>Department</th>
+                <th>Total Fee</th>
+                <th>Paid Amount</th>
+                <th>Balance Due</th>
+                <th>Status</th>
+                <th>Last Reminded</th>
+                <th>Institutional Action</th>
+              </tr>
+            </thead>
+            <tbody id="cohort-fee-tbody">
+              <!-- Rendered by JS -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================================= -->
+    <!-- VIEW: STUDENT 360 & COMPLETE WORK INSPECTION (FULL AUTHORITY)     -->
+    <!-- ================================================================= -->
+    <section id="view-students" class="tab-view">
+      <div class="framework-banner">
+        <div class="framework-banner-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        </div>
+        <div>
+          <h4>Student 360 &amp; Complete Coursework Portfolio Inspection</h4>
+          <p>
+            Institutional Full Authority: Faculty, Mentors, and Department Chairs can inspect any student's entire academic portfolio: all submitted assignments, uploaded project files, continuous marks, attendance velocity, AI check scans, and fee status.
+          </p>
+        </div>
+      </div>
+
+      <!-- Student Selector Bar -->
+      <div class="marks-ledger-container" style="padding: 16px; margin-bottom: 20px;">
+        <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px;">
+          <div style="display: flex; align-items: center; gap: 12px; flex: 1; min-width: 280px;">
+            <label class="form-label" style="margin: 0; white-space: nowrap; font-weight: 700;">Select Student Scholar:</label>
+            <select class="form-control" id="portfolio-student-selector" style="flex: 1;" onchange="loadStudentCompleteWork(this.value)">
+              <!-- Populated by JS -->
+            </select>
+          </div>
+          <div style="display: flex; gap: 8px;">
+            <button class="btn btn-secondary btn-sm" onclick="reloadStudentCompleteWork()">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 4v6h-6M1 20v-6h6"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+              <span>Refresh Portfolio</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Complete Work Inspection Container -->
+      <div id="student-portfolio-container">
+        <!-- Rendered by JS -->
+      </div>
+    </section>
+
+    <!-- GOVERNANCE & POLICY -->
+    <section id="view-safeguards" class="tab-view">
+      <div class="framework-banner">
+        <div class="framework-banner-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </div>
+        <div>
+          <h4>DPDP Act 2023 &amp; NEP 2020 Algorithmic Governance Standards</h4>
+          <p>
+            Full adherence to Indian statutory data privacy rules. Non-punitive alert usage, advisor overrides, and student transparency guarantees are enforced system-wide.
+          </p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ==================== INSTITUTIONAL FOOTER ==================== -->
+  <footer class="app-footer">
+    <div class="footer-content">
+      <div>
+        <strong>EduEagle Institutional Student Growth &amp; Mentorship Companion</strong> | DPDP Act 2023 Compliance &amp; NEP 2020 Academic Framework | 450 Technology Square, Cambridge, MA 02139 | Helpline: +1 (617) 555-0198 | privacy@edueagle.edu
+      </div>
+      <div class="footer-links">
+        <a href="/privacy" onclick="event.preventDefault(); openPrivacyModal();">Privacy Policy</a>
+        <a href="/terms" onclick="event.preventDefault(); openTermsModal();">Terms of Service</a>
+        <a onclick="switchTab('safeguards')" style="cursor: pointer;">DPDP Framework</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Sticky Mobile Action Bar (Item 11) -->
+  <div class="sticky-mobile-cta" id="sticky-mobile-cta">
+    <button class="sticky-mobile-cta-btn sticky-mobile-cta-primary" id="mobile-primary-cta" onclick="handleMobilePrimaryCta()">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
+      <span id="mobile-primary-cta-text">Access Portal</span>
+    </button>
+    <button class="sticky-mobile-cta-btn sticky-mobile-cta-secondary" onclick="openLoginModal()">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      <span>Switch Role</span>
+    </button>
+  </div>
+
+  <!-- Institutional Cookie & Telemetry Banner (Item 17) -->
+  <div class="cookie-banner-wrapper hidden" id="cookie-banner" role="dialog" aria-label="Cookie and telemetry preferences">
+    <div class="cookie-banner-content">
+      <div class="cookie-banner-title">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+        <span>Institutional Session &amp; Privacy Notice</span>
+      </div>
+      <div class="cookie-banner-text">
+        EduEagle uses essential session authentication tokens and privacy-preserving institutional telemetry in compliance with DPDP educational record mandates. Zero third-party advertising or cross-site tracking cookies are used. Learn more in our <a href="/privacy">Privacy Policy</a>.
+      </div>
+    </div>
+    <div class="cookie-banner-actions">
+      <button class="btn btn-primary btn-sm" onclick="acceptCookieConsent('all')">Accept Essential &amp; Analytical</button>
+      <button class="btn btn-secondary btn-sm" onclick="acceptCookieConsent('essential')">Essential Only</button>
+    </div>
+  </div>
+
+  <!-- ==================== MODALS ==================== -->
+
+  <!-- 1. LOGIN & PERSONA SWITCHER MODAL -->
+  <div class="modal-backdrop hidden" id="login-modal">
+    <div class="modal-container" style="max-width: 580px;">
+      <div class="modal-header">
+        <h3>Switch Stakeholder Profile</h3>
+        <button class="modal-close-btn" onclick="closeModal('login-modal')">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 14px;">
+          Choose an institutional role to experience the role-adaptive views:
+        </div>
+        <div class="persona-chip-grid">
+          <button class="persona-fast-chip" onclick="quickLoginAs('Student'); closeModal('login-modal');">
+            <strong>Enrolled Student</strong>
+            <span class="role-tag">Student (Read-Only Marks &amp; Uploads)</span>
+          </button>
+          <button class="persona-fast-chip" onclick="quickLoginAs('Faculty'); closeModal('login-modal');">
+            <strong>Dr. Priya Nair</strong>
+            <span class="role-tag">Faculty (Marks Editor &amp; Task Creator)</span>
+          </button>
+          <button class="persona-fast-chip" onclick="quickLoginAs('Mentor'); closeModal('login-modal');">
+            <strong>Prof. Rajesh Verma</strong>
+            <span class="role-tag">Mentor (Pulse Feed &amp; Digest Scheduler)</span>
+          </button>
+          <button class="persona-fast-chip" onclick="quickLoginAs('HOD'); closeModal('login-modal');">
+            <strong>Dr. Sunita Rao</strong>
+            <span class="role-tag">Head of Department</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. PARENT REPORT PREVIEW MODAL -->
+  <div class="modal-backdrop hidden" id="parent-preview-modal">
+    <div class="modal-container" style="max-width: 640px;">
+      <div class="modal-header">
+        <h3>Bi-Weekly Parent Report Preview</h3>
+        <button class="modal-close-btn" onclick="closeModal('parent-preview-modal')">&times;</button>
+      </div>
+      <div class="modal-body" id="parent-preview-modal-body">
+        <!-- Rendered by JS -->
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" onclick="closeModal('parent-preview-modal')">Close Preview</button>
+        <button class="btn btn-primary" onclick="sendBiWeeklyDigest(); closeModal('parent-preview-modal');">Send via WhatsApp / Email</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. PRIVACY POLICY MODAL -->
+  <div class="modal-backdrop hidden" id="privacy-modal">
+    <div class="modal-container" style="max-width: 680px;">
+      <div class="modal-header">
+        <h3>Institutional Privacy Policy &amp; DPDP Compliance</h3>
+        <button class="modal-close-btn" onclick="closeModal('privacy-modal')">&times;</button>
+      </div>
+      <div class="modal-body" style="font-size: 0.84rem; color: var(--text-muted); line-height: 1.6;">
+        <h4 style="color: var(--text-main); margin-bottom: 4px;">1. Scope &amp; Jurisdiction</h4>
+        <p style="margin-bottom: 12px;">This privacy policy governs student education records and academic advisory data managed by EduEagle in accordance with the Digital Personal Data Protection (DPDP) Act 2023 and FERPA standards.</p>
+
+        <h4 style="color: var(--text-main); margin-bottom: 4px;">2. Purpose of Data Processing</h4>
+        <p style="margin-bottom: 12px;">Data ingested from Student Information Systems (SIS) and examination ledgers is processed solely to calculate academic early-warning alerts, continuous evaluation marks, and attendance velocity.</p>
+
+        <h4 style="color: var(--text-main); margin-bottom: 4px;">3. Role-Based Access Isolation</h4>
+        <p style="margin-bottom: 12px;">Student marks, evaluations, and parental summaries are partitioned by institutional role. Students retain strictly read-only visibility into their own individual records.</p>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-primary" onclick="closeModal('privacy-modal')">Acknowledge</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4. TERMS OF SERVICE MODAL -->
+  <div class="modal-backdrop hidden" id="terms-modal">
+    <div class="modal-container" style="max-width: 680px;">
+      <div class="modal-header">
+        <h3>Terms and Conditions of Institutional Service</h3>
+        <button class="modal-close-btn" onclick="closeModal('terms-modal')">&times;</button>
+      </div>
+      <div class="modal-body" style="font-size: 0.84rem; color: var(--text-muted); line-height: 1.6;">
+        <h4 style="color: var(--text-main); margin-bottom: 4px;">1. Authorized Use</h4>
+        <p style="margin-bottom: 12px;">Access to EduEagle is restricted to verified university faculty, appointed academic mentors, and registered students.</p>
+
+        <h4 style="color: var(--text-main); margin-bottom: 4px;">2. Non-Punitive Mandate</h4>
+        <p style="margin-bottom: 12px;">Alerts, risk levels, and attendance flags generated by the platform do not constitute disciplinary sanctions. No student may be subject to examination exclusion solely on the basis of an algorithmic indicator.</p>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-primary" onclick="closeModal('terms-modal')">Acknowledge</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 5. STUDENT PAY FEE MODAL -->
+  <div class="modal-backdrop hidden" id="pay-fee-modal">
+    <div class="modal-container" style="max-width: 500px;">
+      <div class="modal-header">
+        <h3>Pay Outstanding Academic Dues</h3>
+        <button class="modal-close-btn" onclick="closeModal('pay-fee-modal')">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div style="background: var(--bg-sand); border: 1px solid var(--border-color); border-radius: var(--radius-sm); padding: 12px; margin-bottom: 14px;">
+          <div style="font-size: 0.76rem; color: var(--text-muted);">Current Outstanding Due Balance:</div>
+          <div style="font-size: 1.4rem; font-weight: 800; color: var(--accent-terracotta);" id="pay-modal-due-display">INR 48,000.00</div>
+          <div style="font-size: 0.72rem; color: var(--text-muted); margin-top: 2px;">Semester 6 Tuition &amp; Academic Services Installment</div>
+        </div>
+
+        <div class="form-group" style="margin-bottom: 12px;">
+          <label class="form-label">Payment Amount (INR)</label>
+          <input type="number" id="pay-modal-amount" class="form-control" value="48000" min="1000" max="185000">
+        </div>
+
+        <div class="form-group" style="margin-bottom: 14px;">
+          <label class="form-label">Select Payment Gateway Mode</label>
+          <select id="pay-modal-method" class="form-control">
+            <option value="UPI (Google Pay)">UPI: Google Pay / PhonePe / BHIM</option>
+            <option value="Net Banking (HDFC)">Net Banking: HDFC Bank</option>
+            <option value="Net Banking (SBI)">Net Banking: State Bank of India</option>
+            <option value="Debit Card">Debit Card (Visa / MasterCard / RuPay)</option>
+            <option value="Credit Card">Credit Card</option>
+          </select>
+        </div>
+
+        <div class="form-group" style="margin-bottom: 12px;">
+          <label class="form-label">Payment Remarks / Reference Note</label>
+          <input type="text" id="pay-modal-remarks" class="form-control" placeholder="Semester 6 term fee installment" value="Semester 6 term fee installment">
+        </div>
+
+        <div style="font-size: 0.74rem; color: var(--text-muted); line-height: 1.4;">
+          Payments are cryptographically verified and issued an official institutional receipt instantly.
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" onclick="closeModal('pay-fee-modal')">Cancel</button>
+        <button class="btn btn-primary" id="btn-submit-fee-payment" onclick="submitStudentFeePayment()">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+          <span>Confirm &amp; Settle Online</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 6. INSTITUTIONAL RECORD PAYMENT MODAL (FACULTY / BURSAR) -->
+  <div class="modal-backdrop hidden" id="record-payment-modal">
+    <div class="modal-container" style="max-width: 520px;">
+      <div class="modal-header">
+        <h3>Record Offline / Bank Transfer Payment</h3>
+        <button class="modal-close-btn" onclick="closeModal('record-payment-modal')">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group" style="margin-bottom: 12px;">
+          <label class="form-label">Select Student Scholar</label>
+          <select id="record-modal-student" class="form-control">
+            <!-- Populated by JS -->
+          </select>
+        </div>
+
+        <div class="form-group" style="margin-bottom: 12px;">
+          <label class="form-label">Amount Received (INR)</label>
+          <input type="number" id="record-modal-amount" class="form-control" placeholder="e.g. 25000" min="1000">
+        </div>
+
+        <div class="form-group" style="margin-bottom: 12px;">
+          <label class="form-label">Payment Instrument / Mode</label>
+          <select id="record-modal-method" class="form-control">
+            <option value="Bank Draft / NEFT">Bank Draft / NEFT / RTGS</option>
+            <option value="Cheque Deposit">Cheque Deposit</option>
+            <option value="Institutional Scholarship Credit">Institutional Scholarship Credit</option>
+            <option value="Cash Deposit">Bursar Cash Counter</option>
+          </select>
+        </div>
+
+        <div class="form-group" style="margin-bottom: 12px;">
+          <label class="form-label">Bank Reference / UTR Number</label>
+          <input type="text" id="record-modal-receipt" class="form-control" placeholder="e.g. HDFC-NEFT-992104" value="NEFT-2026-90412">
+        </div>
+
+        <div class="form-group" style="margin-bottom: 12px;">
+          <label class="form-label">Audit Remarks</label>
+          <input type="text" id="record-modal-remarks" class="form-control" placeholder="Recorded by Department Office" value="Fee installment clearance verified by Finance Desk">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" onclick="closeModal('record-payment-modal')">Cancel</button>
+        <button class="btn btn-primary" id="btn-submit-record-payment" onclick="submitRecordPayment()">Record &amp; Issue Receipt</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 7. OFFICIAL FEE RECEIPT MODAL -->
+  <div class="modal-backdrop hidden" id="fee-receipt-modal">
+    <div class="modal-container" style="max-width: 600px;">
+      <div class="modal-header">
+        <h3>Official Institutional Fee Receipt</h3>
+        <button class="modal-close-btn" onclick="closeModal('fee-receipt-modal')">&times;</button>
+      </div>
+      <div class="modal-body" id="fee-receipt-modal-body">
+        <!-- Rendered by JS -->
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" onclick="closeModal('fee-receipt-modal')">Close</button>
+        <button class="btn btn-primary" onclick="window.print()">Print Official Receipt</button>
+      </div>
+  <!-- 8. UPLOAD ACADEMIC RESOURCE MODAL (Faculty / Mentor Only) -->
+  <div class="modal-backdrop hidden" id="upload-resource-modal">
+    <div class="modal-container" style="max-width: 620px;">
+      <div class="modal-header">
+        <h3>Publish Academic Resource</h3>
+        <button class="modal-close-btn" onclick="closeModal('upload-resource-modal')">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label class="form-label">Resource Title</label>
+          <input type="text" id="res-title-input" class="form-control" placeholder="e.g. Distributed Systems & Consensus Algorithms">
+        </div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px;">
+          <div class="form-group">
+            <label class="form-label">Subject</label>
+            <select id="res-subject-select" class="form-control">
+              <option value="Data Structures & Algorithms">Data Structures & Algorithms</option>
+              <option value="Operating Systems">Operating Systems</option>
+              <option value="Database Management Systems">Database Management Systems</option>
+              <option value="Computer Networks">Computer Networks</option>
+              <option value="Information Security & Cryptography">Information Security & Cryptography</option>
+              <option value="Machine Learning & Deep Learning">Machine Learning & Deep Learning</option>
+              <option value="Distributed Systems & Cloud Computing">Distributed Systems & Cloud Computing</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Category</label>
+            <select id="res-category-select" class="form-control">
+              <option value="Lecture Notes">Lecture Notes</option>
+              <option value="PYQ">PYQ Papers (Previous Years)</option>
+              <option value="PYQ Solutions">Model Solutions & Rubrics</option>
+              <option value="Syllabus">Curriculum & Syllabus</option>
+              <option value="Reference">Reference Handbook</option>
+            </select>
+          </div>
+        </div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px;">
+          <div class="form-group">
+            <label class="form-label">Semester</label>
+            <select id="res-semester-select" class="form-control">
+              <option value="Semester 6">Semester 6</option>
+              <option value="Semester 5">Semester 5</option>
+              <option value="Semester 4">Semester 4</option>
+              <option value="Semester 3">Semester 3</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Year / Term</label>
+            <input type="number" id="res-year-input" class="form-control" value="2026">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Study Material & Derivations (Readable Text / Model Answer)</label>
+          <textarea id="res-content-input" class="form-control" rows="5" placeholder="Enter key syllabus topics, derivations, formulas, or full markdown text for question-driven AI study assistance..."></textarea>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" onclick="closeModal('upload-resource-modal')">Cancel</button>
+        <button class="btn btn-primary" onclick="submitAcademicResourceUpload()">
+          <span>Publish Resource</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 9. PYQ MODEL SOLUTIONS & MARKING RUBRICS MODAL -->
+  <div class="modal-backdrop hidden" id="pyq-solution-modal">
+    <div class="modal-container" style="max-width: 740px;">
+      <div class="modal-header">
+        <div>
+          <h3 id="pyq-solution-title">Model Solutions & Marking Rubrics</h3>
+          <div style="font-size: 0.78rem; color: var(--text-muted); margin-top: 4px;" id="pyq-solution-meta">CS302 &bull; End-Semester Examination</div>
+        </div>
+        <button class="modal-close-btn" onclick="closeModal('pyq-solution-modal')">&times;</button>
+      </div>
+      <div class="modal-body" id="pyq-solution-body" style="max-height: 60vh; overflow-y: auto;">
+        <!-- Loaded dynamically from API -->
+      </div>
+      <div class="modal-footer" style="display: flex; justify-content: space-between;">
+        <button class="btn btn-secondary" onclick="closeModal('pyq-solution-modal')">Close</button>
+        <div style="display: flex; gap: 8px;">
+          <button class="btn btn-outline-primary" id="pyq-summarize-btn" onclick="summarizeCurrentModalResource()">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+            <span>Ask AI About This</span>
+          </button>
+          <button class="btn btn-primary" onclick="copyModalContent()">
+            <span>Copy Text</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  <!-- 10. OFFICIAL SCHOLARSHIP & CASH PRIZE AWARD CERTIFICATE MODAL -->
+  <div class="modal-backdrop hidden" id="scholarship-cert-modal">
+    <div class="modal-container" style="max-width: 680px; background: #FAF9F6; border: 1px solid var(--border-color); border-radius: var(--radius-lg); box-shadow: var(--shadow-lg);">
+      <div class="modal-header" style="background: #FFFFFF; border-bottom: 1px solid var(--border-color); border-top-left-radius: 11px; border-top-right-radius: 11px;">
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <div style="width: 36px; height: 36px; border-radius: var(--radius-sm); background: var(--accent-gold-light); color: var(--accent-gold); display: flex; align-items: center; justify-content: center;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/></svg>
+          </div>
+          <div>
+            <h3 style="margin: 0; font-size: 1.05rem;">Official Academic Merit &amp; Scholarship Grant</h3>
+            <div style="font-size: 0.76rem; color: var(--text-muted); margin-top: 2px;">NEP 2020 Continuous Evaluation Institutional Honors</div>
+          </div>
+        </div>
+        <button class="modal-close-btn" onclick="closeModal('scholarship-cert-modal')">&times;</button>
+      </div>
+
+      <div class="modal-body" id="scholarship-cert-body" style="padding: 24px; max-height: 70vh; overflow-y: auto;">
+        <!-- Injected dynamically via app.js -->
+      </div>
+
+      <div class="modal-footer" style="background: #FFFFFF; display: flex; justify-content: space-between; align-items: center; border-bottom-left-radius: 11px; border-bottom-right-radius: 11px;">
+        <button class="btn btn-secondary" onclick="closeModal('scholarship-cert-modal')">Close</button>
+        <div style="display: flex; gap: 8px;">
+          <button class="btn btn-outline-primary btn-sm" onclick="printOrDownloadCertificate()">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+            <span>Print Official Award</span>
+          </button>
+          <button class="btn btn-primary btn-sm" onclick="copyVoucherCode()">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+            <span>Copy Voucher Code</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 10b. TOP 3 REWARD RESTRICTION NOTIFICATION MODAL -->
+  <div class="modal-backdrop hidden" id="modal-top3-restricted">
+    <div class="modal-container" style="max-width: 540px; background: #FAF9F6; border: 1px solid var(--border-color); border-radius: var(--radius-lg); box-shadow: var(--shadow-lg);">
+      <div class="modal-header" style="background: #FFFFFF; border-bottom: 1px solid var(--border-color); border-top-left-radius: 11px; border-top-right-radius: 11px;">
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <div style="width: 36px; height: 36px; border-radius: var(--radius-sm); background: #FEE2E2; color: #DC2626; display: flex; align-items: center; justify-content: center;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          </div>
+          <div>
+            <h3 style="margin: 0; font-size: 1.05rem; color: #B91C1C;">Statutory Reward Access Restricted</h3>
+            <div style="font-size: 0.76rem; color: var(--text-muted); margin-top: 2px;">Reserved Strictly for Top 3 Podium Scholars</div>
+          </div>
+        </div>
+        <button class="modal-close-btn" onclick="closeModal('modal-top3-restricted')">&times;</button>
+      </div>
+
+      <div class="modal-body" id="top3-restricted-body" style="padding: 22px;">
+        <!-- Injected dynamically via app.js -->
+      </div>
+
+      <div class="modal-footer" style="background: #FFFFFF; display: flex; justify-content: space-between; align-items: center; border-bottom-left-radius: 11px; border-bottom-right-radius: 11px;">
+        <button class="btn btn-secondary" onclick="closeModal('modal-top3-restricted')">Dismiss Notice</button>
+        <button class="btn btn-primary" onclick="closeModal('modal-top3-restricted'); switchTab('tasks');">
+          <span>View Upcoming Tasks &amp; Assessments &rarr;</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 11. STUDENT PROFILE & AVATAR MANAGEMENT MODAL -->
+  <div class="modal-backdrop hidden" id="modal-student-profile">
+    <div class="modal-container" style="max-width: 520px;">
+      <div class="modal-header">
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <div class="user-avatar-small" id="profile-modal-avatar-preview">AS</div>
+          <div>
+            <h3 style="margin: 0;">My Student Profile &amp; Avatar</h3>
+            <div style="font-size: 0.74rem; color: var(--text-muted);">Manage your academic details &amp; preferences</div>
+          </div>
+        </div>
+        <button class="modal-close-btn" onclick="closeModal('modal-student-profile')">&times;</button>
+      </div>
+      <div class="modal-body">
+        <form onsubmit="event.preventDefault(); saveStudentProfile();">
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px;">
+            <div class="form-group">
+              <label class="form-label" style="font-weight: 600; font-size: 0.78rem;">Full Name</label>
+              <input type="text" id="profile-input-name" class="form-control" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label" style="font-weight: 600; font-size: 0.78rem;">University Roll Number</label>
+              <input type="text" id="profile-input-roll" class="form-control" disabled style="background: var(--bg-sand); opacity: 0.85;">
+            </div>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px;">
+            <div class="form-group">
+              <label class="form-label" style="font-weight: 600; font-size: 0.78rem;">Department</label>
+              <select id="profile-input-dept" class="form-control" style="font-size: 0.8rem;">
+                <option value="Computer Science & Engineering">Computer Science &amp; Engg</option>
+                <option value="Electronics & Communication">Electronics &amp; Comm</option>
+                <option value="Mechanical Engineering">Mechanical Engg</option>
+                <option value="Civil Engineering">Civil Engg</option>
+                <option value="Information Technology">Information Technology</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label" style="font-weight: 600; font-size: 0.78rem;">Academic Year</label>
+              <select id="profile-input-year" class="form-control" style="font-size: 0.8rem;">
+                <option value="1">Year 1</option>
+                <option value="2">Year 2</option>
+                <option value="3">Year 3</option>
+                <option value="4">Year 4</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group" style="margin-bottom: 10px;">
+            <label class="form-label" style="font-weight: 600; font-size: 0.78rem;">Gender</label>
+            <div style="display: flex; gap: 12px; font-size: 0.78rem;">
+              <label><input type="radio" name="profile-gender" value="Female" style="accent-color: var(--primary);"> Female</label>
+              <label><input type="radio" name="profile-gender" value="Male" style="accent-color: var(--primary);"> Male</label>
+              <label><input type="radio" name="profile-gender" value="Non-Binary" style="accent-color: var(--primary);"> Non-Binary</label>
+              <label><input type="radio" name="profile-gender" value="Other" style="accent-color: var(--primary);"> Other</label>
+            </div>
+          </div>
+
+          <div class="form-group" style="margin-bottom: 14px;">
+            <label class="form-label" style="font-weight: 600; font-size: 0.78rem;">Choose Profile Avatar</label>
+            <div class="avatar-picker-grid" id="profile-avatar-picker">
+              <button type="button" class="avatar-choice-chip" onclick="selectProfileAvatar(this, 'AS')">AS</button>
+              <button type="button" class="avatar-choice-chip" onclick="selectProfileAvatar(this, 'RS')">RS</button>
+              <button type="button" class="avatar-choice-chip" onclick="selectProfileAvatar(this, 'DP')">DP</button>
+              <button type="button" class="avatar-choice-chip" onclick="selectProfileAvatar(this, 'VK')">VK</button>
+              <button type="button" class="avatar-choice-chip" onclick="selectProfileAvatar(this, 'AK')">AK</button>
+              <button type="button" class="avatar-choice-chip" onclick="selectProfileAvatar(this, 'SR')">SR</button>
+            </div>
+            <input type="hidden" id="profile-avatar-val" value="AS">
+          </div>
+
+          <div style="display: flex; justify-content: flex-end; gap: 8px;">
+            <button type="button" class="btn btn-secondary" onclick="closeModal('modal-student-profile')">Cancel</button>
+            <button type="submit" class="btn btn-primary" id="btn-save-student-profile">Save Changes</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- 12. CLAIM MERIT REWARD MODAL -->
+  <div class="modal-backdrop hidden" id="modal-claim-reward">
+    <div class="modal-container" style="max-width: 540px;">
+      <div class="modal-header">
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <div style="width: 34px; height: 34px; border-radius: var(--radius-sm); background: var(--accent-gold-light); color: var(--accent-gold); display: flex; align-items: center; justify-content: center;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          </div>
+          <div>
+            <h3 style="margin: 0;">Claim Academic Merit Award</h3>
+            <div style="font-size: 0.74rem; color: var(--text-muted);">Redeem statutory scholarships &amp; cash prize grants</div>
+          </div>
+        </div>
+        <button class="modal-close-btn" onclick="closeModal('modal-claim-reward')">&times;</button>
+      </div>
+      <div class="modal-body">
+        <form onsubmit="event.preventDefault(); submitRewardClaimAction();">
+          <div class="form-group" style="margin-bottom: 12px;">
+            <label class="form-label" style="font-weight: 600; font-size: 0.78rem;">Selected Merit Honor</label>
+            <select id="claim-reward-tier-select" class="form-control" style="font-size: 0.82rem;">
+              <option value="1">1st Rank - Gold Laureate (INR 50,000 + 100% Tuition Waiver)</option>
+              <option value="2">2nd Rank - Silver Scholar (INR 25,000 + 50% Tuition Waiver)</option>
+              <option value="3">3rd Rank - Bronze Distinction (INR 10,000 + 25% Tuition Waiver)</option>
+              <option value="points">Points Redemption - Academic Book Grant / Cloud Voucher</option>
+            </select>
+          </div>
+
+          <div class="form-group" style="margin-bottom: 12px;">
+            <label class="form-label" style="font-weight: 600; font-size: 0.78rem;">Disbursement Preference</label>
+            <select id="claim-disbursement-pref" class="form-control" style="font-size: 0.82rem;">
+              <option value="bursar_credit">Direct Credit to University Tuition Bursar Account</option>
+              <option value="bank_transfer">Direct Benefit Transfer (DBT) to Student Bank Account</option>
+              <option value="upi">Institutional UPI / Fellowship Voucher</option>
+            </select>
+          </div>
+
+          <div class="form-group" style="margin-bottom: 14px;">
+            <label class="form-label" style="font-weight: 600; font-size: 0.78rem;">Bank Account / UPI Details or Notes</label>
+            <textarea id="claim-notes-input" class="form-control" rows="2" placeholder="e.g. State Bank of India A/C: 38291048291, IFSC: SBIN0001234 or UPI ID: aarav@okhdfcbank" style="font-size: 0.8rem;"></textarea>
+          </div>
+
+          <div style="padding: 10px; background: var(--bg-sand); border-radius: var(--radius-sm); border: 1px solid var(--border-color); margin-bottom: 14px; font-size: 0.74rem; color: var(--text-muted); line-height: 1.45;">
+            <strong>Statutory Guarantee:</strong> Claims are queued in pending status for Dean / Bursar verification. A cryptographically verified voucher code will be issued upon processing. Physical awards require institutional signing.
+          </div>
+
+          <div style="display: flex; justify-content: flex-end; gap: 8px;">
+            <button type="button" class="btn btn-secondary" onclick="closeModal('modal-claim-reward')">Cancel</button>
+            <button type="submit" class="btn btn-primary" id="btn-submit-claim">Submit Award Claim</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- 13. SUBMIT ASSIGNMENT EVALUATION APPEAL MODAL -->
+  <div class="modal-backdrop hidden" id="modal-submit-appeal">
+    <div class="modal-container" style="max-width: 520px;">
+      <div class="modal-header">
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <div style="width: 34px; height: 34px; border-radius: var(--radius-sm); background: var(--primary-light); color: var(--primary); display: flex; align-items: center; justify-content: center;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          </div>
+          <div>
+            <h3 style="margin: 0;">Request Human Evaluation Review</h3>
+            <div style="font-size: 0.74rem; color: var(--text-muted);" id="appeal-modal-subtitle">Submit grading or similarity appeal</div>
+          </div>
+        </div>
+        <button class="modal-close-btn" onclick="closeModal('modal-submit-appeal')">&times;</button>
+      </div>
+      <div class="modal-body">
+        <form onsubmit="event.preventDefault(); submitAppealAction();">
+          <input type="hidden" id="appeal-submission-id">
+          <div class="form-group" style="margin-bottom: 12px;">
+            <label class="form-label" style="font-weight: 600; font-size: 0.78rem;">Ground / Category of Appeal</label>
+            <select id="appeal-category-select" class="form-control" style="font-size: 0.8rem;">
+              <option value="similarity_dispute">Dispute Automated Similarity / Plagiarism Score</option>
+              <option value="handwritten_evidence">Handwritten Notebook Evidence Verification</option>
+              <option value="rubric_clarification">Marking Rubric Clarification Request</option>
+              <option value="video_integrity">Page-Turn Video Integrity Validation</option>
+            </select>
+          </div>
+
+          <div class="form-group" style="margin-bottom: 14px;">
+            <label class="form-label" style="font-weight: 600; font-size: 0.78rem;">Detailed Explanation &amp; Evidence Ground</label>
+            <textarea id="appeal-reason-input" class="form-control" rows="4" placeholder="Explain your derivation steps, reference literature consulted, and notebook page evidence for human faculty evaluation..." style="font-size: 0.8rem;" required></textarea>
+          </div>
+
+          <div style="display: flex; justify-content: flex-end; gap: 8px;">
+            <button type="button" class="btn btn-secondary" onclick="closeModal('modal-submit-appeal')">Cancel</button>
+            <button type="submit" class="btn btn-primary" id="btn-submit-appeal-action">Submit for Faculty Review</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Floating Toast Notifications Container -->
+  <div class="toast-container" id="toast-container"></div>
+
+  <!-- Intelligent AI Chatbot Floating Trigger -->
+  <button id="ai-chat-fab" class="ai-chat-fab" onclick="toggleChatWindow()" title="Chat with EagleMentor AI" aria-label="Open EagleMentor AI Chat">
+    <div class="ai-chat-fab-inner">
+      <svg class="ai-chat-fab-icon" id="ai-fab-open-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+        <path d="M8 9h.01"></path>
+        <path d="M12 9h.01"></path>
+        <path d="M16 9h.01"></path>
+      </svg>
+      <svg class="ai-chat-fab-close hidden" id="ai-fab-close-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="18" y1="6" x2="6" y2="18"></line>
+        <line x1="6" y1="6" x2="18" y2="18"></line>
+      </svg>
+    </div>
+    <span class="ai-chat-fab-badge" id="ai-chat-unread-badge">AI</span>
+  </button>
+
+  <!-- Intelligent AI Chatbot Window Drawer -->
+  <div id="ai-chat-window" class="ai-chat-window hidden" role="dialog" aria-labelledby="ai-chat-title" aria-modal="true">
+    <div class="ai-chat-header">
+      <div class="ai-chat-header-info">
+        <div class="ai-chat-avatar">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
+          </svg>
+        </div>
+        <div>
+          <div class="ai-chat-title" id="ai-chat-title">EagleMentor AI</div>
+          <div class="ai-chat-subtitle" id="ai-chat-role-indicator">Academic & Mentorship Companion</div>
+        </div>
+      </div>
+      <div class="ai-chat-header-actions">
+        <button class="ai-chat-action-btn" onclick="clearChatHistory()" title="Clear Conversation" aria-label="Clear chat">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="3 6 5 6 21 6"></polyline>
+            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+          </svg>
+        </button>
+        <button class="ai-chat-action-btn" onclick="toggleChatWindow()" title="Close Chat" aria-label="Close chat">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Chat Messages Stream -->
+    <div class="ai-chat-messages" id="ai-chat-messages">
+      <!-- Injected dynamically via app.js -->
+    </div>
+
+    <!-- Quick Prompt Suggestions Tray -->
+    <div class="ai-chat-suggestions" id="ai-chat-suggestions">
+      <!-- Chips injected dynamically based on current user / role -->
+    </div>
+
+    <!-- Chat Input Area -->
+    <form class="ai-chat-form" id="ai-chat-form" onsubmit="handleChatSubmit(event)">
+      <div class="ai-chat-input-wrapper">
+        <input 
+          type="text" 
+          id="ai-chat-input" 
+          class="ai-chat-input" 
+          placeholder="Ask about attendance, marks, fees, PYQs..." 
+          autocomplete="off" 
+          maxlength="1500"
+          aria-label="Message EagleMentor AI"
+        />
+        <button type="submit" id="ai-chat-send-btn" class="ai-chat-send-btn" aria-label="Send message">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="22" y1="2" x2="11" y2="13"></line>
+            <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+          </svg>
+        </button>
+      </div>
+      <div class="ai-chat-footer-note">
+        <span>NEP 2020 & DPDP Compliant • Context-Grounded</span>
+      </div>
+    </form>
+  </div>
+
+  <script>
+    function toggleSimMenu() {
+      const menu = document.getElementById("sim-menu");
+      if (menu) menu.style.display = menu.style.display === "none" ? "block" : "none";
+    }
+
+    function openModal(id) {
+      const m = document.getElementById(id);
+      if (m) m.classList.remove("hidden");
+    }
+
+    function closeModal(id) {
+      const m = document.getElementById(id);
+      if (m) m.classList.add("hidden");
+    }
+
+    function openLoginModal() {
+      openModal("login-modal");
+    }
+
+    function openPrivacyModal() {
+      openModal("privacy-modal");
+    }
+
+    function openTermsModal() {
+      openModal("terms-modal");
+    }
+
+    function focusSignInForm() {
+      const phoneInput = document.getElementById("landing-phone-input");
+      if (phoneInput) {
+        phoneInput.focus();
+        phoneInput.scrollIntoView({ behavior: "smooth", block: "center" });
+      }
+    }
+
+    function handleMobilePrimaryCta() {
+      if (typeof state !== 'undefined' && state.isAuthenticated) {
+        switchTab("podium");
+      } else {
+        focusSignInForm();
+      }
+    }
+
+    function checkCookieConsent() {
+      const consent = localStorage.getItem("edueagle_cookie_consent");
+      const banner = document.getElementById("cookie-banner");
+      if (!consent && banner) {
+        setTimeout(() => banner.classList.remove("hidden"), 400);
+      }
+    }
+
+    function acceptCookieConsent(type) {
+      localStorage.setItem("edueagle_cookie_consent", type);
+      const banner = document.getElementById("cookie-banner");
+      if (banner) banner.classList.add("hidden");
+      if (window.EagleAnalytics) {
+        window.EagleAnalytics.track("cookie_consent", { level: type });
+      }
+    }
+
+    document.addEventListener("DOMContentLoaded", checkCookieConsent);
+
+    document.addEventListener("click", (e) => {
+      const menu = document.getElementById("sim-menu");
+      if (menu && !e.target.closest("#sim-menu") && !e.target.closest('button[onclick="toggleSimMenu()"]')) {
+        menu.style.display = "none";
+      }
+    });
+  </script>
+  <script src="/js/charts.js"></script>
+  <script src="/js/analytics.js"></script>
+  <script src="/js/app.js"></script>
+</body>
+</html>

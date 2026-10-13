@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <!-- Soft Squircle Container (border-radius: 12px equivalent on 64x64) -->
+  <rect width="64" height="64" rx="14" fill="#0F5338"/>
+  <rect x="2" y="2" width="60" height="60" rx="12" fill="#FFFFFF"/>
+  
+  <!-- Rising Sun Glow & Rays in Warm Gold -->
+  <circle cx="32" cy="28" r="16" fill="#F59E0B" fill-opacity="0.18"/>
+  <path d="M32 8V13M16 14L20 18M48 14L44 18" stroke="#D97706" stroke-width="2.5" stroke-linecap="round"/>
+  
+  <!-- Open Book Base in Warm Sand / Gold -->
+  <path d="M16 46C21 43 27 43 32 47C37 43 43 43 48 46V35C43 32 37 32 32 36C27 32 21 32 16 35V46Z" fill="#FEF3C7" stroke="#D97706" stroke-width="2" stroke-linejoin="round"/>
+  <path d="M32 36V47" stroke="#D97706" stroke-width="2" stroke-linecap="round"/>
+  
+  <!-- Minimalist Soaring Geometric Eagle in Deep Forest Emerald -->
+  <path d="M32 16L37 24L50 23L40 30L44 41L32 34L20 41L24 30L14 23L27 24L32 16Z" fill="#0F5338" stroke="#0F5338" stroke-width="1.8" stroke-linejoin="round"/>
+</svg>

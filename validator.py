@@ -591,13 +591,25 @@ SCHEMAS = {
         },
         "subject": {
             "type": str,
-            "required": True,
+            "required": False,
+            "min_len": 2,
+            "max_len": 120
+        },
+        "course": {
+            "type": str,
+            "required": False,
             "min_len": 2,
             "max_len": 120
         },
         "deadline": {
             "type": str,
-            "required": True,
+            "required": False,
+            "min_len": 8,
+            "max_len": 30
+        },
+        "due_date": {
+            "type": str,
+            "required": False,
             "min_len": 8,
             "max_len": 30
         },
@@ -612,6 +624,38 @@ SCHEMAS = {
             "required": False,
             "min_val": 1,
             "max_val": 500
+        },
+        "marking_criteria": {
+            "type": str,
+            "required": False,
+            "max_len": 2000
+        },
+        "required_word_count": {
+            "type": (int, float),
+            "required": False,
+            "min_val": 0,
+            "max_val": 100000
+        },
+        "paragraph_count": {
+            "type": (int, float),
+            "required": False,
+            "min_val": 0,
+            "max_val": 1000
+        },
+        "required_points": {
+            "type": str,
+            "required": False,
+            "max_len": 2000
+        },
+        "submission_format": {
+            "type": str,
+            "required": False,
+            "max_len": 200
+        },
+        "attached_resources": {
+            "type": str,
+            "required": False,
+            "max_len": 2000
         }
     },
     "marks_update": {
@@ -680,20 +724,25 @@ SCHEMAS = {
         "weekly_review_day": {
             "type": str,
             "required": False,
-            "enum": {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"}
+            "enum": {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"}
         },
         "review_day": {
             "type": str,
             "required": False,
-            "enum": {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"}
+            "enum": {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"}
+        },
+        "day": {
+            "type": str,
+            "required": False,
+            "enum": {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"}
         }
     },
     "note_summarize": {
         "note_id": {
             "type": str,
-            "required": True,
-            "min_len": 3,
-            "max_len": 30
+            "required": False,
+            "min_len": 1,
+            "max_len": 50
         },
         "question": {
             "type": str,

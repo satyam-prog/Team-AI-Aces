@@ -89,12 +89,20 @@ status, data, _ = request_json("/api/students", method="GET")
 test("Unauthenticated API request rejected with 401 Unauthorized", status == 401, f"status={status}, data={data}")
 
 # Login as Faculty (Dr. Priya Nair) to obtain valid signed HMAC token
-status, data, _ = request_json("/api/auth/login", {"type": "role_switch", "role": "Faculty"}, method="POST")
+for _ in range(3):
+    status, data, _ = request_json("/api/auth/login", {"type": "role_switch", "role": "Faculty"}, method="POST")
+    if status == 200:
+        break
+    time.sleep(1.2)
 faculty_token = data.get("token")
 test("Faculty login succeeds and issues HMAC-signed session token", status == 200 and faculty_token and "." in faculty_token, f"status={status}, token={faculty_token}")
 
 # Login as Student (Aarav Sharma - USR-001 / STU-101)
-status, data, _ = request_json("/api/auth/login", {"type": "role_switch", "role": "Student"}, method="POST")
+for _ in range(3):
+    status, data, _ = request_json("/api/auth/login", {"type": "role_switch", "role": "Student"}, method="POST")
+    if status == 200:
+        break
+    time.sleep(1.2)
 student_token = data.get("token")
 test("Student login succeeds and issues HMAC-signed session token", status == 200 and student_token and "." in student_token, f"status={status}")
 
@@ -230,13 +238,21 @@ target_phone = f"99887{int(time.time() * 100) % 100000:05d}"
 locked_out = False
 lockout_secs = 0
 
-for attempt in range(8):
+attempt = 0
+max_tries = 12
+while attempt < 8 and max_tries > 0:
+    max_tries -= 1
     # Send incorrect OTPs repeatedly
     s, d, _ = request_json("/api/auth/login", {"type": "phone", "phone": target_phone, "otp": f"00000{attempt}"}, method="POST")
     if s == 429 and "locked" in d.get("error", "").lower():
         locked_out = True
         lockout_secs = d.get("retry_after_seconds", 0)
         break
+    elif s == 429:
+        # Preceding suite IP rate limiter backoff
+        time.sleep(1.5)
+        continue
+    attempt += 1
 
 test("Brute force protection locks account after repeated failed attempts (HTTP 429)", locked_out, f"locked={locked_out}, secs={lockout_secs}")
 test("Account lockout specifies cooldown duration (>0s)", lockout_secs > 0)
