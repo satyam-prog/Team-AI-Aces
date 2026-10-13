@@ -1,0 +1,14 @@
+# EduEagle Institutional Student Success Platform
+# Search Engine Crawling Policy
+User-agent: *
+Allow: /
+Allow: /privacy
+Allow: /terms
+Allow: /thank-you
+Allow: /static/
+Disallow: /api/
+Disallow: /private_storage/
+Disallow: /.env
+
+Sitemap: https://edueagle.edu/sitemap.xml
+

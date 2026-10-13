@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <defs>
+    <linearGradient id="shieldGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#1e293b"/>
+      <stop offset="100%" stop-color="#0f172a"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="630" fill="#0a0f1d"/>
+
+  <!-- Outer Border & Accent Bar -->
+  <rect x="24" y="24" width="1152" height="582" rx="8" fill="none" stroke="#24344d" stroke-width="2"/>
+  <rect x="24" y="24" width="1152" height="6" rx="3" fill="#2563eb"/>
+
+  <!-- Interior Canvas Card -->
+  <rect x="60" y="60" width="1080" height="510" rx="6" fill="#0f172a" stroke="#1e293b" stroke-width="1"/>
+
+  <!-- Brand Shield Logo -->
+  <g transform="translate(110, 110)">
+    <rect width="96" height="96" rx="16" fill="#151f32" stroke="#24344d" stroke-width="2"/>
+    <path d="M48 18L24 32V50C24 67.5 34.3 83.7 48 89C61.7 83.7 72 67.5 72 50V32L48 18Z" fill="url(#shieldGrad)" stroke="#2563eb" stroke-width="3" stroke-linejoin="round"/>
+    <path d="M35 46L48 37L61 46L48 55L35 46Z" fill="#2563eb"/>
+    <path d="M39 52V62C39 64 43 67 48 67C53 67 57 64 57 62V52" stroke="#38bdf8" stroke-width="2.5" stroke-linecap="round"/>
+    <line x1="61" y1="46" x2="61" y2="60" stroke="#38bdf8" stroke-width="2.5" stroke-linecap="round"/>
+  </g>
+
+  <!-- Brand Header Typography -->
+  <text x="230" y="160" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="52" font-weight="800" fill="#f8fafc" letter-spacing="1">EduEagle</text>
+  <text x="232" y="196" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="20" font-weight="600" fill="#38bdf8" letter-spacing="0.5">Student Success &amp; Academic Intervention Engine</text>
+
+  <!-- Divider -->
+  <line x1="100" y1="240" x2="1100" y2="240" stroke="#24344d" stroke-width="1.5"/>
+
+  <!-- Three Pillar Cards -->
+  <!-- Card 1: Student 360 -->
+  <g transform="translate(100, 270)">
+    <rect width="306" height="190" rx="6" fill="#151f32" stroke="#24344d" stroke-width="1"/>
+    <rect width="306" height="4" rx="2" fill="#38bdf8"/>
+    <text x="24" y="42" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="20" font-weight="700" fill="#f1f5f9">Student 360 Dossier</text>
+    <text x="24" y="74" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="14" font-weight="400" fill="#94a3b8">Continuous Internal Marks</text>
+    <text x="24" y="100" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="14" font-weight="400" fill="#94a3b8">30-Day Attendance Velocity</text>
+    <text x="24" y="126" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="14" font-weight="400" fill="#94a3b8">Fee Status &amp; LMS Engagement</text>
+    <text x="24" y="160" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="600" fill="#38bdf8">HOLISTIC STUDENT VISIBILITY</text>
+  </g>
+
+  <!-- Card 2: Explainable Risk Attribution -->
+  <g transform="translate(446, 270)">
+    <rect width="306" height="190" rx="6" fill="#151f32" stroke="#24344d" stroke-width="1"/>
+    <rect width="306" height="4" rx="2" fill="#2563eb"/>
+    <text x="24" y="42" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="20" font-weight="700" fill="#f1f5f9">Explainable Risk Attribution</text>
+    <text x="24" y="74" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="14" font-weight="400" fill="#94a3b8">Quantified Factor Drivers</text>
+    <text x="24" y="100" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="14" font-weight="400" fill="#94a3b8">Academic Dip Detection</text>
+    <text x="24" y="126" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="14" font-weight="400" fill="#94a3b8">Actionable Advisory Triggers</text>
+    <text x="24" y="160" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="600" fill="#60a5fa">ZERO BLACK-BOX DECISIONS</text>
+  </g>
+
+  <!-- Card 3: Governance & Safeguards -->
+  <g transform="translate(792, 270)">
+    <rect width="308" height="190" rx="6" fill="#151f32" stroke="#24344d" stroke-width="1"/>
+    <rect width="308" height="4" rx="2" fill="#16a34a"/>
+    <text x="24" y="42" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="20" font-weight="700" fill="#f1f5f9">Governance &amp; FERPA</text>
+    <text x="24" y="74" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="14" font-weight="400" fill="#94a3b8">Non-Punitive Mandate</text>
+    <text x="24" y="100" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="14" font-weight="400" fill="#94a3b8">Mandatory Advisor Overrides</text>
+    <text x="24" y="126" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="14" font-weight="400" fill="#94a3b8">Immutable Audit Ledger</text>
+    <text x="24" y="160" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="600" fill="#4ade80">ETHICAL ADVISORY SAFEGUARDS</text>
+  </g>
+
+  <!-- Footer Ribbon -->
+  <text x="100" y="515" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="13" font-weight="500" fill="#64748b">INSTITUTIONAL GRADE ACADEMIC RETENTION &amp; INTERVENTION PLATFORM | HTTPS://EDUEAGLE.EDU</text>
+</svg>
+

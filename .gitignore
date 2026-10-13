@@ -1,0 +1,41 @@
+# Environment & secrets
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.cert
+
+# Database files & local persistence
+*.db
+*.sqlite
+*.sqlite3
+edueagle.db
+
+# Sandboxed private storage
+private_storage/
+uploads/
+
+# Python byte code & cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+
+# System and logs
+*.log
+.DS_Store
+Thumbs.db
+scratch/
+
+# IDE configuration
+.vscode/
+.idea/
+
+# Vercel cache
+.vercel/
+
