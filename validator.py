@@ -235,7 +235,7 @@ SCHEMAS = {
         "type": {
             "type": str,
             "required": True,
-            "enum": {"firebase", "phone", "gmail", "github", "role_switch", "credentials", "student", "student_login", "staff_login"}
+            "enum": {"firebase", "phone", "gmail", "github", "role_switch", "credentials", "student", "student_login", "staff_login", "unified", "demo"}
         },
         "firebase_id_token": {
             "type": str,

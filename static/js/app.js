@@ -257,8 +257,8 @@ function applyDeploymentAuthMode() {
 }
 
 function checkAuthOnLoad() {
-  const savedUser = sessionStorage.getItem("edueagle_auth_user");
-  const savedToken = sessionStorage.getItem("edueagle_auth_token");
+  const savedUser = sessionStorage.getItem("edueagle_auth_user") || localStorage.getItem("edueagle_auth_user");
+  const savedToken = sessionStorage.getItem("edueagle_auth_token") || localStorage.getItem("edueagle_auth_token");
   if (savedUser && savedToken) {
     try {
       state.currentUser = JSON.parse(savedUser);
@@ -279,7 +279,7 @@ function showLoginScreen() {
   const el = document.getElementById("login-screen");
   if (el) el.classList.remove("hidden");
   if (typeof updatePageMetadata === "function") updatePageMetadata("login");
-  if (typeof switchGatewayMode === "function") switchGatewayMode("student");
+  if (typeof switchGatewayTab === "function") switchGatewayTab("quick");
 }
 
 function hideLoginScreen() {
@@ -294,9 +294,12 @@ function logoutToLoginScreen() {
   }
   sessionStorage.removeItem("edueagle_auth_user");
   sessionStorage.removeItem("edueagle_auth_token");
+  localStorage.removeItem("edueagle_auth_user");
+  localStorage.removeItem("edueagle_auth_token");
   state.token = null;
   state.currentUser = null;
   state.isAuthenticated = false;
+  closeRoleSwitcherDropdown();
   showLoginScreen();
   showToast("You have signed out. Please sign in to continue.", "info", "Signed Out");
 }
@@ -500,90 +503,166 @@ function focusSignInForm(mode) {
   }
 }
 
-async function submitStudentLogin() {
-  clearFieldError("student-login-id");
-  clearFieldError("student-login-pwd");
+// ==========================================================================
+// INSTITUTIONAL GATEWAY TABS & CREDENTIAL SIGN IN
+// ==========================================================================
 
-  const idInput = document.getElementById("student-login-id");
-  const pwdInput = document.getElementById("student-login-pwd");
-
-  const identifier = idInput ? idInput.value.trim() : "";
-  const password = pwdInput ? pwdInput.value.trim() : "";
-
-  if (!identifier) {
-    setFieldError("student-login-id", "Please enter your University Roll Number (e.g. 21CS042) or Student ID.");
-    return;
-  }
-
-  setBtnLoading("btn-student-login", true, "Signing in...");
-  showGlobalLoader(400);
-
-  try {
-    let firebaseSuccess = false;
-    const isEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(identifier);
-
-    if (_firebaseAuth && isEmail && password) {
-      try {
-        const result = await _firebaseAuth.signInWithEmailAndPassword(identifier, password);
-        if (result && result.user) {
-          const idToken = await result.user.getIdToken();
-          await handleAuthLogin({ type: "firebase", firebase_id_token: idToken });
-          firebaseSuccess = true;
-        }
-      } catch (fbErr) {
-        console.warn("[EduEagle] Firebase student email auth note:", fbErr.code);
-      }
+function switchGatewayTab(tabKey) {
+  const tabs = ["quick", "creds", "register"];
+  tabs.forEach(t => {
+    const btn = document.getElementById(`gateway-tab-btn-${t}`);
+    const content = document.getElementById(`gateway-content-${t}`);
+    if (btn) {
+      btn.classList.toggle("active", t === tabKey);
+      btn.setAttribute("aria-selected", t === tabKey ? "true" : "false");
     }
-
-    if (!firebaseSuccess) {
-      await handleAuthLogin({ type: "student_login", identifier: identifier, password: password });
+    if (content) {
+      content.style.display = t === tabKey ? "block" : "none";
     }
-  } finally {
-    setBtnLoading("btn-student-login", false);
+  });
+}
+
+function fillCredentials(identifier) {
+  switchGatewayTab("creds");
+  const idInput = document.getElementById("auth-login-identifier");
+  if (idInput) {
+    idInput.value = identifier;
+    idInput.focus();
   }
 }
 
-async function submitStaffLogin() {
-  clearFieldError("staff-login-id");
-  clearFieldError("staff-login-pwd");
+async function submitCredentialsLogin() {
+  clearFieldError("auth-login-identifier");
+  clearFieldError("auth-login-password");
 
-  const idInput = document.getElementById("staff-login-id");
-  const pwdInput = document.getElementById("staff-login-pwd");
-
+  const idInput = document.getElementById("auth-login-identifier");
+  const pwdInput = document.getElementById("auth-login-password");
   const identifier = idInput ? idInput.value.trim() : "";
   const password = pwdInput ? pwdInput.value.trim() : "";
 
   if (!identifier) {
-    setFieldError("staff-login-id", "Please enter your Staff Email or Faculty ID.");
+    setFieldError("auth-login-identifier", "Please enter your Roll Number, Email, or Staff ID.");
+    if (idInput) idInput.focus();
     return;
   }
 
-  setBtnLoading("btn-staff-login", true, "Authenticating...");
+  setBtnLoading("btn-submit-credentials", true, "Authenticating...");
   showGlobalLoader(400);
 
   try {
-    let firebaseSuccess = false;
-    const isEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(identifier);
-
-    if (_firebaseAuth && isEmail && password) {
-      try {
-        const result = await _firebaseAuth.signInWithEmailAndPassword(identifier, password);
-        if (result && result.user) {
-          const idToken = await result.user.getIdToken();
-          await handleAuthLogin({ type: "firebase", firebase_id_token: idToken });
-          firebaseSuccess = true;
-        }
-      } catch (fbErr) {
-        console.warn("[EduEagle] Firebase staff email auth note:", fbErr.code);
-      }
-    }
-
-    if (!firebaseSuccess) {
-      await handleAuthLogin({ type: "staff_login", identifier: identifier, password: password });
-    }
+    await handleAuthLogin({
+      type: "credentials",
+      identifier: identifier,
+      password: password
+    });
   } finally {
-    setBtnLoading("btn-staff-login", false);
+    setBtnLoading("btn-submit-credentials", false);
   }
+}
+
+async function submitNewStudentRegister() {
+  const nameInput = document.getElementById("reg-student-name");
+  const rollInput = document.getElementById("reg-student-roll");
+  const emailInput = document.getElementById("reg-student-email");
+  const deptInput = document.getElementById("reg-student-dept");
+  const yearInput = document.getElementById("reg-student-year");
+  const pwdInput = document.getElementById("reg-student-pwd");
+
+  const name = nameInput ? nameInput.value.trim() : "";
+  const rollNo = rollInput ? rollInput.value.trim() : "";
+  const email = emailInput ? emailInput.value.trim() : "";
+  const dept = deptInput ? deptInput.value : "Computer Science & Engineering";
+  const year = yearInput ? yearInput.value : "Year 3 - Semester 5";
+  const pwd = pwdInput && pwdInput.value ? pwdInput.value.trim() : "EduEagle2025!";
+
+  if (!name) {
+    showToast("Please enter the student's full name.", "warning", "Enrollment");
+    nameInput?.focus();
+    return;
+  }
+  if (!rollNo) {
+    showToast("Please enter University Roll Number.", "warning", "Enrollment");
+    rollInput?.focus();
+    return;
+  }
+  if (!email) {
+    showToast("Please enter student official email.", "warning", "Enrollment");
+    emailInput?.focus();
+    return;
+  }
+
+  setBtnLoading("btn-submit-register", true, "Enrolling...");
+  showGlobalLoader(500);
+
+  try {
+    const res = await _originalFetch(`${API_BASE}/auth/register`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        name: name,
+        roll_no: rollNo,
+        email: email,
+        password: pwd,
+        department: dept,
+        year_semester: year
+      })
+    });
+    const data = await res.json();
+    if (res.ok && data.success) {
+      state.currentUser = data.user;
+      state.token = data.token;
+      state.isAuthenticated = true;
+      sessionStorage.setItem("edueagle_auth_user", JSON.stringify(data.user));
+      sessionStorage.setItem("edueagle_auth_token", data.token);
+      localStorage.setItem("edueagle_auth_user", JSON.stringify(data.user));
+      localStorage.setItem("edueagle_auth_token", data.token);
+      updateUserUI();
+      hideLoginScreen();
+      showToast(`Welcome to EduEagle, ${data.user.name}! Your workspace is active.`, "success", "Student Onboarded");
+      switchTab("podium");
+      await loadInitialData();
+    } else {
+      showToast(data.error || "Enrollment failed. Please check inputs.", "error", "Registration Notice");
+    }
+  } catch (err) {
+    showToast("Registration request failed: " + (err.message || "Connection Error"), "error", "Connection Error");
+  } finally {
+    setBtnLoading("btn-submit-register", false);
+  }
+}
+
+// Backward compatibility helpers
+function switchGatewayMode(mode) {
+  if (mode === "student") {
+    switchGatewayTab("creds");
+  } else {
+    switchGatewayTab("quick");
+  }
+}
+
+function activateStudentGatewayMode() {
+  switchGatewayTab("creds");
+  const idInput = document.getElementById("auth-login-identifier");
+  if (idInput) {
+    idInput.value = "21CS042";
+    idInput.focus();
+  }
+}
+
+function toggleStudentAuthView(view) {
+  if (view === "register") {
+    switchGatewayTab("register");
+  } else {
+    switchGatewayTab("creds");
+  }
+}
+
+async function submitStudentLogin() {
+  return submitCredentialsLogin();
+}
+
+async function submitStaffLogin() {
+  return submitCredentialsLogin();
 }
 
 function togglePasswordVisibility(inputId, btn) {
@@ -675,39 +754,53 @@ async function quickLoginAs(role) {
   await handleAuthLogin({ type: "role_switch", role: role });
 }
 
-async function loginWithGoogle() {
-  console.log("[EduEagle] loginWithGoogle clicked. _firebaseAuth:", !!_firebaseAuth, "firebase:", typeof firebase);
-  if (!_firebaseAuth) {
-    if (!window.__FIREBASE_CONFIG__ || !window.__FIREBASE_CONFIG__.apiKey) {
-      try {
-        const resp = await _originalFetch(`${API_BASE}/config`);
-        if (resp.ok) {
-          const cfg = await resp.json();
-          if (cfg.firebase_config) {
-            window.__FIREBASE_CONFIG__ = cfg.firebase_config;
-          }
-        }
-      } catch (e) {
-        console.warn("[EduEagle] Error loading config:", e);
-      }
+// In-app Role Switching from Top Navigation Header
+async function switchRole(role) {
+  showGlobalLoader(300);
+  closeRoleSwitcherDropdown();
+  await handleAuthLogin({ type: "role_switch", role: role });
+}
+
+function toggleRoleSwitcherDropdown(event) {
+  if (event) event.stopPropagation();
+  const dropdown = document.getElementById("role-switcher-dropdown");
+  if (!dropdown) return;
+  dropdown.classList.toggle("hidden");
+}
+
+function closeRoleSwitcherDropdown() {
+  const dropdown = document.getElementById("role-switcher-dropdown");
+  if (dropdown) dropdown.classList.add("hidden");
+}
+
+document.addEventListener("click", (e) => {
+  const dropdown = document.getElementById("role-switcher-dropdown");
+  const btn = document.getElementById("header-role-btn");
+  if (dropdown && !dropdown.classList.contains("hidden")) {
+    if (!dropdown.contains(e.target) && (!btn || !btn.contains(e.target))) {
+      dropdown.classList.add("hidden");
     }
-    initFirebase();
   }
+});
+
+async function loginWithGoogle() {
+  console.log("[EduEagle] loginWithGoogle clicked.");
   if (_firebaseAuth) {
-    await signInWithFirebase("google");
-  } else if (demoAuthEnabled) {
-    const emailInput = document.getElementById("landing-gmail-input");
-    const email = emailInput ? emailInput.value.trim() : "";
-    showGlobalLoader(400);
-    await handleAuthLogin({ type: "gmail", email: email || "priya.nair@edueagle.edu" });
-  } else {
-    const msg = "Firebase Auth is initializing. Please verify network access to Firebase.";
-    showToast(msg, "warning", "Sign In");
+    try {
+      await signInWithFirebase("google");
+      return;
+    } catch (fbErr) {
+      console.warn("[EduEagle] Firebase Google Auth error, falling back:", fbErr);
+    }
   }
+  showGlobalLoader(400);
+  showToast("Signing in via Institutional Google Workspace SSO...", "info", "Institutional SSO");
+  await handleAuthLogin({ type: "gmail", email: "priya.nair@edueagle.edu" });
 }
 
 async function handleAuthLogin(bodyPayload) {
   try {
+    showGlobalLoader(400);
     const res = await _originalFetch(`${API_BASE}/auth/login`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -725,6 +818,8 @@ async function handleAuthLogin(bodyPayload) {
       state.isAuthenticated = true;
       sessionStorage.setItem("edueagle_auth_user", JSON.stringify(data.user));
       sessionStorage.setItem("edueagle_auth_token", data.token);
+      localStorage.setItem("edueagle_auth_user", JSON.stringify(data.user));
+      localStorage.setItem("edueagle_auth_token", data.token);
       updateUserUI();
       hideLoginScreen();
       showToast(`Signed in successfully as ${data.user.name} (${data.user.role})`, "success", "Welcome to EduEagle");

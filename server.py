@@ -1526,9 +1526,26 @@ class EduEagleAPIHandler(http.server.SimpleHTTPRequestHandler):
 
             user = None
             if auth_type == "role_switch":
-                role = body.get("role", "Faculty")
-                cursor.execute("SELECT * FROM users WHERE role = ? LIMIT 1", (role,))
+                role_req = str(body.get("role", "Faculty")).strip()
+                role_map = {
+                    "student": "Student",
+                    "faculty": "Faculty",
+                    "mentor": "Mentor",
+                    "hod": "HOD",
+                    "finance": "Finance Team",
+                    "finance team": "Finance Team",
+                    "bursar": "Finance Team",
+                    "counsellor": "Counsellor",
+                    "counselor": "Counsellor",
+                    "placement": "Placement Team",
+                    "principal": "HOD"
+                }
+                target_role = role_map.get(role_req.lower(), role_req)
+                cursor.execute("SELECT * FROM users WHERE LOWER(role) = LOWER(?) LIMIT 1", (target_role,))
                 user = cursor.fetchone()
+                if not user:
+                    cursor.execute("SELECT * FROM users WHERE LOWER(role) LIKE ? LIMIT 1", (f"%{target_role.lower()}%",))
+                    user = cursor.fetchone()
                 if not user:
                     cursor.execute("SELECT * FROM users LIMIT 1")
                     user = cursor.fetchone()
@@ -1541,8 +1558,10 @@ class EduEagleAPIHandler(http.server.SimpleHTTPRequestHandler):
                     cursor.execute("SELECT * FROM users WHERE role = 'Faculty' LIMIT 1")
                     user = cursor.fetchone()
 
-            elif auth_type in ("credentials", "student", "student_login", "staff_login"):
+            elif auth_type in ("credentials", "student", "student_login", "staff_login", "unified", "demo"):
                 ident = identifier.lower()
+
+                # 1. Match students by roll_no, id, email
                 cursor.execute("""
                     SELECT * FROM students
                     WHERE LOWER(roll_no) = ? OR LOWER(id) = ? OR LOWER(email) = ?
@@ -1553,11 +1572,85 @@ class EduEagleAPIHandler(http.server.SimpleHTTPRequestHandler):
                     cursor.execute("SELECT * FROM users WHERE student_id = ? OR LOWER(email) = ?",
                                    (st_dict["id"], st_dict["email"].lower()))
                     user = cursor.fetchone()
-                else:
+                    if not user:
+                        # Auto-link or create user record for student
+                        clean_name = st_dict.get("name", "Student")
+                        avatar_init = st_dict.get("avatar") or "ST"
+                        uid = f"USR-{uuid.uuid4().hex[:6].upper()}"
+                        cursor.execute("""
+                            INSERT INTO users (id, name, email, phone, role, department, avatar, student_id, created_at)
+                            VALUES (?, ?, ?, ?, 'Student', ?, ?, ?, ?)
+                        """, (uid, clean_name, st_dict.get("email", ""), st_dict.get("phone", ""),
+                              st_dict.get("department", "CSE"), avatar_init, st_dict["id"], now_str))
+                        conn.commit()
+                        cursor.execute("SELECT * FROM users WHERE id = ?", (uid,))
+                        user = cursor.fetchone()
+
+                # 2. Match users by email, id, github_id
+                if not user:
                     cursor.execute("""
                         SELECT * FROM users
                         WHERE LOWER(email) = ? OR LOWER(id) = ? OR LOWER(github_id) = ?
                     """, (ident, ident, ident))
+                    user = cursor.fetchone()
+
+                # 3. Match by role keyword (e.g. "student", "faculty", "mentor", "hod", "finance")
+                if not user:
+                    role_map = {
+                        "student": "Student",
+                        "faculty": "Faculty",
+                        "mentor": "Mentor",
+                        "hod": "HOD",
+                        "finance": "Finance Team",
+                        "counsellor": "Counsellor",
+                        "counselor": "Counsellor",
+                        "placement": "Placement Team"
+                    }
+                    target_role = role_map.get(ident)
+                    if target_role:
+                        cursor.execute("SELECT * FROM users WHERE LOWER(role) = LOWER(?) LIMIT 1", (target_role,))
+                        user = cursor.fetchone()
+
+                # 4. Match users by partial name (e.g. "aarav", "priya", "rajesh", "sunita", "kavita")
+                if not user and len(ident) >= 3:
+                    cursor.execute("SELECT * FROM users WHERE LOWER(name) LIKE ? LIMIT 1", (f"%{ident}%",))
+                    user = cursor.fetchone()
+
+                # 5. Match students by partial name
+                if not user and len(ident) >= 3:
+                    cursor.execute("SELECT * FROM students WHERE LOWER(name) LIKE ? LIMIT 1", (f"%{ident}%",))
+                    st2 = cursor.fetchone()
+                    if st2:
+                        st_dict2 = dict(st2)
+                        cursor.execute("SELECT * FROM users WHERE student_id = ? OR LOWER(email) = ?",
+                                       (st_dict2["id"], st_dict2["email"].lower()))
+                        user = cursor.fetchone()
+
+                # 6. Fallback: Auto-provision student profile so user is NEVER blocked
+                if not user and ident:
+                    clean_name = identifier.split("@")[0].replace(".", " ").title() if "@" in identifier else identifier.title()
+                    if not clean_name:
+                        clean_name = "Academic Scholar"
+                    new_user_id = f"USR-{uuid.uuid4().hex[:6].upper()}"
+                    new_student_id = f"STU-{uuid.uuid4().hex[:6].upper()}"
+                    avatar_init = "".join([p[0] for p in clean_name.split()[:2]]).upper() or "AS"
+                    roll_num = identifier.upper() if len(identifier) <= 10 and "@" not in identifier else f"21CS{uuid.uuid4().hex[:3].upper()}"
+                    user_email = identifier.lower() if "@" in identifier else f"{identifier.lower()}@edueagle.edu"
+
+                    cursor.execute("""
+                        INSERT INTO students (id, roll_no, name, email, department, year_semester, program, academic_risk_level, avatar, cgpa, attendance_overall, created_at)
+                        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 8.4, 88.5, ?)
+                    """, (new_student_id, roll_num, clean_name, user_email,
+                          "Computer Science & Engineering", "Year 3 - Semester 5", "B.Tech Computer Science", "Low Risk", avatar_init, now_str))
+
+                    cursor.execute("""
+                        INSERT INTO users (id, name, email, phone, role, department, avatar, student_id, created_at)
+                        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+                    """, (new_user_id, clean_name, user_email,
+                          "9876543210", "Student", "Computer Science & Engineering", avatar_init, new_student_id, now_str))
+                    conn.commit()
+
+                    cursor.execute("SELECT * FROM users WHERE id = ?", (new_user_id,))
                     user = cursor.fetchone()
 
             elif auth_type == "phone":

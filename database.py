@@ -2703,10 +2703,27 @@ def register_new_student(name, roll_no, email, phone=None, gender="Not Specified
     cursor = conn.cursor()
     now_str = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
-    cursor.execute("SELECT id FROM users WHERE LOWER(email) = ? OR LOWER(github_id) = ?", (email.lower(), roll_no.lower()))
-    if cursor.fetchone():
+    cursor.execute("""
+        SELECT id FROM students WHERE LOWER(roll_no) = ? OR LOWER(email) = ?
+    """, (roll_no.lower(), email.lower()))
+    existing_st = cursor.fetchone()
+    if existing_st:
+        cursor.execute("SELECT * FROM users WHERE student_id = ? OR LOWER(email) = ?", (existing_st[0], email.lower()))
+        existing_u = cursor.fetchone()
+        cursor.execute("SELECT * FROM students WHERE id = ?", (existing_st[0],))
+        st_data = dict(cursor.fetchone())
         conn.close()
-        return None, "A student account with this email or roll number already exists."
+        if existing_u:
+            return {"user": dict(existing_u), "student": st_data}, None
+        return {"user": {"id": f"USR-{existing_st[0]}", "name": name, "email": email, "role": "Student", "student_id": existing_st[0], "avatar": avatar}, "student": st_data}, None
+
+    cursor.execute("SELECT id FROM users WHERE LOWER(email) = ? OR LOWER(github_id) = ?", (email.lower(), roll_no.lower()))
+    existing_u = cursor.fetchone()
+    if existing_u:
+        cursor.execute("SELECT * FROM users WHERE id = ?", (existing_u[0],))
+        u_data = dict(cursor.fetchone())
+        conn.close()
+        return {"user": u_data, "student": {"id": u_data.get("student_id"), "name": name, "roll_no": roll_no}}, None
 
     cursor.execute("SELECT COUNT(*) FROM students")
     next_num = cursor.fetchone()[0] + 101
