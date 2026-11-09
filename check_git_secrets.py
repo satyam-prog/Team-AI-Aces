@@ -44,6 +44,9 @@ def scan_directory(base_dir: str):
                                 # Exclude code definitions / comments like regex definition itself
                                 if "SECRET_PATTERNS" in line or "re.compile" in line:
                                     continue
+                                # Exclude public client-side Firebase API keys from false positive alerts
+                                if "AIzaSy" in line and any(f in file_path.lower() for f in ("index.html", "app.js", "firebase")):
+                                    continue
                                 rel_path = os.path.relpath(file_path, base_dir)
                                 findings.append((label, rel_path, line_num, line.strip()))
             except Exception as e:

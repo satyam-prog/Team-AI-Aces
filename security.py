@@ -158,7 +158,7 @@ MAGIC_SIGNATURES = {
 FORBIDDEN_FILE_PATTERNS = [
     re.compile(r"(^|[\\/])\."),          # Hidden files/directories (.env, .git, .vscode)
     re.compile(r"\.(env|db|sqlite|sqlite3|py|pyc|log|key|pem|bak|swp|config|ini|sh|bat|cmd)$", re.IGNORECASE),
-    re.compile(r"(serviceAccount|service_account|firebase)", re.IGNORECASE),
+    re.compile(r"(?:service_?account|firebase).*\.json$", re.IGNORECASE),
 ]
 
 def is_path_forbidden(path: str) -> bool:

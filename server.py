@@ -123,7 +123,9 @@ class EduEagleAPIHandler(http.server.SimpleHTTPRequestHandler):
         return security.verify_signed_token(token)
 
     def do_OPTIONS(self):
-        if security.is_path_forbidden(self.path):
+        parsed = urllib.parse.urlparse(self.path)
+        path = parsed.path
+        if security.is_path_forbidden(path):
             self.send_response(403)
             self.end_headers()
             return
@@ -133,8 +135,12 @@ class EduEagleAPIHandler(http.server.SimpleHTTPRequestHandler):
         self.end_headers()
 
     def do_GET(self):
+        parsed = urllib.parse.urlparse(self.path)
+        path = parsed.path
+        query = urllib.parse.parse_qs(parsed.query)
+
         # 1. Enforce forbidden path & directory traversal filtering (.env, .git, .py, .db, ..)
-        if security.is_path_forbidden(self.path):
+        if security.is_path_forbidden(path):
             self.send_response(403)
             self.send_header("Content-Type", "application/json; charset=utf-8")
             self.send_header("X-Content-Type-Options", "nosniff")
@@ -145,9 +151,6 @@ class EduEagleAPIHandler(http.server.SimpleHTTPRequestHandler):
             return
 
         client_ip = self.client_address[0]
-        parsed = urllib.parse.urlparse(self.path)
-        path = parsed.path
-        query = urllib.parse.parse_qs(parsed.query)
 
         # Root and institutional static landing views
         if path in ("/", "/index.html"):
@@ -272,8 +275,11 @@ class EduEagleAPIHandler(http.server.SimpleHTTPRequestHandler):
             return self._send_404_page()
 
     def do_POST(self):
+        parsed = urllib.parse.urlparse(self.path)
+        path = parsed.path
+
         # 1. Enforce forbidden path & directory traversal filtering
-        if security.is_path_forbidden(self.path):
+        if security.is_path_forbidden(path):
             self.send_response(403)
             self.send_header("Content-Type", "application/json; charset=utf-8")
             self.send_header("X-Content-Type-Options", "nosniff")
@@ -284,8 +290,6 @@ class EduEagleAPIHandler(http.server.SimpleHTTPRequestHandler):
             return
 
         client_ip = self.client_address[0]
-        parsed = urllib.parse.urlparse(self.path)
-        path = parsed.path
 
         if path.startswith("/api/"):
             # Enforce thread-safe rate limiting

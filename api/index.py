@@ -38,9 +38,52 @@ class VercelRequestHandler(server.EduEagleAPIHandler):
             self.headers["Content-Length"] = environ["CONTENT_LENGTH"]
 
         self.command = environ.get("REQUEST_METHOD", "GET").upper()
-        path = environ.get("PATH_INFO", "/")
+
+        # Resolve real request path: On Vercel, PATH_INFO can be rewritten to /api/index.py
+        import urllib.parse
+        real_path = None
+        for key in (
+            "HTTP_X_FORWARDED_URI",
+            "REQUEST_URI",
+            "RAW_URI",
+            "HTTP_X_MATCHED_PATH",
+            "HTTP_X_VERCEL_FORWARDED_FOR",
+        ):
+            val = environ.get(key)
+            if val:
+                parsed_val = urllib.parse.urlparse(val).path
+                if parsed_val and not parsed_val.endswith(".py"):
+                    real_path = parsed_val
+                    break
+
+        if not real_path:
+            route_matches = environ.get("HTTP_X_NOW_ROUTE_MATCHES", "")
+            if route_matches:
+                qs = urllib.parse.parse_qs(route_matches)
+                match1 = qs.get("1", [""])[0]
+                if match1:
+                    real_path = f"/api/{match1}"
+
+        if not real_path:
+            real_path = environ.get("PATH_INFO", "/")
+
+        if real_path.endswith(".py") or real_path in ("/api/index.py", "api/index.py", "/index.py"):
+            query_str = environ.get("QUERY_STRING", "")
+            if query_str and query_str.startswith("/"):
+                real_path = query_str.split("?")[0]
+            elif query_str and "path=" in query_str:
+                real_path = urllib.parse.parse_qs(query_str).get("path", ["/"])[0]
+            else:
+                real_path = "/api/config"
+
+        if not real_path.startswith("/api/") and real_path != "/":
+            if real_path.startswith("/"):
+                real_path = "/api" + real_path
+            else:
+                real_path = "/api/" + real_path
+
         query = environ.get("QUERY_STRING", "")
-        self.path = f"{path}?{query}" if query else path
+        self.path = f"{real_path}?{query}" if query else real_path
         self.request_version = "HTTP/1.1"
         self.client_address = (environ.get("REMOTE_ADDR", ""), 0)
         self.rfile = environ.get("wsgi.input", BytesIO())

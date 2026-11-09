@@ -117,25 +117,28 @@ document.addEventListener("DOMContentLoaded", async () => {
 let _firebaseApp = null;
 let _firebaseAuth = null;
 
+const FALLBACK_FIREBASE_CONFIG = {
+  apiKey: "AIzaSyBleX2QL92elVwZO0chnQXh_cKQe4J-jZI",
+  authDomain: "edu-eagle-dc3af.firebaseapp.com",
+  projectId: "edu-eagle-dc3af",
+  storageBucket: "edu-eagle-dc3af.firebasestorage.app",
+  messagingSenderId: "1013380277371",
+  appId: "1:1013380277371:web:fc860eb6b6c2059184aede"
+};
+
 /**
  * Initialise the Firebase client SDK using config injected by the server
  * into window.__FIREBASE_CONFIG__ (set in index.html <script> block).
  * Falls back gracefully if config is missing (demo/dev mode).
  */
 function initFirebase() {
-  const cfg = window.__FIREBASE_CONFIG__;
-  if (!cfg || !cfg.apiKey) {
-    if (!demoAuthEnabled) {
-      console.warn(
-        "[EduEagle] Firebase client config (window.__FIREBASE_CONFIG__) is missing. " +
-        "Set FIREBASE_* env vars and inject the config block into index.html."
-      );
-    }
-    return;
-  }
+  const cfg = (window.__FIREBASE_CONFIG__ && window.__FIREBASE_CONFIG__.apiKey)
+    ? window.__FIREBASE_CONFIG__
+    : FALLBACK_FIREBASE_CONFIG;
+
   try {
     if (typeof firebase === "undefined") {
-      console.error("[EduEagle] Firebase SDK is not loaded.");
+      console.warn("[EduEagle] Firebase SDK script tag not loaded yet.");
       return;
     }
     _firebaseApp = (firebase.apps && firebase.apps.length > 0) ? firebase.app() : firebase.initializeApp(cfg);
@@ -710,8 +713,13 @@ async function handleAuthLogin(bodyPayload) {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(bodyPayload)
     });
-    const data = await res.json();
-    if (data.success) {
+    let data;
+    try {
+      data = await res.json();
+    } catch (parseErr) {
+      data = { error: `Server returned HTTP ${res.status}. Please check deployment API configuration.` };
+    }
+    if (res.ok && data.success) {
       state.currentUser = data.user;
       state.token = data.token;
       state.isAuthenticated = true;
@@ -728,7 +736,8 @@ async function handleAuthLogin(bodyPayload) {
       showToast(data.error || "Authentication failed. Please verify credentials.", "error", "Sign In Notice");
     }
   } catch (err) {
-    showToast("Authentication request failed. Please check network connection.", "error", "Connection Error");
+    console.error("[EduEagle] Login error:", err);
+    showToast("Authentication request failed: " + (err.message || "Connection Error"), "error", "Connection Error");
   }
 }
 
