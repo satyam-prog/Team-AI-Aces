@@ -132,22 +132,26 @@ header.app-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 14px 28px;
+  padding: 12px 24px;
   background: #FFFFFF;
+  gap: 12px;
+  flex-wrap: wrap;
 }
 
 .brand {
   display: flex;
   align-items: center;
-  gap: 14px;
+  gap: 12px;
   cursor: pointer;
   text-decoration: none;
+  flex-shrink: 0;
+  min-width: 0;
 }
 
 /* Bespoke Eagle & Book Squircle Logo Container (border-radius: 12px) */
 .brand-squircle-logo {
-  width: 44px;
-  height: 44px;
+  width: 42px;
+  height: 42px;
   border-radius: 12px;
   background: linear-gradient(135deg, #0F5338 0%, #15803D 50%, #D97706 100%);
   padding: 2px;
@@ -168,27 +172,34 @@ header.app-header {
   justify-content: center;
 }
 
+.brand-text {
+  min-width: 0;
+}
+
 .brand-text h1 {
-  font-size: 1.25rem;
+  font-size: clamp(1.1rem, 2vw, 1.25rem);
   font-weight: 800;
   color: var(--primary);
   line-height: 1.15;
   letter-spacing: -0.02em;
+  white-space: nowrap;
 }
 
 .brand-text p {
-  font-size: 0.72rem;
+  font-size: clamp(0.64rem, 1vw, 0.72rem);
   color: var(--text-muted);
   text-transform: uppercase;
   letter-spacing: 0.05em;
   font-weight: 600;
   margin-top: 1px;
+  white-space: nowrap;
 }
 
 .header-controls {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
+  flex-wrap: wrap;
 }
 
 .safeguard-badge {
@@ -415,17 +426,28 @@ main.app-main {
   flex-wrap: wrap;
 }
 
+.view-header-title {
+  min-width: 0;
+  flex: 1 1 280px;
+}
+
 .view-header-title h2 {
-  font-size: 1.45rem;
+  font-size: clamp(1.2rem, 2.4vw, 1.45rem);
   font-weight: 800;
   color: var(--text-main);
   letter-spacing: -0.02em;
+  line-height: 1.25;
+  word-break: break-word;
+  overflow-wrap: break-word;
 }
 
 .view-header-title p {
-  font-size: 0.85rem;
+  font-size: clamp(0.78rem, 1.4vw, 0.85rem);
   color: var(--text-muted);
   margin-top: 3px;
+  line-height: 1.45;
+  word-break: break-word;
+  overflow-wrap: break-word;
 }
 
 /* Framework Notice Banner */
@@ -1826,10 +1848,12 @@ main.app-main {
   z-index: 500;
   background: var(--bg-primary);
   overflow-y: auto;
+  overflow-x: hidden;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
-  padding: 24px;
+  padding: 24px 16px;
+  min-height: 100vh;
 }
 
 .login-screen-wrapper.hidden {
@@ -1838,9 +1862,10 @@ main.app-main {
 
 .login-card-container {
   display: grid;
-  grid-template-columns: 1.1fr 1fr;
+  grid-template-columns: 1.05fr 1fr;
   max-width: 1040px;
   width: 100%;
+  margin: auto 0;
   background: #FFFFFF;
   border: 1px solid var(--border-color);
   border-radius: var(--radius-lg);
@@ -1850,34 +1875,37 @@ main.app-main {
 
 .login-brand-side {
   background: linear-gradient(180deg, #F8F7F4 0%, #FFFFFF 100%);
-  padding: 36px 32px;
+  padding: 32px 28px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   border-right: 1px solid var(--border-color);
+  min-width: 0;
 }
 
 .brand-badge-large {
   display: flex;
   align-items: center;
   gap: 14px;
-  margin-bottom: 20px;
+  margin-bottom: 16px;
 }
 
 .brand-hero-title {
-  font-size: 1.45rem;
+  font-size: clamp(1.2rem, 2.5vw, 1.45rem);
   font-weight: 800;
   color: var(--primary);
-  line-height: 1.1;
+  line-height: 1.15;
   letter-spacing: -0.02em;
+  word-break: break-word;
 }
 
 .brand-hero-sub {
-  font-size: 0.74rem;
+  font-size: clamp(0.68rem, 1.2vw, 0.74rem);
   color: var(--text-muted);
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.04em;
   font-weight: 700;
+  line-height: 1.35;
 }
 
 .hero-feature-list {
@@ -1930,25 +1958,31 @@ main.app-main {
 }
 
 .login-form-side {
-  padding: 36px 32px;
+  padding: 32px 28px;
   background: #FFFFFF;
+  min-width: 0;
 }
 
 .login-form-header {
-  margin-bottom: 20px;
+  margin-bottom: 16px;
 }
 
 .login-form-title {
-  font-size: 1.35rem;
+  font-size: clamp(1.15rem, 2.2vw, 1.35rem);
   font-weight: 800;
   color: var(--text-main);
   letter-spacing: -0.02em;
+  line-height: 1.25;
+  word-break: break-word;
+  overflow-wrap: break-word;
 }
 
 .login-form-sub {
-  font-size: 0.82rem;
+  font-size: clamp(0.76rem, 1.4vw, 0.82rem);
   color: var(--text-muted);
   margin-top: 4px;
+  line-height: 1.4;
+  word-break: break-word;
 }
 
 .auth-tabs-row {
@@ -2659,13 +2693,28 @@ footer.app-footer {
 @media (max-width: 1024px) {
   .login-card-container {
     grid-template-columns: 1fr;
+    max-width: 580px;
+    margin: 16px auto;
   }
   .login-brand-side {
     border-right: none;
     border-bottom: 1px solid var(--border-color);
+    padding: 24px 20px;
+  }
+  .hero-feature-list {
+    display: none;
+  }
+  .brand-badge-large {
+    margin-bottom: 8px;
   }
   .pulse-layout, .tasks-layout {
     grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 900px) {
+  .brand-text p {
+    display: none;
   }
 }
 
@@ -2688,6 +2737,12 @@ footer.app-footer {
   }
   .kpi-grid {
     grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .safeguard-badge {
+    display: none;
   }
 }
 
