@@ -220,6 +220,10 @@ async function signInWithFirebase(method, opts = {}) {
     }
   } catch (err) {
     console.error("[EduEagle] Firebase Auth Error:", err);
+    if (method === "google") {
+      // Re-throw so loginWithGoogle can seamlessly fall back to Institutional Google SSO
+      throw err;
+    }
     const firebaseErrorMap = {
       "auth/user-not-found": "No Firebase account found for this email address.",
       "auth/wrong-password": "Incorrect password. Please try again.",
@@ -816,17 +820,29 @@ async function handleAuthLogin(bodyPayload) {
       state.currentUser = data.user;
       state.token = data.token;
       state.isAuthenticated = true;
-      sessionStorage.setItem("edueagle_auth_user", JSON.stringify(data.user));
-      sessionStorage.setItem("edueagle_auth_token", data.token);
-      localStorage.setItem("edueagle_auth_user", JSON.stringify(data.user));
-      localStorage.setItem("edueagle_auth_token", data.token);
-      updateUserUI();
+      try {
+        sessionStorage.setItem("edueagle_auth_user", JSON.stringify(data.user));
+        sessionStorage.setItem("edueagle_auth_token", data.token);
+        localStorage.setItem("edueagle_auth_user", JSON.stringify(data.user));
+        localStorage.setItem("edueagle_auth_token", data.token);
+      } catch (storageErr) {
+        console.warn("[EduEagle] Storage warning:", storageErr);
+      }
       hideLoginScreen();
+      try {
+        updateUserUI();
+      } catch (uiErr) {
+        console.warn("[EduEagle] UI update warning:", uiErr);
+      }
       showToast(`Signed in successfully as ${data.user.name} (${data.user.role})`, "success", "Welcome to EduEagle");
 
       // Switch to default view and reload all module data
       switchTab("podium");
-      await loadInitialData();
+      try {
+        await loadInitialData();
+      } catch (loadErr) {
+        console.warn("[EduEagle] Initial data load warning:", loadErr);
+      }
     } else {
       showToast(data.error || "Authentication failed. Please verify credentials.", "error", "Sign In Notice");
     }
