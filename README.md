@@ -143,7 +143,6 @@ On phones or tablets connected to the local Wi-Fi:
 EduEagle/
 ├── server.py              # Zero-dependency Python HTTP and REST API server
 ├── database.py            # SQLite schema, tables, seed generator
-├── edueagle.db            # Persistent SQLite database
 ├── start.ps1              # Windows PowerShell launcher
 ├── README.md              # Comprehensive documentation and demo guide
 └── static/
@@ -157,7 +156,7 @@ EduEagle/
 ```
 
 - **Backend**: Python 3.12 Standard Library (`http.server`, `sqlite3`, `json`, `urllib`).
-- **Database**: SQLite 3 with ACID transactions and audit logging.
+- **Database**: SQLite 3 with ACID transactions and audit logging. The local `edueagle.db` is created at runtime and intentionally excluded from Git; use a configured PostgreSQL database for deployment.
 - **Frontend**: Vanilla Modern JavaScript (ES6+), responsive CSS3 custom design tokens, vector SVG iconography. Zero external CDN dependencies required; runs 100% reliably in any offline or restricted network environment.
 
 ---

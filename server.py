@@ -1451,6 +1451,13 @@ class EduEagleAPIHandler(http.server.SimpleHTTPRequestHandler):
                 cursor.execute("SELECT * FROM users WHERE firebase_uid = ?", (fb_uid,))
                 user = cursor.fetchone()
                 if not user and fb_email:
+                    if firebase_claims.get("email_verified") is not True:
+                        conn.close()
+                        self._send_json({
+                            "error": "Verify your email address before signing in.",
+                            "status": 403
+                        }, status=403)
+                        return
                     cursor.execute("SELECT * FROM users WHERE LOWER(email) = ?", (fb_email,))
                     user = cursor.fetchone()
 

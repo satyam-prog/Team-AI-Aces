@@ -112,7 +112,7 @@ flowchart TD
 * **Error Sanitization**: Server catches unhandled exceptions, logs detailed stack traces internally with unique incident identifiers (`INC-XXXXXXXX`), and returns generic error responses to clients.
 
 ### 3.4 Data & Storage Layer
-* **Relational Storage**: SQLite database ([`edueagle.db`](file:///d:/Programming/AI%20Aces/edueagle.db)) operating in WAL mode with enforced foreign keys (`PRAGMA foreign_keys = ON;`).
+* **Relational Storage**: A local SQLite database created at runtime and operating in WAL mode with enforced foreign keys (`PRAGMA foreign_keys = ON;`). Database files are excluded from Git; deployments should use the configured PostgreSQL database.
 * **Connection Pooling**: Managed via `database.get_db()` with `sqlite3.Row` factory for dictionary-style data access.
 * **Audit Ledger**: Dedicated `audit_logs` table permanently records all critical institutional actions (marks updates, AI scan triggers, parent dispatches, attendance alerts).
 * **Sandboxed Artifact Vault**: Stored outside the web root at `private_storage/` with strict extension, MIME type, and magic byte validation (PDF, PNG, JPG, MP4). Direct execution is prevented.
@@ -285,4 +285,3 @@ The platform maintains four dedicated automated test suites verifying all functi
    * **57 Tests (100% Pass)**: Validates Academic Excellence Podium & live recalculation, Student read-only mark controls, Smart Attendance 3-tier categorization (<75% alerts), Mentor Pulse alternate-day sync with Sunday pause, configurable weekly review day, Bi-Weekly Parent Portal with extracurriculars, Task Studio 80 MB drag-and-drop validation (blocking videos for assignments, allowing for projects), Teacher-Only Manual AI scan with probability breakdowns, Question-Driven AI Note Summarizer, Token Bucket continuous rate limiting, Student Fee Ledger & strict data isolation (403 on other students), Institutional Cohort Billing Desk & offline payment recording, Statutory fee reminder dispatch, Student online payment settlement with automatic balance deduction, and Institutional Full Authority complete student coursework inspection.
 
 **Total Automated Coverage: 146 / 146 Passing Tests (0 Failures)**.
-

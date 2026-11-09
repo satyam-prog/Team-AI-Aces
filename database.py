@@ -29,7 +29,7 @@ def uses_postgres_db():
 
 # Serverless environment (Vercel / AWS Lambda) fallback:
 # If running serverless and no external Postgres DATABASE_URL is provided,
-# copy bundled edueagle.db to /tmp so SQLite has full read/write permissions.
+# use /tmp for SQLite writes; copy a bundled seed database there when available.
 if not DATABASE_URL and (os.getenv("VERCEL") or os.getenv("AWS_LAMBDA_FUNCTION_NAME") or os.getenv("NOW_REGION")):
     TMP_DB = os.path.join("/tmp", "edueagle.db")
     ORIG_DB = os.path.join(ROOT_DIR, "edueagle.db")
