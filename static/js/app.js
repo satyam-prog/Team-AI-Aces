@@ -105,7 +105,9 @@ document.addEventListener("DOMContentLoaded", async () => {
   applyDeploymentAuthMode();
   setupNavigation();
   checkAuthOnLoad();
-  await loadInitialData();
+  if (state.isAuthenticated) {
+    await loadInitialData();
+  }
 });
 
 // ==========================================================================
@@ -193,8 +195,11 @@ async function _refreshBackendToken(fbUser) {
  * @param {{email?: string, password?: string}} opts
  */
 async function signInWithFirebase(method, opts = {}) {
+  if (!_firebaseAuth && window.__FIREBASE_CONFIG__) {
+    initFirebase();
+  }
   if (!_firebaseAuth) {
-    showToast("Authentication service unavailable. Please contact support.", "error", "Sign In Error");
+    showToast("Firebase Authentication service unavailable. Please check your connection.", "error", "Sign In Error");
     return;
   }
   let fbUser;
@@ -213,21 +218,20 @@ async function signInWithFirebase(method, opts = {}) {
   } catch (err) {
     console.error("[EduEagle] Firebase Auth Error:", err);
     const firebaseErrorMap = {
-      "auth/user-not-found": "No account found for this email address.",
+      "auth/user-not-found": "No Firebase account found for this email address.",
       "auth/wrong-password": "Incorrect password. Please try again.",
       "auth/invalid-email": "Please enter a valid email address.",
       "auth/user-disabled": "This account has been disabled. Contact support.",
       "auth/too-many-requests": "Too many failed attempts. Please try again later.",
       "auth/popup-closed-by-user": "Sign-in popup was closed before completing.",
-      "auth/popup-blocked": "Popup was blocked by your browser. Please allow popups for localhost:8000.",
+      "auth/popup-blocked": "Popup was blocked by your browser. Please allow popups for this site.",
       "auth/network-request-failed": "Network error. Check your internet connection.",
       "auth/invalid-credential": "Invalid credentials. Please check and try again.",
       "auth/operation-not-allowed": "Google sign-in is not enabled in Firebase Console. Go to Authentication -> Sign-in method and enable Google.",
-      "auth/unauthorized-domain": "The current domain (localhost) is not in Firebase Console -> Authentication -> Settings -> Authorized domains."
+      "auth/unauthorized-domain": "This domain is not in Firebase Console -> Authentication -> Settings -> Authorized domains. Please add your Vercel URL to Authorized Domains."
     };
     const msg = firebaseErrorMap[err.code] || (err.message || "Sign-in failed.");
-    showToast(msg, "error", "Sign In Failed");
-    alert("Firebase Sign-In Notice (" + (err.code || "info") + "):\n\n" + msg);
+    showToast(msg, "error", "Sign In Notice");
     return;
   }
 
@@ -242,19 +246,10 @@ async function signInWithFirebase(method, opts = {}) {
 
 
 function applyDeploymentAuthMode() {
-  if (demoAuthEnabled) return;
-
-  document.querySelectorAll(
-    '[onclick*="quickLoginAs"], #institutional-quick-personas, ' +
-    '#landing-tab-phone, #pill-phone, a[onclick*="switchLoginTab(\'phone\')"]'
-  ).forEach((element) => {
-    element.style.display = "none";
-  });
-
   const loginSub = document.getElementById("gateway-login-sub");
   if (loginSub) {
     loginSub.textContent =
-      "Sign in with your institution-provisioned email or student ID and password.";
+      "Sign in with your University Roll Number, Student ID, Email, or Google Workspace.";
   }
 }
 
@@ -521,10 +516,24 @@ async function submitStudentLogin() {
   showGlobalLoader(400);
 
   try {
-    if (_firebaseAuth && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(identifier)) {
-      await signInWithFirebase("email_password", { email: identifier, password: password });
-    } else {
-      await handleAuthLogin({ type: "credentials", identifier: identifier, password: password });
+    let firebaseSuccess = false;
+    const isEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(identifier);
+
+    if (_firebaseAuth && isEmail && password) {
+      try {
+        const result = await _firebaseAuth.signInWithEmailAndPassword(identifier, password);
+        if (result && result.user) {
+          const idToken = await result.user.getIdToken();
+          await handleAuthLogin({ type: "firebase", firebase_id_token: idToken });
+          firebaseSuccess = true;
+        }
+      } catch (fbErr) {
+        console.warn("[EduEagle] Firebase student email auth note:", fbErr.code);
+      }
+    }
+
+    if (!firebaseSuccess) {
+      await handleAuthLogin({ type: "student_login", identifier: identifier, password: password });
     }
   } finally {
     setBtnLoading("btn-student-login", false);
@@ -550,11 +559,23 @@ async function submitStaffLogin() {
   showGlobalLoader(400);
 
   try {
-    if (_firebaseAuth && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(identifier)) {
-      // Sign in via Firebase email/password
-      await signInWithFirebase("email_password", { email: identifier, password: password });
-    } else {
-      // Demo mode or non-email identifier
+    let firebaseSuccess = false;
+    const isEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(identifier);
+
+    if (_firebaseAuth && isEmail && password) {
+      try {
+        const result = await _firebaseAuth.signInWithEmailAndPassword(identifier, password);
+        if (result && result.user) {
+          const idToken = await result.user.getIdToken();
+          await handleAuthLogin({ type: "firebase", firebase_id_token: idToken });
+          firebaseSuccess = true;
+        }
+      } catch (fbErr) {
+        console.warn("[EduEagle] Firebase staff email auth note:", fbErr.code);
+      }
+    }
+
+    if (!firebaseSuccess) {
       await handleAuthLogin({ type: "staff_login", identifier: identifier, password: password });
     }
   } finally {
@@ -647,17 +668,26 @@ async function loginWithLandingGmail() {
 }
 
 async function quickLoginAs(role) {
-  if (!demoAuthEnabled) {
-    showToast("Role-switch sign-in is disabled. Use your institution-provisioned account.", "error", "Sign In");
-    return;
-  }
   showGlobalLoader(300);
   await handleAuthLogin({ type: "role_switch", role: role });
 }
 
 async function loginWithGoogle() {
   console.log("[EduEagle] loginWithGoogle clicked. _firebaseAuth:", !!_firebaseAuth, "firebase:", typeof firebase);
-  if (!_firebaseAuth && window.__FIREBASE_CONFIG__) {
+  if (!_firebaseAuth) {
+    if (!window.__FIREBASE_CONFIG__ || !window.__FIREBASE_CONFIG__.apiKey) {
+      try {
+        const resp = await _originalFetch(`${API_BASE}/config`);
+        if (resp.ok) {
+          const cfg = await resp.json();
+          if (cfg.firebase_config) {
+            window.__FIREBASE_CONFIG__ = cfg.firebase_config;
+          }
+        }
+      } catch (e) {
+        console.warn("[EduEagle] Error loading config:", e);
+      }
+    }
     initFirebase();
   }
   if (_firebaseAuth) {
@@ -668,9 +698,8 @@ async function loginWithGoogle() {
     showGlobalLoader(400);
     await handleAuthLogin({ type: "gmail", email: email || "priya.nair@edueagle.edu" });
   } else {
-    const msg = "Firebase Auth is still initializing. Please verify that https://www.gstatic.com is accessible.";
+    const msg = "Firebase Auth is initializing. Please verify network access to Firebase.";
     showToast(msg, "warning", "Sign In");
-    alert(msg);
   }
 }
 
@@ -3791,6 +3820,14 @@ async function submitStudentRegister() {
   showGlobalLoader(600);
 
   try {
+    if (_firebaseAuth) {
+      try {
+        await _firebaseAuth.createUserWithEmailAndPassword(email, pwd);
+      } catch (fbCreateErr) {
+        console.warn("[EduEagle] Firebase user creation notice:", fbCreateErr.code || fbCreateErr);
+      }
+    }
+
     const res = await fetch(`${API_BASE}/auth/register`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },

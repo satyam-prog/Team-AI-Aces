@@ -30,8 +30,10 @@ def uses_postgres_db():
 # Serverless environment (Vercel / AWS Lambda) fallback:
 # If running serverless and no external Postgres DATABASE_URL is provided,
 # use /tmp for SQLite writes; copy a bundled seed database there when available.
+import tempfile
 if not DATABASE_URL and (os.getenv("VERCEL") or os.getenv("AWS_LAMBDA_FUNCTION_NAME") or os.getenv("NOW_REGION")):
-    TMP_DB = os.path.join("/tmp", "edueagle.db")
+    tmp_base = "/tmp" if os.path.isdir("/tmp") else tempfile.gettempdir()
+    TMP_DB = os.path.join(tmp_base, "edueagle.db")
     ORIG_DB = os.path.join(ROOT_DIR, "edueagle.db")
     if not os.path.exists(TMP_DB) and os.path.exists(ORIG_DB):
         try:
@@ -486,10 +488,7 @@ def init_db(force_reseed=False):
     # Check if empty, seed if needed
     cursor.execute("SELECT COUNT(*) FROM students")
     count = cursor.fetchone()[0]
-    seed_demo_data = os.getenv(
-        "EDUEAGLE_SEED_DEMO_DATA",
-        "false" if (os.getenv("VERCEL") or os.getenv("AWS_LAMBDA_FUNCTION_NAME")) else "true",
-    ).lower() == "true"
+    seed_demo_data = os.getenv("EDUEAGLE_SEED_DEMO_DATA", "true").lower() == "true"
     if count == 0 and seed_demo_data:
         seed_data(conn)
     elif count > 0 and seed_demo_data:

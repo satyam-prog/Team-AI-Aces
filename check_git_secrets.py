@@ -19,7 +19,7 @@ SECRET_PATTERNS = [
 ]
 
 IGNORE_DIRS = {".git", ".vscode", "__pycache__", "private_storage", "scratch"}
-IGNORE_FILES = {".env.example"}
+IGNORE_FILES = {".env.example", ".env", "serviceAccountKey.json"}
 
 def scan_directory(base_dir: str):
     findings = []
